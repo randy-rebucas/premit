@@ -1,0 +1,14 @@
+<mat-grid-list cols="1" rowHeight="100px">
+    <mat-grid-tile>
+        <nav mat-tab-nav-bar>
+            <a mat-tab-link [routerLink]="['/transfer/amount']" routerLinkActive #rlaAmount="routerLinkActive" [active]="rlaAmount.isActive">Amount</a>
+            <a mat-tab-link [routerLink]="['/transfer/recipient']" routerLinkActive #rlaRecipient="routerLinkActive" [active]="rlaRecipient.isActive">Recipient</a>
+            <a mat-tab-link [routerLink]="['/transfer/sender']" routerLinkActive #rlaSender="routerLinkActive" [active]="rlaSender.isActive">Sender</a>
+            <a mat-tab-link [routerLink]="['/transfer/summary']" routerLinkActive #rlaSummary="routerLinkActive" [active]="rlaSummary.isActive">Summary</a>
+            <a mat-tab-link [routerLink]="['/transfer/checkout']" routerLinkActive #rlaCheckout="routerLinkActive" [active]="rlaCheckout.isActive">Checkout</a>
+        </nav>
+    </mat-grid-tile>
+    <mat-grid-tile>
+        <router-outlet></router-outlet>
+    </mat-grid-tile>
+</mat-grid-list>
