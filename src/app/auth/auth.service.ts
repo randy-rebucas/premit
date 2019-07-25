@@ -5,6 +5,7 @@ import { Subject } from 'rxjs';
 
 import { environment } from '../../environments/environment';
 import { AuthData } from './auth-data.model';
+import { AuthSignup } from './auth-signup.model';
 
 const BACKEND_URL = environment.apiUrl + '/user';
 
@@ -34,9 +35,14 @@ export class AuthService {
     return this.authStatusListener.asObservable();
   }
 
-  createUser(email: string, password: string) {
-    const authData: AuthData = {email: email, password: password};
-    this.http.post(BACKEND_URL + '/signup', authData).subscribe(() => {
+  createUser(firstname: string, lastname: string, email: string, password: string) {
+    const authSignup: AuthSignup = {
+      firstname: firstname,
+      lastname: lastname,
+      email: email,
+      password: password
+    };
+    this.http.post(BACKEND_URL + '/signup', authSignup).subscribe(() => {
       this.router.navigate(['/']);
     }, error => {
       this.authStatusListener.next(false);

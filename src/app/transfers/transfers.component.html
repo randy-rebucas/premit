@@ -1,4 +1,4 @@
-<mat-grid-list cols="1" rowHeight="100px">
+<mat-grid-list cols="1" rowHeight="100px" *ngIf="userIsAuthenticated">
     <mat-grid-tile>
         <nav mat-tab-nav-bar>
             <a mat-tab-link [routerLink]="['/transfer/amount']" routerLinkActive #rlaAmount="routerLinkActive" [active]="rlaAmount.isActive">Amount</a>

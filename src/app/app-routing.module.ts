@@ -13,8 +13,8 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
 
 const appRoutes: Routes = [
     { path: '', redirectTo: '/transfer', pathMatch: 'full' },
-    { path: 'transfer', component: TransfersComponent, children: [
-        { path: '', component: TransferStartComponent },
+    { path: 'transfer', component: TransfersComponent, canActivate: [AuthGuard], children: [
+        { path: '', component: TransferStartComponent},
         { path: 'amount', component: TransferAmountEditComponent },
         { path: 'recipient', component: TransferRecipientEditComponent },
         { path: 'sender', component: TransferSenderEditComponent },
