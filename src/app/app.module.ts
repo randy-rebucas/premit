@@ -4,7 +4,6 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 
 import { AppComponent } from './app.component';
-import { TransfersComponent } from './transfers/transfers.component';
 import { HeaderComponent } from './header/header.component';
 import { AppRoutingModule } from './app-routing.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -13,22 +12,24 @@ import { AuthInterceptor } from './auth/auth-interceptor';
 import { ErrorInterceptor } from './error-interceptor';
 import { ErrorComponent } from './error/error.component';
 import { PageNotFoundComponent } from './page-not-found/page-not-found.component';
-import { TransfersModule } from './transfers/transfers.module';
+
+import { HomeComponent } from './home/home.component';
+import { PatientsModule } from './patients/patients.module';
 
 @NgModule({
   declarations: [
     AppComponent,
-    TransfersComponent,
     HeaderComponent,
     ErrorComponent,
-    PageNotFoundComponent
+    PageNotFoundComponent,
+    HomeComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
     HttpClientModule,
-    TransfersModule,
+    PatientsModule,
     FormsModule,
     ReactiveFormsModule,
     AngularMaterialModule

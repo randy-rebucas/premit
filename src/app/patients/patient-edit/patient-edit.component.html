@@ -1,0 +1,51 @@
+<mat-card id="card">
+    <mat-spinner *ngIf="isLoading"></mat-spinner>
+    <form [formGroup]="form" (submit)="onSavePatient()" *ngIf="!isLoading">
+        <div>
+            <button mat-stroked-button type="button" (click)="filePicker.click()">Upload</button>
+            <input type="file" #filePicker (change)="onImagePicked($event)">
+        </div>
+        <div class="image-preview" *ngIf="imagePreview !== '' && imagePreview && form.get('image').valid">
+            <img [src]="imagePreview" [alt]="form.value.firstname">
+        </div>
+        <div class="form-field-block">
+            <mat-form-field>
+                <input matInput type="text" formControlName="firstname" placeholder="Firstname">
+                <mat-error *ngIf="form.get('firstname').invalid">Please enter firstname</mat-error>
+            </mat-form-field>
+            <mat-form-field>
+                <input matInput type="text" formControlName="midlename" placeholder="Midlename">
+                <mat-error *ngIf="form.get('midlename').invalid">Please enter midlename</mat-error>
+            </mat-form-field>
+            <mat-form-field>
+                <input matInput type="text" formControlName="lastname" placeholder="Lastname">
+                <mat-error *ngIf="form.get('lastname').invalid">Please enter lastname</mat-error>
+            </mat-form-field>
+        </div>
+        <div class="form-field-block">
+            <mat-form-field>
+                <input matInput type="text" formControlName="contact" placeholder="Contact">
+                <mat-error *ngIf="form.get('contact').invalid">Please enter contact</mat-error>
+            </mat-form-field>
+            <mat-form-field>
+                <mat-select formControlName="gender" placeholder="Gender">
+                  <mat-option value="Male">Male</mat-option>
+                  <mat-option value="Female">Female</mat-option>
+                </mat-select>
+                <mat-error *ngIf="form.get('gender').invalid">Please enter gender</mat-error>
+            </mat-form-field>
+            <mat-form-field>
+                <input matInput [matDatepicker]="picker" formControlName="birthdate" placeholder="Birthdate">
+                <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                <mat-datepicker #picker startView="year" [startAt]="startDate"></mat-datepicker>
+              </mat-form-field>
+        </div>
+        <div class="form-field-block">
+            <mat-form-field>
+                <textarea matInput rows="6" formControlName="address" placeholder="Address"></textarea>
+                <mat-error *ngIf="form.get('address').invalid">Please enter address</mat-error>
+            </mat-form-field>
+        </div>
+        <button mat-raised-button color="primary" type="submit">Save</button>
+    </form>
+</mat-card>

@@ -1,0 +1,12 @@
+<div class="transfer-wrap">
+  <nav mat-tab-nav-bar>
+      <a mat-tab-link [routerLink]="['/patient/medical-history']" routerLinkActive #rlaAmount="routerLinkActive" [active]="rlaAmount.isActive">Amount</a>
+      <a mat-tab-link [routerLink]="['/patient/recipient']" routerLinkActive #rlaRecipient="routerLinkActive" [active]="rlaRecipient.isActive">Recipient</a>
+      <a mat-tab-link [routerLink]="['/patient/sender']" routerLinkActive #rlaSender="routerLinkActive" [active]="rlaSender.isActive">Sender</a>
+      <a mat-tab-link [routerLink]="['/patient/summary']" routerLinkActive #rlaSummary="routerLinkActive" [active]="rlaSummary.isActive">Summary</a>
+      <a mat-tab-link [routerLink]="['/patient/checkout']" routerLinkActive #rlaCheckout="routerLinkActive" [active]="rlaCheckout.isActive">Checkout</a>
+  </nav>
+  <div>
+    <router-outlet></router-outlet>
+  </div>
+</div>

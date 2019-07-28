@@ -10,7 +10,12 @@ import { MatInputModule,
   MatGridListModule,
   MatTabsModule,
   MatIconModule,
-  MatStepperModule
+  MatStepperModule,
+  MatSelectModule,
+  MatDatepickerModule,
+  MatNativeDateModule,
+  MatTableModule,
+  MatSortModule
 } from '@angular/material';
 
 @NgModule({
@@ -26,7 +31,12 @@ import { MatInputModule,
     MatGridListModule,
     MatTabsModule,
     MatIconModule,
-    MatStepperModule
+    MatStepperModule,
+    MatSelectModule,
+    MatDatepickerModule,
+    MatNativeDateModule,
+    MatTableModule,
+    MatSortModule
   ]
 })
 export class AngularMaterialModule {}

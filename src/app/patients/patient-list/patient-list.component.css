@@ -1,0 +1,23 @@
+#datable-wrapper {
+  margin: 2em auto;
+}
+
+table {
+  width: 100%;
+}
+
+.mat-form-field {
+  font-size: 14px;
+  width: 100%;
+}
+
+.hide {
+  display: none;
+}
+.mat-paginator {
+  background: transparent;
+}
+mat-footer-row mat-footer-cell {
+  justify-content: center;
+  font-style: italic;
+}

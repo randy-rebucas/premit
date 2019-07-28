@@ -10,6 +10,7 @@ var mongoose = require('mongoose');
 
 var indexRouter = require('./routes/index');
 var userRouter = require('./routes/user');
+var patientRouter = require('./routes/patient');
 
 var app = express();
 
@@ -35,7 +36,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
-//app.use('/images', express.static(path.join(__dirname, 'images')));
+app.use('/images', express.static(path.join(__dirname, 'images')));
 //app.use('/', express.static(path.join(__dirname, 'angular')));
 
 app.use((req, res, next) => {
@@ -53,6 +54,7 @@ app.use((req, res, next) => {
 
 app.use('/', indexRouter);
 app.use('/api/user', userRouter);
+app.use('/api/patients', patientRouter);
 
 //app.use((req, res, next) => {
 //    res.sendFile(path.join(__dirname, 'angular', 'index.html'));
