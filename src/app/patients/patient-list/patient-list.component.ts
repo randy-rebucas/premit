@@ -1,14 +1,18 @@
 import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
-import { PageEvent } from '@angular/material';
+import { PageEvent, MatDialog, MatDialogConfig } from '@angular/material';
 import { Subscription } from 'rxjs';
 
 import { PatientData } from '../patient-data.model';
 import { AuthService } from 'src/app/auth/auth.service';
 import { PatientsService } from '../patients.service';
 
-import {MatPaginator} from '@angular/material/paginator';
-import {MatSort} from '@angular/material/sort';
-import {MatTableDataSource} from '@angular/material/table';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatSort } from '@angular/material/sort';
+import { MatTableDataSource } from '@angular/material/table';
+import { NotificationService } from 'src/app/shared/notification.service';
+
+import { PatientEditComponent } from '../patient-edit/patient-edit.component';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-patient-list',
@@ -33,10 +37,13 @@ export class PatientListComponent implements OnInit, OnDestroy {
   constructor(
     public patientsService: PatientsService,
     private authService: AuthService,
+    private dialog: MatDialog,
+    private notificationService: NotificationService,
+    private router: Router,
   ) {}
 
   dataSource: MatTableDataSource<any>;
-  displayedColumns: string[] = ['firstname', 'midlename', 'lastname', 'contact', 'gender', 'action'];
+  displayedColumns: string[] = ['firstname', 'midlename', 'lastname', 'contact', 'gender', 'birthdate', 'action'];
 
   ngOnInit() {
     this.isLoading = true;
@@ -76,13 +83,31 @@ export class PatientListComponent implements OnInit, OnDestroy {
     this.patientsService.getPatients(this.patientsPerPage, this.currentPage);
   }
 
-  onDelete(postId: string) {
-    this.isLoading = true;
-    this.patientsService.deletePatient(postId).subscribe(() => {
-      this.patientsService.getPatients(this.patientsPerPage, this.currentPage);
-    }, () => {
-      this.isLoading = false;
-    });
+  onCreate() {
+    this.patientsService.initializeFormGroup();
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.disableClose = true;
+    dialogConfig.autoFocus = true;
+    dialogConfig.width = '50%';
+    this.dialog.open(PatientEditComponent, dialogConfig);
+  }
+
+  onEdit(row){
+    this.patientsService.populateForm(row);
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.disableClose = true;
+    dialogConfig.autoFocus = true;
+    dialogConfig.width = '50%';
+    this.dialog.open(PatientEditComponent, dialogConfig);
+  }
+
+  onDelete($key){
+    if(confirm('Are you sure to delete this record ?')){
+      this.patientsService.deletePatient($key).subscribe(() => {
+        this.patientsService.getPatients(this.patientsPerPage, this.currentPage);
+        this.notificationService.warn('! Deleted successfully');
+      });
+    }
   }
 
   ngOnDestroy() {

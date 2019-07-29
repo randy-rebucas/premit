@@ -1,23 +1,41 @@
 #datable-wrapper {
-  margin: 2em auto;
+    margin: 2em auto;
 }
 
 table {
-  width: 100%;
+    width: 100%;
 }
 
 .mat-form-field {
-  font-size: 14px;
-  width: 100%;
+    font-size: 14px;
+    width: 100%;
+}
+
+.mat-paginator {
+    background: transparent;
+}
+
+mat-footer-row mat-footer-cell {
+    justify-content: center;
+    font-style: italic;
 }
 
 .hide {
-  display: none;
+    display: none;
 }
-.mat-paginator {
-  background: transparent;
+
+table.mat-table tbody tr td:last-child {
+    width: 10%;
 }
-mat-footer-row mat-footer-cell {
-  justify-content: center;
-  font-style: italic;
+
+td.mat-cell.cdk-column-action.mat-column-action {
+    text-align: right;
+}
+
+td.mat-cell.cdk-column-action.mat-column-action button {
+    visibility: hidden;
+}
+
+tr:hover td.mat-cell.cdk-column-action.mat-column-action button {
+    visibility: visible;
 }
