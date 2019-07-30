@@ -7,6 +7,8 @@ import { PatientsService } from '../patients.service';
 import { PatientData } from '../patient-data.model';
 import { mimeType } from './mime-type.validator';
 import { AuthService } from 'src/app/auth/auth.service';
+import { NotificationService } from 'src/app/shared/notification.service';
+import { MatDialogRef } from '@angular/material';
 
 @Component({
   selector: 'app-patient-edit',
@@ -14,6 +16,8 @@ import { AuthService } from 'src/app/auth/auth.service';
   styleUrls: ['./patient-edit.component.css']
 })
 export class PatientEditComponent implements OnInit, OnDestroy {
+  patientsPerPage = 10;
+  currentPage = 1;
 
   patient: PatientData;
   isLoading = false;
@@ -28,7 +32,10 @@ export class PatientEditComponent implements OnInit, OnDestroy {
   constructor(
     public patientsService: PatientsService,
     public route: ActivatedRoute,
-    private authService: AuthService
+    private authService: AuthService,
+
+    private notificationService: NotificationService,
+    public dialogRef: MatDialogRef < PatientEditComponent >
   ) {}
 
   ngOnInit() {
@@ -114,7 +121,6 @@ export class PatientEditComponent implements OnInit, OnDestroy {
     if (this.form.invalid) {
       return;
     }
-    this.isLoading = true;
     if (this.mode === 'create') {
       this.patientsService.addPatient(
         this.form.value.firstname,
@@ -125,7 +131,13 @@ export class PatientEditComponent implements OnInit, OnDestroy {
         this.form.value.birthdate,
         this.form.value.address,
         this.form.value.image
-      );
+      ).subscribe(() => {
+        this.patientsService.getPatients(this.patientsPerPage, this.currentPage);
+      });
+
+      this.form.reset();
+      this.notificationService.success(':: Added successfully');
+      this.onClose();
     } else {
       this.patientsService.updatePatient(
         this.patientId,
@@ -138,8 +150,16 @@ export class PatientEditComponent implements OnInit, OnDestroy {
         this.form.value.address,
         this.form.value.image
       );
+
+      this.form.reset();
+      this.notificationService.success(':: Updated successfully');
+      this.onClose();
     }
+  }
+
+  onClose() {
     this.form.reset();
+    this.dialogRef.close();
   }
 
   ngOnDestroy() {

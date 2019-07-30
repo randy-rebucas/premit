@@ -15,10 +15,14 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
 
 import { HomeComponent } from './home/home.component';
 import { PatientsModule } from './patients/patients.module';
+
 import { AppointmentsComponent } from './appointments/appointments.component';
 import { SettingsComponent } from './settings/settings.component';
 import { SettingsGeneralComponent } from './settings/setting-general/setting-general.component';
 import { SettingsNotificationComponent } from './settings/setting-notification/setting-notification.component';
+
+import { DatePipe } from '@angular/common';
+
 
 @NgModule({
   declarations: [
@@ -44,7 +48,8 @@ import { SettingsNotificationComponent } from './settings/setting-notification/s
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
-    { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true }
+    { provide: HTTP_INTERCEPTORS, useClass: ErrorInterceptor, multi: true },
+    DatePipe
   ],
   bootstrap: [AppComponent],
   entryComponents: [ErrorComponent]

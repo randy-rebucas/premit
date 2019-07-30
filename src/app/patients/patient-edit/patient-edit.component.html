@@ -1,6 +1,9 @@
-<mat-card id="card">
-    <mat-spinner *ngIf="isLoading"></mat-spinner>
-    <form [formGroup]="form" (submit)="onSavePatient()" *ngIf="!isLoading">
+<h2 mat-dialog-title>{{patientsService.form.controls['$key'].value ? "Update Patient" : "New Patient" }}
+    <button class="btn-dialog-close" mat-stroked-button (click)="onClose()" tabIndex="-1"><mat-icon>clear</mat-icon></button>
+</h2>
+<mat-dialog-content class="mat-typography">
+    <form [formGroup]="form" class="normal-form" (submit)="onSavePatient()" *ngIf="!isLoading">
+        <input type="hidden" formControlName="$key">
         <div>
             <button mat-stroked-button type="button" (click)="filePicker.click()">Upload</button>
             <input type="file" #filePicker (change)="onImagePicked($event)">
@@ -29,8 +32,8 @@
             </mat-form-field>
             <mat-form-field>
                 <mat-select formControlName="gender" placeholder="Gender">
-                  <mat-option value="Male">Male</mat-option>
-                  <mat-option value="Female">Female</mat-option>
+                    <mat-option value="Male">Male</mat-option>
+                    <mat-option value="Female">Female</mat-option>
                 </mat-select>
                 <mat-error *ngIf="form.get('gender').invalid">Please enter gender</mat-error>
             </mat-form-field>
@@ -38,7 +41,7 @@
                 <input matInput [matDatepicker]="picker" formControlName="birthdate" placeholder="Birthdate">
                 <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                 <mat-datepicker #picker startView="year" [startAt]="startDate"></mat-datepicker>
-              </mat-form-field>
+            </mat-form-field>
         </div>
         <div class="form-field-block">
             <mat-form-field>
@@ -48,4 +51,4 @@
         </div>
         <button mat-raised-button color="primary" type="submit">Save</button>
     </form>
-</mat-card>
+</mat-dialog-content>
