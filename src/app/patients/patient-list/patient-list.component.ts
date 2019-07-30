@@ -84,7 +84,7 @@ export class PatientListComponent implements OnInit, OnDestroy {
   }
 
   onCreate() {
-    this.patientsService.initializeFormGroup();
+    // this.patientsService.initializeFormGroup();
     const dialogConfig = new MatDialogConfig();
     dialogConfig.disableClose = true;
     dialogConfig.autoFocus = true;
@@ -92,7 +92,7 @@ export class PatientListComponent implements OnInit, OnDestroy {
     this.dialog.open(PatientEditComponent, dialogConfig);
   }
 
-  onEdit(row){
+  onEdit(row) {
     this.patientsService.populateForm(row);
     const dialogConfig = new MatDialogConfig();
     dialogConfig.disableClose = true;
@@ -101,8 +101,8 @@ export class PatientListComponent implements OnInit, OnDestroy {
     this.dialog.open(PatientEditComponent, dialogConfig);
   }
 
-  onDelete($key){
-    if(confirm('Are you sure to delete this record ?')){
+  onDelete($key) {
+    if (confirm('Are you sure to delete this record ?')){
       this.patientsService.deletePatient($key).subscribe(() => {
         this.patientsService.getPatients(this.patientsPerPage, this.currentPage);
         this.notificationService.warn('! Deleted successfully');
