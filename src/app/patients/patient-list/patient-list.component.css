@@ -10,7 +10,9 @@ table {
   font-size: 14px;
   width: 100%;
 }
-
+td.mat-cell.cdk-column-action.mat-column-action {
+  text-align: right;
+}
 .hide {
   display: none;
 }

@@ -48,7 +48,6 @@ export class PatientListComponent implements OnInit, OnDestroy {
         this.isLoading = false;
         this.totalPatients = patientData.patientCount;
         this.dataSource = new MatTableDataSource(patientData.patients);
-
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;
       });
@@ -59,6 +58,7 @@ export class PatientListComponent implements OnInit, OnDestroy {
         this.userIsAuthenticated = isAuthenticated;
         this.userId = this.authService.getUserId();
       });
+
   }
 
   applyFilter(filterValue: string) {

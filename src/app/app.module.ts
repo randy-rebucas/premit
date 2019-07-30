@@ -15,6 +15,10 @@ import { PageNotFoundComponent } from './page-not-found/page-not-found.component
 
 import { HomeComponent } from './home/home.component';
 import { PatientsModule } from './patients/patients.module';
+import { AppointmentsComponent } from './appointments/appointments.component';
+import { SettingsComponent } from './settings/settings.component';
+import { SettingsGeneralComponent } from './settings/setting-general/setting-general.component';
+import { SettingsNotificationComponent } from './settings/setting-notification/setting-notification.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +26,11 @@ import { PatientsModule } from './patients/patients.module';
     HeaderComponent,
     ErrorComponent,
     PageNotFoundComponent,
-    HomeComponent
+    HomeComponent,
+    AppointmentsComponent,
+    SettingsComponent,
+    SettingsGeneralComponent,
+    SettingsNotificationComponent
   ],
   imports: [
     BrowserModule,

@@ -8,6 +8,10 @@ import { HomeComponent } from './home/home.component';
 import { PatientEditComponent } from './patients/patient-edit/patient-edit.component';
 import { PatientDetailComponent } from './patients/patient-detail/patient-detail.component';
 import { PatientListComponent } from './patients/patient-list/patient-list.component';
+import { AppointmentsComponent } from './appointments/appointments.component';
+import { SettingsComponent } from './settings/settings.component';
+import { SettingsGeneralComponent } from './settings/setting-general/setting-general.component';
+import { SettingsNotificationComponent } from './settings/setting-notification/setting-notification.component';
 
 const appRoutes: Routes = [
     // { path: '', redirectTo: '/patients', pathMatch: 'full' },
@@ -20,6 +24,13 @@ const appRoutes: Routes = [
     { path: 'patients', component: PatientListComponent, canActivate: [AuthGuard] },
     { path: 'create', component: PatientEditComponent, canActivate: [AuthGuard] },
     { path: 'edit/:patientId', component: PatientEditComponent, canActivate: [AuthGuard] },
+
+    { path: 'settings', component: SettingsComponent, canActivate: [AuthGuard], children: [
+      { path: '', redirectTo: '/settings/general', pathMatch: 'full' },
+      { path: 'general', component: SettingsGeneralComponent },
+      { path: 'notifications', component: SettingsNotificationComponent }
+    ] },
+    { path: 'appointments', component: AppointmentsComponent, canActivate: [AuthGuard] },
 
     { path: 'auth', loadChildren: './auth/auth.module#AuthModule'},
     { path: 'not-found', component: PageNotFoundComponent },
