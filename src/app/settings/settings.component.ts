@@ -2,6 +2,8 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { AuthService } from '../auth/auth.service';
 import { Router } from '@angular/router';
+import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { mimeType } from '../patients/patient-edit/mime-type.validator';
 
 @Component({
   selector: 'app-settings',
@@ -9,6 +11,8 @@ import { Router } from '@angular/router';
   styleUrls: ['./settings.component.css']
 })
 export class SettingsComponent implements OnInit, OnDestroy {
+  form: FormGroup;
+  imagePreview: string;
   userIsAuthenticated = false;
   private authListenerSubs: Subscription;
 

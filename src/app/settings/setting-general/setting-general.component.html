@@ -1,3 +1,19 @@
-<p>general-settings</p>
+<mat-card>
+  <form [formGroup]="form" (submit)="onSave()">
+    <mat-form-field>
+        <input
+          matInput
+          type="text"
+          formControlName="clinicname"
+          placeholder="Clinic Name">
+        <mat-error *ngIf="form.get('clinicname').invalid">Please enter post clinicname</mat-error>
+      </mat-form-field>
+      <button
+          mat-raised-button
+          color="primary"
+          type="submit">Save</button>
+  </form>
+</mat-card>
+
 
 
