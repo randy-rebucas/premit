@@ -54,6 +54,12 @@ table.mat-table tbody tr td:last-child {
     width: 10%;
 }
 
+table.mat-table tbody tr td img {
+    width: 40px;
+    height: 40px;
+    border-radius: 100%;
+}
+
 td.mat-cell.cdk-column-action.mat-column-action {
     text-align: right;
 }

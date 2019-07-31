@@ -13,6 +13,7 @@ import { NotificationService } from 'src/app/shared/notification.service';
 
 import { PatientEditComponent } from '../patient-edit/patient-edit.component';
 import { Router } from '@angular/router';
+import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-patient-list',
@@ -28,6 +29,9 @@ export class PatientListComponent implements OnInit, OnDestroy {
   pageSizeOptions = [5, 10, 25, 100];
   userIsAuthenticated = false;
   userId: string;
+  myDate = new Date();
+  theDate: string;
+
   private patientsSub: Subscription;
   private authStatusSub: Subscription;
 
@@ -38,10 +42,13 @@ export class PatientListComponent implements OnInit, OnDestroy {
     @Optional() @Inject(MAT_DIALOG_DATA) public data: PatientData,
     private notificationService: NotificationService,
     private router: Router,
-  ) {}
+    private datePipe: DatePipe
+  ) {
+    this.theDate = this.datePipe.transform(this.myDate, 'yyyy-MM-dd');
+  }
 
   dataSource: MatTableDataSource<any>;
-  displayedColumns: string[] = ['firstname', 'midlename', 'lastname', 'contact', 'gender', 'birthdate', 'action'];
+  displayedColumns: string[] = ['imagePath', 'firstname', 'midlename', 'lastname', 'contact', 'gender', 'birthdate', 'action'];
   @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
   @ViewChild(MatSort, {static: true}) sort: MatSort;
 
@@ -84,7 +91,6 @@ export class PatientListComponent implements OnInit, OnDestroy {
   }
 
   onCreate() {
-    // this.patientsService.initializeFormGroup();
     const dialogConfig = new MatDialogConfig();
     dialogConfig.disableClose = true;
     dialogConfig.autoFocus = true;
@@ -92,12 +98,11 @@ export class PatientListComponent implements OnInit, OnDestroy {
     dialogConfig.data = {
       id: null,
       title: 'New patient'
-  };
+    };
     this.dialog.open(PatientEditComponent, dialogConfig);
   }
 
   onEdit(patientId){
-    // this.patientsService.populateForm(patientId);
     const dialogConfig = new MatDialogConfig();
     dialogConfig.disableClose = true;
     dialogConfig.autoFocus = true;
