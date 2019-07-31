@@ -13,6 +13,11 @@ mat-form-field:not(:first-child) {
     flex-basis: auto;
 }
 
+div#patient-picture .image-preview {
+    display: inline-flex;
+    margin-right: 2em;
+}
+
 textarea {
     width: 100%;
 }

@@ -3,14 +3,14 @@
 </h2>
 <mat-dialog-content class="mat-typography">
     <form [formGroup]="form" class="normal-form" (submit)="onSavePatient()" *ngIf="!isLoading">
-        <!-- <input type="hidden" formControlName="id"> -->
-        <div>
+        <div id="patient-picture">
+            <div class="image-preview" *ngIf="imagePreview !== '' && imagePreview && form.get('image').valid">
+                <img [src]="imagePreview" [alt]="form.value.firstname">
+            </div>
             <button mat-stroked-button type="button" (click)="filePicker.click()">Upload</button>
             <input type="file" #filePicker (change)="onImagePicked($event)">
         </div>
-        <div class="image-preview" *ngIf="imagePreview !== '' && imagePreview && form.get('image').valid">
-            <img [src]="imagePreview" [alt]="form.value.firstname">
-        </div>
+
         <div class="form-field-block">
             <mat-form-field>
                 <input matInput type="text" formControlName="firstname" placeholder="Firstname">

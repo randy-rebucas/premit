@@ -105,6 +105,7 @@ export class PatientEditComponent implements OnInit, OnDestroy {
             address: this.patient.address,
             image: this.patient.imagePath
           });
+          this.imagePreview = this.patient.imagePath;
         });
       } else {
         this.mode = 'create';
