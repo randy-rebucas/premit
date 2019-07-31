@@ -102,12 +102,11 @@ export class PatientListComponent implements OnInit, OnDestroy {
     this.dialog.open(PatientEditComponent, dialogConfig);
   }
 
-  onEdit(patientId){
+  onEdit(patientId) {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.disableClose = true;
     dialogConfig.autoFocus = true;
     dialogConfig.width = '50%';
-    // pass data patientId
     dialogConfig.data = {
         id: patientId,
         title: 'Update patient'
@@ -115,8 +114,8 @@ export class PatientListComponent implements OnInit, OnDestroy {
     this.dialog.open(PatientEditComponent, dialogConfig);
   }
 
-  onDelete(patientId){
-    if (confirm('Are you sure to delete this record ?')){
+  onDelete(patientId) {
+    if (confirm('Are you sure to delete this record ?')) {
       this.patientsService.deletePatient(patientId).subscribe(() => {
         this.patientsService.getPatients(this.patientsPerPage, this.currentPage);
         this.notificationService.warn('! Deleted successfully');

@@ -41,7 +41,6 @@ export class PatientEditComponent implements OnInit, OnDestroy {
   ) {
     this.patientId = data.id;
     this.title = data.title;
-    console.log(data.id);
   }
 
   ngOnInit() {
@@ -51,7 +50,6 @@ export class PatientEditComponent implements OnInit, OnDestroy {
       this.isLoading = false;
     });
     this.form = new FormGroup({
-      // id: new FormControl(null),
       firstname: new FormControl(null, {
         validators: [Validators.required, Validators.minLength(3), Validators.maxLength(50) ]
       }),
@@ -76,10 +74,9 @@ export class PatientEditComponent implements OnInit, OnDestroy {
         asyncValidators: [mimeType]
       })
     });
-    
+
     if (this.patientId) {
         this.mode = 'edit';
-        // this.patientId = paramMap.get('patientId');
         this.isLoading = true;
         this.patientsService.getPatient(this.patientId).subscribe(patientData => {
           this.isLoading = false;
