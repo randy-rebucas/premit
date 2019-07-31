@@ -1,5 +1,5 @@
-import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
-import { PageEvent, MatDialog, MatDialogConfig } from '@angular/material';
+import { Component, OnInit, OnDestroy, ViewChild, Optional, Inject } from '@angular/core';
+import { PageEvent, MatDialog, MatDialogConfig, MAT_DIALOG_DATA } from '@angular/material';
 import { Subscription } from 'rxjs';
 
 import { PatientData } from '../patient-data.model';
@@ -31,19 +31,19 @@ export class PatientListComponent implements OnInit, OnDestroy {
   private patientsSub: Subscription;
   private authStatusSub: Subscription;
 
-  @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
-  @ViewChild(MatSort, {static: true}) sort: MatSort;
-
   constructor(
     public patientsService: PatientsService,
     private authService: AuthService,
     private dialog: MatDialog,
+    @Optional() @Inject(MAT_DIALOG_DATA) public data: PatientData,
     private notificationService: NotificationService,
     private router: Router,
   ) {}
 
   dataSource: MatTableDataSource<any>;
   displayedColumns: string[] = ['firstname', 'midlename', 'lastname', 'contact', 'gender', 'birthdate', 'action'];
+  @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
+  @ViewChild(MatSort, {static: true}) sort: MatSort;
 
   ngOnInit() {
     this.isLoading = true;
@@ -89,21 +89,30 @@ export class PatientListComponent implements OnInit, OnDestroy {
     dialogConfig.disableClose = true;
     dialogConfig.autoFocus = true;
     dialogConfig.width = '50%';
+    dialogConfig.data = {
+      id: null,
+      title: 'New patient'
+  };
     this.dialog.open(PatientEditComponent, dialogConfig);
   }
 
-  onEdit(row) {
-    this.patientsService.populateForm(row);
+  onEdit(patientId){
+    // this.patientsService.populateForm(patientId);
     const dialogConfig = new MatDialogConfig();
     dialogConfig.disableClose = true;
     dialogConfig.autoFocus = true;
     dialogConfig.width = '50%';
+    // pass data patientId
+    dialogConfig.data = {
+        id: patientId,
+        title: 'Update patient'
+    };
     this.dialog.open(PatientEditComponent, dialogConfig);
   }
 
-  onDelete($key) {
+  onDelete(patientId){
     if (confirm('Are you sure to delete this record ?')){
-      this.patientsService.deletePatient($key).subscribe(() => {
+      this.patientsService.deletePatient(patientId).subscribe(() => {
         this.patientsService.getPatients(this.patientsPerPage, this.currentPage);
         this.notificationService.warn('! Deleted successfully');
       });

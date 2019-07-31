@@ -1,9 +1,9 @@
-<h2 mat-dialog-title>{{patientsService.form.controls['$key'].value ? "Update Patient" : "New Patient" }}
+<h2 mat-dialog-title>{{ title }}
     <button class="btn-dialog-close" mat-stroked-button (click)="onClose()" tabIndex="-1"><mat-icon>clear</mat-icon></button>
 </h2>
 <mat-dialog-content class="mat-typography">
     <form [formGroup]="form" class="normal-form" (submit)="onSavePatient()" *ngIf="!isLoading">
-        <input type="hidden" formControlName="$key">
+        <!-- <input type="hidden" formControlName="id"> -->
         <div>
             <button mat-stroked-button type="button" (click)="filePicker.click()">Upload</button>
             <input type="file" #filePicker (change)="onImagePicked($event)">

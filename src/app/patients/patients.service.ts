@@ -7,10 +7,6 @@ import { DatePipe } from '@angular/common';
 
 import { environment } from '../../environments/environment';
 import { PatientData } from './patient-data.model';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { mimeType } from './patient-edit/mime-type.validator';
-
-import * as _ from 'lodash';
 
 const BACKEND_URL = environment.apiUrl + '/patients';
 
@@ -25,47 +21,6 @@ export class PatientsService {
     private router: Router,
     private datePipe: DatePipe
     ) {}
-
-    form: FormGroup = new FormGroup({
-      $key: new FormControl(null),
-      firstname: new FormControl(null, {
-        validators: [Validators.required, Validators.minLength(3), Validators.maxLength(50) ]
-      }),
-      midlename: new FormControl(null, {
-        validators: [Validators.required]
-      }),
-      lastname: new FormControl(null, {
-        validators: [Validators.required, Validators.minLength(3), Validators.maxLength(50)]
-      }),
-      contact: new FormControl(null, {
-        validators: [Validators.required, Validators.minLength(7), Validators.maxLength(13)]
-      }),
-      gender: new FormControl(null, {
-        validators: [Validators.required]
-      }),
-      birthdate: new FormControl(null),
-      address: new FormControl(null, {
-        validators: [Validators.required, Validators.minLength(3), Validators.maxLength(250)]
-      }),
-      image: new FormControl(null, {
-        validators: [Validators.required],
-        asyncValidators: [mimeType]
-      })
-    });
-
-    initializeFormGroup() {
-      this.form.setValue({
-        $key: null,
-        firstname: '',
-        midlename: '',
-        lastname: '',
-        contact: '',
-        gender: '',
-        birthdate: '',
-        address: '',
-        image: ''
-      });
-    }
 
   getPatients(patientPerPage: number, currentPage: number) {
     const queryParams = `?pagesize=${patientPerPage}&page=${currentPage}`;
@@ -123,14 +78,8 @@ export class PatientsService {
     patientData.append('address', address);
     patientData.append('image', image, firstname);
     return this.http.post<{ message: string, patient: PatientData }>(BACKEND_URL, patientData);
-    // this.http
-    //   .post<{ message: string, patient: PatientData }>(BACKEND_URL, patientData)
-    //   .subscribe((responseData) => {
-    //     this.router.navigate(['/patients']);
-    //   });
   }
 
-  // tslint:disable-next-line: max-line-length
   updatePatient(id: string, firstname: string, midlename: string, lastname: string, contact: string, gender: string, birthdate: string, address: string, image: File | string) {
     let patientData: PatientData | FormData;
     if (typeof(image) === 'object') {
@@ -151,17 +100,10 @@ export class PatientsService {
     }
 
     return this.http.put(BACKEND_URL + '/' + id, patientData);
-    // this.http.put(BACKEND_URL + '/' + id, patientData)
-    //   .subscribe(response => {
-    //     this.router.navigate(['/patients']);
-    //   });
   }
 
   deletePatient(patientId: string) {
     return this.http.delete(BACKEND_URL + '/' + patientId);
   }
 
-  populateForm(patients) {
-    this.form.setValue(patients);
-  }
 }

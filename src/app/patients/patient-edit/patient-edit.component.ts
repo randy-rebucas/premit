@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, Inject} from '@angular/core';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
 import { ActivatedRoute, ParamMap } from '@angular/router';
 import { Subscription } from 'rxjs';
@@ -8,7 +8,7 @@ import { PatientData } from '../patient-data.model';
 import { mimeType } from './mime-type.validator';
 import { AuthService } from 'src/app/auth/auth.service';
 import { NotificationService } from 'src/app/shared/notification.service';
-import { MatDialogRef } from '@angular/material';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 
 @Component({
   selector: 'app-patient-edit',
@@ -25,6 +25,7 @@ export class PatientEditComponent implements OnInit, OnDestroy {
   imagePreview: string;
   private mode = 'create';
   private patientId: string;
+  private title: string;
   private authStatusSub: Subscription;
 
   startDate = new Date(1990, 0, 1);
@@ -35,8 +36,13 @@ export class PatientEditComponent implements OnInit, OnDestroy {
     private authService: AuthService,
 
     private notificationService: NotificationService,
-    public dialogRef: MatDialogRef < PatientEditComponent >
-  ) {}
+    public dialogRef: MatDialogRef < PatientEditComponent >,
+    @Inject(MAT_DIALOG_DATA) data
+  ) {
+    this.patientId = data.id;
+    this.title = data.title;
+    console.log(data.id);
+  }
 
   ngOnInit() {
     this.authStatusSub = this.authService
@@ -45,6 +51,7 @@ export class PatientEditComponent implements OnInit, OnDestroy {
       this.isLoading = false;
     });
     this.form = new FormGroup({
+      // id: new FormControl(null),
       firstname: new FormControl(null, {
         validators: [Validators.required, Validators.minLength(3), Validators.maxLength(50) ]
       }),
@@ -69,10 +76,10 @@ export class PatientEditComponent implements OnInit, OnDestroy {
         asyncValidators: [mimeType]
       })
     });
-    this.route.paramMap.subscribe((paramMap: ParamMap) => {
-      if (paramMap.has('patientId')) {
+    
+    if (this.patientId) {
         this.mode = 'edit';
-        this.patientId = paramMap.get('patientId');
+        // this.patientId = paramMap.get('patientId');
         this.isLoading = true;
         this.patientsService.getPatient(this.patientId).subscribe(patientData => {
           this.isLoading = false;
@@ -103,7 +110,6 @@ export class PatientEditComponent implements OnInit, OnDestroy {
         this.mode = 'create';
         this.patientId = null;
       }
-    });
   }
 
   onImagePicked(event: Event) {
@@ -149,7 +155,9 @@ export class PatientEditComponent implements OnInit, OnDestroy {
         this.form.value.birthdate,
         this.form.value.address,
         this.form.value.image
-      );
+      ).subscribe(() => {
+        this.patientsService.getPatients(this.patientsPerPage, this.currentPage);
+      });
 
       this.form.reset();
       this.notificationService.success(':: Updated successfully');
