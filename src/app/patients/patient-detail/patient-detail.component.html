@@ -19,21 +19,16 @@
             </mat-card-actions>
         </mat-card>
         <mat-list>
-            <mat-list-item> Pepper </mat-list-item>
-            <mat-list-item> Salt </mat-list-item>
-            <mat-list-item> Paprika </mat-list-item>
+            <mat-list-item> Chief complaint </mat-list-item>
+            <mat-list-item> History of the present illness </mat-list-item>
+            <mat-list-item> Physical examination </mat-list-item>
+            <mat-list-item> Assessment and plan </mat-list-item>
+            <mat-list-item> Orders and prescriptions </mat-list-item>
+            <mat-list-item> Progress notes </mat-list-item>
+            <mat-list-item> Test results </mat-list-item>
         </mat-list>
     </div>
     <div class="detail-right">
-        <nav mat-tab-nav-bar>
-            <a mat-tab-link [routerLink]="['/patient/medical-history']" routerLinkActive #rlaAmount="routerLinkActive" [active]="rlaAmount.isActive">Amount</a>
-            <a mat-tab-link [routerLink]="['/patient/recipient']" routerLinkActive #rlaRecipient="routerLinkActive" [active]="rlaRecipient.isActive">Recipient</a>
-            <a mat-tab-link [routerLink]="['/patient/sender']" routerLinkActive #rlaSender="routerLinkActive" [active]="rlaSender.isActive">Sender</a>
-            <a mat-tab-link [routerLink]="['/patient/summary']" routerLinkActive #rlaSummary="routerLinkActive" [active]="rlaSummary.isActive">Summary</a>
-            <a mat-tab-link [routerLink]="['/patient/checkout']" routerLinkActive #rlaCheckout="routerLinkActive" [active]="rlaCheckout.isActive">Checkout</a>
-        </nav>
-        <div>
-            <router-outlet></router-outlet>
-        </div>
+        <router-outlet></router-outlet>
     </div>
 </div>

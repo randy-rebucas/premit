@@ -1,5 +1,4 @@
-export interface SettingsData<T> {
-  value: T;
+export interface SettingsData<> {
   key: string;
   label: string;
   required: boolean;

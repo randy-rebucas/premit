@@ -13,7 +13,7 @@
 
         <div class="form-field-block">
             <mat-form-field>
-                <input matInput type="text" formControlName="firstname" placeholder="Firstname">
+                <input matInput type="text" formControlName="firstname" placeholder="Firstname" uppercase>
                 <mat-error *ngIf="form.get('firstname').invalid">Please enter firstname</mat-error>
             </mat-form-field>
             <mat-form-field>
