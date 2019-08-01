@@ -2,23 +2,25 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { AuthService } from '../../auth/auth.service';
 import { Router } from '@angular/router';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { FormGroup, FormControl, Validators, FormBuilder, FormArray } from '@angular/forms';
 import { mimeType } from 'src/app/patients/patient-edit/mime-type.validator';
 import { NotificationService } from 'src/app/shared/notification.service';
 
 @Component({
   selector: 'app-settings-general',
-  templateUrl: './setting-general.component.html'
+  templateUrl: './setting-general.component.html',
+  styleUrls: ['./setting-general.component.css']
 })
 export class SettingsGeneralComponent implements OnInit, OnDestroy {
   form: FormGroup;
-  imagePreview: string;
+
   userIsAuthenticated = false;
   private authListenerSubs: Subscription;
 
   constructor(private authService: AuthService,
               private router: Router,
-              private notificationService: NotificationService) { }
+              private notificationService: NotificationService,
+              private formBuilder: FormBuilder) {}
 
   ngOnInit() {
     this.userIsAuthenticated = this.authService.getIsAuth();
@@ -27,31 +29,32 @@ export class SettingsGeneralComponent implements OnInit, OnDestroy {
       .subscribe(isAuthenticated => {
         this.userIsAuthenticated = isAuthenticated;
       });
+
     this.form = new FormGroup({
-        clinicname: new FormControl(null, {
-          validators: [Validators.required, Validators.minLength(3), Validators.maxLength(50) ]
+        perPage: new FormControl('5', {
+          validators: [Validators.required, Validators.maxLength(2) ]
         })
+      });
+    this.form.setValue({
+      perPage: 5
       });
   }
 
-  onImagePicked(event: Event) {
-    const file = (event.target as HTMLInputElement).files[0];
-    this.form.patchValue({ image: file });
-    this.form.get('image').updateValueAndValidity();
-    const reader = new FileReader();
-    reader.onload = () => {
-      this.imagePreview = reader.result as string;
-    };
-    reader.readAsDataURL(file);
-  }
+  onSaveGenSetting() {
+    // this.patientsService.addPatient(
+    //   this.form.value.firstname,
+    //   this.form.value.midlename,
+    //   this.form.value.lastname,
+    //   this.form.value.contact,
+    //   this.form.value.gender,
+    //   this.form.value.birthdate,
+    //   this.form.value.address,
+    //   this.form.value.image
+    // ).subscribe(() => {
+    //   this.patientsService.getPatients(this.patientsPerPage, this.currentPage);
+    // });
 
-  onSave() {
-    if (this.form.invalid) {
-      return;
-    }
-
-    this.form.reset();
-    this.notificationService.success(':: Updated successfully');
+    this.notificationService.success(':: Added successfully');
   }
 
   ngOnDestroy() {

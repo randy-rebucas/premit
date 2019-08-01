@@ -1,0 +1,14 @@
+.detail-wrapper {
+    display: flex;
+    flex-direction: row;
+    margin-top: 2em;
+}
+
+.detail-wrapper>div:first-child {
+    flex-basis: 300px;
+    margin-right: 1em;
+}
+
+.mat-card-header-text {
+    margin: 0;
+}

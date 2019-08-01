@@ -12,7 +12,7 @@ import { MatTableDataSource } from '@angular/material/table';
 import { NotificationService } from 'src/app/shared/notification.service';
 
 import { PatientEditComponent } from '../patient-edit/patient-edit.component';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { DatePipe } from '@angular/common';
 
 @Component({
@@ -42,6 +42,7 @@ export class PatientListComponent implements OnInit, OnDestroy {
     @Optional() @Inject(MAT_DIALOG_DATA) public data: PatientData,
     private notificationService: NotificationService,
     private router: Router,
+    private route: ActivatedRoute,
     private datePipe: DatePipe
   ) {
     this.theDate = this.datePipe.transform(this.myDate, 'yyyy-MM-dd');
@@ -121,6 +122,11 @@ export class PatientListComponent implements OnInit, OnDestroy {
         this.notificationService.warn('! Deleted successfully');
       });
     }
+  }
+
+  onDetails(patientId) {
+    // this.router.navigate(['patients/'+patientId]);
+    this.router.navigate(['./', patientId], {relativeTo: this.route});
   }
 
   ngOnDestroy() {

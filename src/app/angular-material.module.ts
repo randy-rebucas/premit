@@ -16,7 +16,8 @@ import { MatInputModule,
   MatNativeDateModule,
   MatTableModule,
   MatSortModule,
-  MatSnackBarModule
+  MatSnackBarModule,
+  MatListModule
 } from '@angular/material';
 
 @NgModule({
@@ -38,7 +39,8 @@ import { MatInputModule,
     MatNativeDateModule,
     MatTableModule,
     MatSortModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    MatListModule
   ]
 })
 export class AngularMaterialModule {}

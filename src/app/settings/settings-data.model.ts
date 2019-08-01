@@ -1,6 +1,8 @@
-export interface SettingsData {
-  id: string;
+export interface SettingsData<T> {
+  value: T;
   key: string;
-  value: string;
-  section: string;
+  label: string;
+  required: boolean;
+  order: number;
+  controlType: string;
 }

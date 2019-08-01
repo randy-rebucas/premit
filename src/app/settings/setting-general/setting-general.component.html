@@ -1,19 +1,9 @@
-<mat-card>
-  <form [formGroup]="form" (submit)="onSave()">
-    <mat-form-field>
-        <input
-          matInput
-          type="text"
-          formControlName="clinicname"
-          placeholder="Clinic Name">
-        <mat-error *ngIf="form.get('clinicname').invalid">Please enter post clinicname</mat-error>
-      </mat-form-field>
-      <button
-          mat-raised-button
-          color="primary"
-          type="submit">Save</button>
-  </form>
-</mat-card>
-
-
-
+<div class="field-wrapper">
+    <form [formGroup]="form" class="normal-form" (submit)="onSaveGenSetting()">
+        <mat-form-field>
+            <input matInput type="text" formControlName="perPage" placeholder="Per Page">
+            <mat-error *ngIf="form.get('perPage').invalid">Please enter per page</mat-error>
+        </mat-form-field>
+        <button mat-raised-button color="primary" type="submit">Save</button>
+    </form>
+</div>

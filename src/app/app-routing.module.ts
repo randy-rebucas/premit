@@ -16,14 +16,9 @@ import { SettingsNotificationComponent } from './settings/setting-notification/s
 const appRoutes: Routes = [
     // { path: '', redirectTo: '/patients', pathMatch: 'full' },
     { path: '', component: HomeComponent },
-    { path: 'patient-detail', component: PatientDetailComponent, canActivate: [AuthGuard], children: [
-        { path: 'new', component: PatientEditComponent },
-        { path: ':id', component: PatientDetailComponent },
-        { path: ':id/edit', component: PatientEditComponent }
-    ] },
-    { path: 'patients', component: PatientListComponent, canActivate: [AuthGuard] },
-    { path: 'create', component: PatientEditComponent, canActivate: [AuthGuard] },
-    { path: 'edit/:patientId', component: PatientEditComponent, canActivate: [AuthGuard] },
+    { path: 'patients', component: PatientListComponent, canActivate: [AuthGuard]},
+    // { path: 'create', component: PatientEditComponent, canActivate: [AuthGuard] },
+    { path: 'patients/:patientId', component: PatientDetailComponent, canActivate: [AuthGuard] },
 
     { path: 'settings', component: SettingsComponent, canActivate: [AuthGuard], children: [
       { path: '', redirectTo: '/settings/general', pathMatch: 'full' },

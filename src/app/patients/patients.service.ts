@@ -59,8 +59,17 @@ export class PatientsService {
   }
 
   getPatient(id: string) {
-    // tslint:disable-next-line: max-line-length
-    return this.http.get<{ _id: string; firstname: string, midlename: string, lastname: string, contact: string, gender: string, birthdate: string, address: string, imagePath: string, creator: string
+    return this.http.get<{
+      _id: string;
+      firstname: string,
+      midlename: string,
+      lastname: string,
+      contact: string,
+      gender: string,
+      birthdate: string,
+      address: string,
+      imagePath: string,
+      creator: string
     }>(
       BACKEND_URL + '/' + id
       );
