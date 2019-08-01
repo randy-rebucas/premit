@@ -23,6 +23,7 @@ import { SettingsGeneralComponent } from './settings/setting-general/setting-gen
 import { SettingsNotificationComponent } from './settings/setting-notification/setting-notification.component';
 
 import { DatePipe } from '@angular/common';
+import { PatientEditComponent } from './patients/patient-edit/patient-edit.component';
 
 
 @NgModule({

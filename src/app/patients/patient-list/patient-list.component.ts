@@ -1,19 +1,19 @@
 import { Component, OnInit, OnDestroy, ViewChild, Optional, Inject } from '@angular/core';
-import { PageEvent, MatDialog, MatDialogConfig, MAT_DIALOG_DATA } from '@angular/material';
+import { Router, ActivatedRoute } from '@angular/router';
+import { DatePipe } from '@angular/common';
 import { Subscription } from 'rxjs';
+import { PageEvent, MatDialog, MatDialogConfig, MAT_DIALOG_DATA } from '@angular/material';
+import { MatSort } from '@angular/material/sort';
+import { MatPaginator } from '@angular/material/paginator';
+import { MatTableDataSource } from '@angular/material/table';
 
 import { PatientData } from '../patient-data.model';
 import { AuthService } from 'src/app/auth/auth.service';
 import { PatientsService } from '../patients.service';
 
-import { MatPaginator } from '@angular/material/paginator';
-import { MatSort } from '@angular/material/sort';
-import { MatTableDataSource } from '@angular/material/table';
 import { NotificationService } from 'src/app/shared/notification.service';
 
 import { PatientEditComponent } from '../patient-edit/patient-edit.component';
-import { Router, ActivatedRoute } from '@angular/router';
-import { DatePipe } from '@angular/common';
 
 @Component({
   selector: 'app-patient-list',
