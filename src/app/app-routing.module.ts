@@ -8,21 +8,37 @@ import { HomeComponent } from './home/home.component';
 import { PatientEditComponent } from './patients/patient-edit/patient-edit.component';
 import { PatientDetailComponent } from './patients/patient-detail/patient-detail.component';
 import { PatientListComponent } from './patients/patient-list/patient-list.component';
+import { VitalSignsComponent } from './patients/patient-record/vital-signs/vital-signs.component';
+import { EncounterComponent } from './patients/patient-record/encounter/encounter.component';
 import { AppointmentsComponent } from './appointments/appointments.component';
 import { SettingsComponent } from './settings/settings.component';
 import { SettingsGeneralComponent } from './settings/setting-general/setting-general.component';
 import { SettingsNotificationComponent } from './settings/setting-notification/setting-notification.component';
+import { ChiefComplaintComponent } from './patients/patient-record/chief-complaint/chief-complaint.component';
+import { HistoriesComponent } from './patients/patient-record/histories/histories.component';
+import { PhysicalExamsComponent } from './patients/patient-record/physical-exams/physical-exams.component';
+import { AssessmentsComponent } from './patients/patient-record/assessments/assessments.component';
+import { PrescriptionsComponent } from './patients/patient-record/prescriptions/prescriptions.component';
+import { ProgressNotesComponent } from './patients/patient-record/progress-notes/progress-notes.component';
+import { TestResultsComponent } from './patients/patient-record/test-results/test-results.component';
 
 const appRoutes: Routes = [
     // { path: '', redirectTo: '/patients', pathMatch: 'full' },
     { path: '', component: HomeComponent },
     { path: 'patients', component: PatientListComponent, canActivate: [AuthGuard], children: [
         { path: 'create', component: PatientEditComponent }
-        // { path: ':patientId', component: PatientDetailComponent }
     ] },
-    // { path: 'create', component: PatientEditComponent, canActivate: [AuthGuard] },
-    { path: 'patients/:patientId', component: PatientDetailComponent, canActivate: [AuthGuard] },
-
+    { path: 'patient-details/:patientId', component: PatientDetailComponent, canActivate: [AuthGuard], children: [
+      { path: '', redirectTo: 'chief-complaint', pathMatch: 'full' },
+      { path: 'encounter', component: EncounterComponent },
+      { path: 'chief-complaint', component: ChiefComplaintComponent },
+      { path: 'histories', component: HistoriesComponent },
+      { path: 'physical-exams', component: PhysicalExamsComponent },
+      { path: 'assessments', component: AssessmentsComponent },
+      { path: 'prescriptions', component: PrescriptionsComponent },
+      { path: 'progress-notes', component: ProgressNotesComponent },
+      { path: 'test-results', component: TestResultsComponent }
+    ] },
     { path: 'settings', component: SettingsComponent, canActivate: [AuthGuard], children: [
       { path: '', redirectTo: '/settings/general', pathMatch: 'full' },
       { path: 'general', component: SettingsGeneralComponent },

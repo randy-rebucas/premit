@@ -24,7 +24,7 @@ import { SettingsNotificationComponent } from './settings/setting-notification/s
 
 import { DatePipe } from '@angular/common';
 import { PatientEditComponent } from './patients/patient-edit/patient-edit.component';
-
+import { MatDialogConfirmComponent } from './mat-dialog-confirm/mat-dialog-confirm.component';
 
 @NgModule({
   declarations: [
@@ -36,7 +36,8 @@ import { PatientEditComponent } from './patients/patient-edit/patient-edit.compo
     AppointmentsComponent,
     SettingsComponent,
     SettingsGeneralComponent,
-    SettingsNotificationComponent
+    SettingsNotificationComponent,
+    MatDialogConfirmComponent
   ],
   imports: [
     BrowserModule,
@@ -61,7 +62,7 @@ import { PatientEditComponent } from './patients/patient-edit/patient-edit.compo
     Title
   ],
   bootstrap: [AppComponent],
-  entryComponents: [ErrorComponent]
+  entryComponents: [ErrorComponent, MatDialogConfirmComponent]
 })
 export class AppModule { }
 

@@ -1,15 +1,15 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { AuthService } from '../../auth/auth.service';
+import { AuthService } from '../../../auth/auth.service';
 import { Router } from '@angular/router';
 import { NotificationService } from 'src/app/shared/notification.service';
 
 @Component({
-  selector: 'app-settings-general',
-  templateUrl: './setting-general.component.html',
-  styleUrls: ['./setting-general.component.css']
+  selector: 'app-prescriptions',
+  templateUrl: './prescriptions.component.html',
+  styleUrls: ['./prescriptions.component.css']
 })
-export class PatientRecordComponent implements OnInit, OnDestroy {
+export class PrescriptionsComponent implements OnInit, OnDestroy {
   userIsAuthenticated = false;
   private authListenerSubs: Subscription;
 

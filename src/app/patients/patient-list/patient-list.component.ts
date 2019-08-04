@@ -14,6 +14,7 @@ import { PatientsService } from '../patients.service';
 import { NotificationService } from 'src/app/shared/notification.service';
 
 import { PatientEditComponent } from '../patient-edit/patient-edit.component';
+import { DialogService } from 'src/app/shared/dialog.service';
 
 @Component({
   selector: 'app-patient-list',
@@ -36,14 +37,15 @@ export class PatientListComponent implements OnInit, OnDestroy {
   private authStatusSub: Subscription;
 
   constructor(
+    @Optional() @Inject(MAT_DIALOG_DATA) public data: PatientData,
     public patientsService: PatientsService,
     private authService: AuthService,
     private dialog: MatDialog,
-    @Optional() @Inject(MAT_DIALOG_DATA) public data: PatientData,
     private notificationService: NotificationService,
     private router: Router,
     private route: ActivatedRoute,
-    private datePipe: DatePipe
+    private datePipe: DatePipe,
+    private dialogService: DialogService
   ) {
     this.theDate = this.datePipe.transform(this.myDate, 'yyyy-MM-dd');
   }
@@ -116,17 +118,16 @@ export class PatientListComponent implements OnInit, OnDestroy {
   }
 
   onDelete(patientId) {
-    if (confirm('Are you sure to delete this record ?')) {
-      this.patientsService.deletePatient(patientId).subscribe(() => {
-        this.patientsService.getPatients(this.patientsPerPage, this.currentPage);
-        this.notificationService.warn('! Deleted successfully');
-      });
-    }
-  }
-
-  onDetails(patientId) {
-    // this.router.navigate(['patients/'+patientId]);
-    this.router.navigate(['./', patientId], {relativeTo: this.route});
+    this.dialogService.openConfirmDialog('Are you sure to delete this record ?')
+    .afterClosed().subscribe(res => {
+      console.log(res);
+      if (res) {
+        this.patientsService.deletePatient(patientId).subscribe(() => {
+          this.patientsService.getPatients(this.patientsPerPage, this.currentPage);
+          this.notificationService.warn('! Deleted successfully');
+        });
+      }
+    });
   }
 
   ngOnDestroy() {

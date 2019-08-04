@@ -1,0 +1,14 @@
+.mat-grid-tile .mat-grid-tile-footer {
+  background: rgb(236, 236, 236);
+  color: #555;
+}
+.list-left > ::ng-deep figure {
+  justify-content: flex-start !important;
+  align-items: flex-start !important;
+}
+mat-grid-list {
+  margin-top: 2em;
+}
+.mat-list-base {
+  padding-top: 52px;
+}

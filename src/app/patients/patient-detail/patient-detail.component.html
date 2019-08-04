@@ -1,9 +1,12 @@
+<div class="component-page-header">
+  <h1 class="mat-headline"> Patient Details</h1>
+</div>
 <div class="detail-wrapper">
     <div class="detail-left">
         <mat-card>
             <mat-card-header>
                 <mat-card-title>{{fullname}}</mat-card-title>
-                <mat-card-subtitle>ID: {{id}}</mat-card-subtitle>
+                <mat-card-subtitle>{{id}}</mat-card-subtitle>
             </mat-card-header>
             <img mat-card-image src="{{image}}" alt="{{fullname}}">
             <mat-card-content>
@@ -13,22 +16,48 @@
                   Birthdate: {{birthdate}}
                 </address>
             </mat-card-content>
+
             <mat-card-actions>
                 <button mat-raised-button color="accent">Que</button>
                 <button mat-button>Message</button>
             </mat-card-actions>
         </mat-card>
-        <mat-list>
-            <mat-list-item> Chief complaint </mat-list-item>
-            <mat-list-item> History of the present illness </mat-list-item>
-            <mat-list-item> Physical examination </mat-list-item>
-            <mat-list-item> Assessment and plan </mat-list-item>
-            <mat-list-item> Orders and prescriptions </mat-list-item>
-            <mat-list-item> Progress notes </mat-list-item>
-            <mat-list-item> Test results </mat-list-item>
-        </mat-list>
+        <mat-card>
+            <mat-card-header>
+                <mat-card-title>Actions</mat-card-title>
+            </mat-card-header>
+            <mat-card-content>
+                <mat-list>
+                    <mat-list-item> <a href="/">View Account</a> </mat-list-item>
+                    <mat-list-item> <a href="/">View Chart</a> </mat-list-item>
+                    <mat-list-item> <a href="/">Print Chart</a> </mat-list-item>
+                    <mat-list-item> <a href="/">Generate QR Code</a> </mat-list-item>
+                </mat-list>
+            </mat-card-content>
+        </mat-card>
+
+        <mat-card>
+            <mat-card-header>
+                <mat-card-title>Quick links</mat-card-title>
+            </mat-card-header>
+            <mat-card-content>
+                <mat-list>
+                    <mat-list-item> <a href="/profile/">Change password</a> </mat-list-item>
+                </mat-list>
+
+            </mat-card-content>
+        </mat-card>
     </div>
     <div class="detail-right">
+        <nav mat-tab-nav-bar>
+          <a mat-tab-link routerLink="./histories" routerLinkActive #rlaHistories="routerLinkActive" [active]="rlaHistories.isActive">History</a>
+          <a mat-tab-link routerLink="./chief-complaint" routerLinkActive #rlaChiefComplaint="routerLinkActive" [active]="rlaChiefComplaint.isActive">Chief complaint</a>
+          <a mat-tab-link routerLink="./physical-exams" routerLinkActive #rlaPhysicalExams="routerLinkActive" [active]="rlaPhysicalExams.isActive">Physical exam</a>
+          <a mat-tab-link routerLink="./assessments" routerLinkActive #rlaAssessments="routerLinkActive" [active]="rlaAssessments.isActive">Assessment & Plan</a>
+          <a mat-tab-link routerLink="./prescriptions" routerLinkActive #rlaPrescriptions="routerLinkActive" [active]="rlaPrescriptions.isActive">Order & Prescriptions</a>
+          <a mat-tab-link routerLink="./progress-notes" routerLinkActive #rlaProgressNotes="routerLinkActive" [active]="rlaProgressNotes.isActive">Progress Notes</a>
+          <a mat-tab-link routerLink="./test-results" routerLinkActive #rlaTestResult="routerLinkActive" [active]="rlaTestResult.isActive">Test Results</a>
+        </nav>
         <router-outlet></router-outlet>
     </div>
 </div>
