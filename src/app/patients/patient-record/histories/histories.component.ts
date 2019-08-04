@@ -12,6 +12,7 @@ import { NotificationService } from 'src/app/shared/notification.service';
 export class HistoriesComponent implements OnInit, OnDestroy {
   userIsAuthenticated = false;
   private authListenerSubs: Subscription;
+  panelOpenState = false;
 
   constructor(private authService: AuthService,
               private router: Router,

@@ -8,7 +8,6 @@ import { HomeComponent } from './home/home.component';
 import { PatientEditComponent } from './patients/patient-edit/patient-edit.component';
 import { PatientDetailComponent } from './patients/patient-detail/patient-detail.component';
 import { PatientListComponent } from './patients/patient-list/patient-list.component';
-import { VitalSignsComponent } from './patients/patient-record/vital-signs/vital-signs.component';
 import { EncounterComponent } from './patients/patient-record/encounter/encounter.component';
 import { AppointmentsComponent } from './appointments/appointments.component';
 import { SettingsComponent } from './settings/settings.component';

@@ -4,6 +4,10 @@ import { AuthService } from '../../../auth/auth.service';
 import { Router } from '@angular/router';
 import { NotificationService } from 'src/app/shared/notification.service';
 
+export interface Complaint {
+  text: string;
+}
+
 @Component({
   selector: 'app-chief-complaint',
   templateUrl: './chief-complaint.component.html',
@@ -12,7 +16,12 @@ import { NotificationService } from 'src/app/shared/notification.service';
 export class ChiefComplaintComponent implements OnInit, OnDestroy {
   userIsAuthenticated = false;
   private authListenerSubs: Subscription;
-
+  complaints: Complaint[] = [
+    {text: 'One'},
+    {text: 'Two'},
+    {text: 'Three'},
+    {text: 'Four'},
+  ];
   constructor(private authService: AuthService,
               private router: Router,
               private notificationService: NotificationService) {}

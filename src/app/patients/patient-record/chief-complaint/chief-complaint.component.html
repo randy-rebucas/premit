@@ -1,1 +1,7 @@
-<p>Chief complaint. Up coming...</p>
+<mat-list>
+    <mat-list-item>
+        <mat-chip-list>
+          <mat-chip *ngFor="let complaint of complaints">{{ complaint.text }}</mat-chip>
+        </mat-chip-list>
+    </mat-list-item>
+</mat-list>
