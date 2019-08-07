@@ -19,4 +19,4 @@ import { HeightListComponent } from './height/height-list/height-list.component'
     RouterModule
   ]
 })
-export class PhysicalExamModule {}
+export class PhysicalExamsModule {}
