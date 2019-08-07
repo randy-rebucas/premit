@@ -23,8 +23,8 @@ import { SettingsGeneralComponent } from './settings/setting-general/setting-gen
 import { SettingsNotificationComponent } from './settings/setting-notification/setting-notification.component';
 
 import { DatePipe } from '@angular/common';
-import { PatientEditComponent } from './patients/patient-edit/patient-edit.component';
 import { MatDialogConfirmComponent } from './mat-dialog-confirm/mat-dialog-confirm.component';
+import { RecordsModule } from './patients/patient-record/records.module';
 
 @NgModule({
   declarations: [
@@ -45,6 +45,7 @@ import { MatDialogConfirmComponent } from './mat-dialog-confirm/mat-dialog-confi
     BrowserAnimationsModule,
     HttpClientModule,
     PatientsModule,
+    RecordsModule,
     FormsModule,
     ReactiveFormsModule,
     AngularMaterialModule

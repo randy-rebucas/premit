@@ -12,6 +12,8 @@ var indexRouter = require('./routes/index');
 var userRouter = require('./routes/user');
 var patientRouter = require('./routes/patient');
 
+var heightRouter = require('./routes/records/height');
+
 var app = express();
 
 mongoose.connect(
@@ -56,6 +58,7 @@ app.use('/', indexRouter);
 app.use('/api/user', userRouter);
 app.use('/api/patients', patientRouter);
 
+app.use('/api/heights', heightRouter);
 //app.use((req, res, next) => {
 //    res.sendFile(path.join(__dirname, 'angular', 'index.html'));
 //});
