@@ -20,6 +20,11 @@ import { AssessmentsComponent } from './patients/patient-record/assessments/asse
 import { PrescriptionsComponent } from './patients/patient-record/prescriptions/prescriptions.component';
 import { ProgressNotesComponent } from './patients/patient-record/progress-notes/progress-notes.component';
 import { TestResultsComponent } from './patients/patient-record/test-results/test-results.component';
+import { HeightComponent } from './patients/patient-record/physical-exams/height/height.component';
+import { WeightComponent } from './patients/patient-record/physical-exams/weight/weight.component';
+import { BloodPressureComponent } from './patients/patient-record/physical-exams/blood-pressure/blood-pressure.component';
+import { TemperatureComponent } from './patients/patient-record/physical-exams/temperature/temperature.component';
+import { RespiratoryRateComponent } from './patients/patient-record/physical-exams/respiratory-rate/respiratory-rate.component';
 
 const appRoutes: Routes = [
     // { path: '', redirectTo: '/patients', pathMatch: 'full' },
@@ -32,7 +37,14 @@ const appRoutes: Routes = [
       { path: 'encounter', component: EncounterComponent },
       { path: 'chief-complaint', component: ChiefComplaintComponent },
       { path: 'histories', component: HistoriesComponent },
-      { path: 'physical-exams', component: PhysicalExamsComponent },
+      { path: 'physical-exams', component: PhysicalExamsComponent, children: [
+        { path: '', redirectTo: 'height', pathMatch: 'full' },
+        { path: 'height', component: HeightComponent },
+        { path: 'weight', component: WeightComponent },
+        { path: 'temperature', component: TemperatureComponent },
+        { path: 'blood-pressure', component: BloodPressureComponent },
+        { path: 'respiratory-rate', component: RespiratoryRateComponent }
+      ] },
       { path: 'assessments', component: AssessmentsComponent },
       { path: 'prescriptions', component: PrescriptionsComponent },
       { path: 'progress-notes', component: ProgressNotesComponent },

@@ -1,14 +1,15 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { AuthService } from '../../../../../auth/auth.service';
+import { AuthService } from '../../../../auth/auth.service';
 import { Router } from '@angular/router';
 import { NotificationService } from 'src/app/shared/notification.service';
 
 @Component({
-  selector: 'app-height-list',
-  templateUrl: './height-list.component.html'
+  selector: 'app-weight',
+  templateUrl: './weight.component.html',
+  styleUrls: ['./weight.component.css']
 })
-export class HeightListComponent implements OnInit, OnDestroy {
+export class WeightComponent implements OnInit, OnDestroy {
   userIsAuthenticated = false;
   private authListenerSubs: Subscription;
 

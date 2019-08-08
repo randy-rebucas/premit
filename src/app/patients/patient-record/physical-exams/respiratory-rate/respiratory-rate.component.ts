@@ -1,14 +1,15 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { AuthService } from '../../../../../auth/auth.service';
+import { AuthService } from '../../../../auth/auth.service';
 import { Router } from '@angular/router';
 import { NotificationService } from 'src/app/shared/notification.service';
 
 @Component({
-  selector: 'app-height-list',
-  templateUrl: './height-list.component.html'
+  selector: 'app-respiratory-rate',
+  templateUrl: './respiratory-rate.component.html',
+  styleUrls: ['./respiratory-rate.component.css']
 })
-export class HeightListComponent implements OnInit, OnDestroy {
+export class RespiratoryRateComponent implements OnInit, OnDestroy {
   userIsAuthenticated = false;
   private authListenerSubs: Subscription;
 

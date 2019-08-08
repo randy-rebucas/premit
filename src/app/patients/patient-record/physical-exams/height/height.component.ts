@@ -6,11 +6,8 @@ import { NotificationService } from 'src/app/shared/notification.service';
 
 @Component({
   selector: 'app-height',
-  template: `<mat-grid-tile [colspan]="2" [rowspan]="2">
-                <mat-grid-tile-header>Height</mat-grid-tile-header>
-                    <app-height-list></app-height-list>
-                <mat-grid-tile-footer>Footer</mat-grid-tile-footer>
-            </mat-grid-tile>`
+  templateUrl: './height.component.html',
+  styleUrls: ['./height.component.css']
 })
 export class HeightComponent implements OnInit, OnDestroy {
   userIsAuthenticated = false;

@@ -1,32 +1,21 @@
-<mat-grid-list cols="6" rowHeight="350px" [gutterSize]="'10px'">
-
-    <mat-grid-tile [colspan]="2" [rowspan]="1">
-        <mat-grid-tile-header>Temperature</mat-grid-tile-header>
-        2
-        <mat-grid-tile-footer>Footer</mat-grid-tile-footer>
-    </mat-grid-tile>
-    <mat-grid-tile [colspan]="2" [rowspan]="1">
-        <mat-grid-tile-header>Weight</mat-grid-tile-header>
-        3
-        <mat-grid-tile-footer>Footer</mat-grid-tile-footer>
-    </mat-grid-tile>
-    <mat-grid-tile [colspan]="2" [rowspan]="2">
-        <mat-grid-tile-header>Height</mat-grid-tile-header>
-        4
-        <mat-grid-tile-footer>Footer</mat-grid-tile-footer>
-    </mat-grid-tile>
-    <mat-grid-tile [colspan]="2" [rowspan]="1" class="list-left">
-        <mat-grid-tile-header>Blood pressure</mat-grid-tile-header>
-        <mat-list>
-            <mat-list-item> Pepper </mat-list-item>
-            <mat-list-item> Salt </mat-list-item>
-            <mat-list-item> Paprika </mat-list-item>
-        </mat-list>
-        <mat-grid-tile-footer>Footer</mat-grid-tile-footer>
-    </mat-grid-tile>
-    <mat-grid-tile [colspan]="2" [rowspan]="1">
-        <mat-grid-tile-header>Respiratory rate</mat-grid-tile-header>
-        5
-        <mat-grid-tile-footer>Footer</mat-grid-tile-footer>
-    </mat-grid-tile>
-</mat-grid-list>
+<div class="physical-exam-wrapper">
+  <div class="physical-exam-left">
+      <mat-card>
+          <mat-card-header>
+              <mat-card-title>Quick Nav</mat-card-title>
+          </mat-card-header>
+          <mat-card-content>
+              <mat-list>
+                  <mat-list-item> <a routerLink="./height" routerLinkActive="active">Height</a> </mat-list-item>
+                  <mat-list-item> <a routerLink="./weight" routerLinkActive="active">Weight</a> </mat-list-item>
+                  <mat-list-item> <a routerLink="./temperature" routerLinkActive="active">Temperature</a> </mat-list-item>
+                  <mat-list-item> <a routerLink="./blood-pressure" routerLinkActive="active">Blood pressure</a> </mat-list-item>
+                  <mat-list-item> <a routerLink="./respiratory-rate" routerLinkActive="active">Respiratory rate</a> </mat-list-item>
+              </mat-list>
+          </mat-card-content>
+      </mat-card>
+  </div>
+  <div class="physical-exam-right">
+      <router-outlet></router-outlet>
+  </div>
+</div>
