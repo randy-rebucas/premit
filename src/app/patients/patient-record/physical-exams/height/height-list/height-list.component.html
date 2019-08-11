@@ -41,7 +41,7 @@
             <tr mat-footer-row *matFooterRowDef="['loading']" [ngClass]="{'hide': dataSource!=null}"></tr>
             <tr mat-footer-row *matFooterRowDef="['noData']" [ngClass]="{'hide': !(dataSource!=null && dataSource.data.length==0)}"></tr>
         </table>
-        <mat-paginator [pageSizeOptions]="pageSizeOptions" [pageSize]="perPage" showFirstLastButtons></mat-paginator>
+        <mat-paginator [pageSizeOptions]="pageSizeOptions" [pageSize]="perPage"></mat-paginator>
     </div>
 </div>
 
