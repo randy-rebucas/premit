@@ -57,7 +57,7 @@ export class PatientsService {
   getPatientUpdateListener() {
     return this.patientsUpdated.asObservable();
   }
-  
+
   getPatient(id: string) {
     // tslint:disable-next-line: max-line-length
     return this.http.get<{ _id: string; firstname: string, midlename: string, lastname: string, contact: string, gender: string, birthdate: string, address: string, imagePath: string, creator: string

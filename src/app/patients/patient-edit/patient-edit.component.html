@@ -40,7 +40,7 @@
             <mat-form-field>
                 <input matInput [matDatepicker]="picker" formControlName="birthdate" placeholder="Birthdate">
                 <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-                <mat-datepicker #picker startView="year" [startAt]="startDate"></mat-datepicker>
+                <mat-datepicker #picker startView="multi-year" [startAt]="startDate"></mat-datepicker>
             </mat-form-field>
         </div>
         <div class="form-field-block">

@@ -6,6 +6,7 @@ import { RouterModule } from '@angular/router';
 import { AngularMaterialModule } from '../../../angular-material.module';
 import { HeightComponent } from './height/height.component';
 import { HeightListComponent } from './height/height-list/height-list.component';
+import { HeightEditComponent } from './height/height-edit/height-edit.component';
 import { WeightComponent } from './weight/weight.component';
 import { TemperatureComponent } from './temperature/temperature.component';
 import { BloodPressureComponent } from './blood-pressure/blood-pressure.component';
@@ -15,6 +16,7 @@ import { RespiratoryRateComponent } from './respiratory-rate/respiratory-rate.co
   declarations: [
     HeightComponent,
     HeightListComponent,
+    HeightEditComponent,
     WeightComponent,
     TemperatureComponent,
     BloodPressureComponent,

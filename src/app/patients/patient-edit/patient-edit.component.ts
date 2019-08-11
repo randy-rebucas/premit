@@ -25,7 +25,7 @@ export class PatientEditComponent implements OnInit, OnDestroy {
   imagePreview: string;
   private mode = 'create';
   private patientId: string;
-  private title: string;
+  title: string;
   private authStatusSub: Subscription;
 
   startDate = new Date(1990, 0, 1);

@@ -3,21 +3,21 @@ const Height = require('../../models/records/height');
 exports.create = (req, res, next) => {
     const height = new Height({
         height: req.body.height,
-        created: req.body.created_date,
-        patient: req.body.patient_id
+        created: req.body.created,
+        patient: req.body.patient
     });
-    height.save().then(created => {
+    height.save().then(createdRecord => {
             res.status(201).json({
                 message: 'Successfully added',
                 height: {
-                    ...created,
-                    id: created._id,
+                    ...createdRecord,
+                    id: createdRecord._id,
                 }
             });
         })
         .catch(error => {
             res.status(500).json({
-                message: 'Failed!'
+                message: error.message
             });
         });
 };
@@ -40,12 +40,13 @@ exports.update = (req, res, next) => {
         })
         .catch(error => {
             res.status(500).json({
-                message: 'Unable to update this record!'
+                message: error.message
             });
         });
 };
 
 exports.getAll = (req, res, next) => {
+    const patient = +req.query.patient;
     const pageSize = +req.query.pagesize;
     const currentPage = +req.query.page;
     const heightQuery = Height.find();
@@ -68,7 +69,7 @@ exports.getAll = (req, res, next) => {
         })
         .catch(error => {
             res.status(500).json({
-                message: 'Fetching failed!'
+                message: error.message
             });
         });
 };
@@ -83,7 +84,7 @@ exports.get = (req, res, next) => {
         })
         .catch(error => {
             res.status(500).json({
-                message: 'Fetching failed!'
+                message: error.message
             });
         });
 };
@@ -99,7 +100,7 @@ exports.delete = (req, res, next) => {
         })
         .catch(error => {
             res.status(500).json({
-                message: 'Fetching failed!'
+                message: error.message
             });
         });
 };

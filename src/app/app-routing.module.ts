@@ -21,6 +21,8 @@ import { PrescriptionsComponent } from './patients/patient-record/prescriptions/
 import { ProgressNotesComponent } from './patients/patient-record/progress-notes/progress-notes.component';
 import { TestResultsComponent } from './patients/patient-record/test-results/test-results.component';
 import { HeightComponent } from './patients/patient-record/physical-exams/height/height.component';
+import { HeightListComponent } from './patients/patient-record/physical-exams/height/height-list/height-list.component';
+import { HeightEditComponent } from './patients/patient-record/physical-exams/height/height-edit/height-edit.component';
 import { WeightComponent } from './patients/patient-record/physical-exams/weight/weight.component';
 import { BloodPressureComponent } from './patients/patient-record/physical-exams/blood-pressure/blood-pressure.component';
 import { TemperatureComponent } from './patients/patient-record/physical-exams/temperature/temperature.component';
@@ -39,7 +41,9 @@ const appRoutes: Routes = [
       { path: 'histories', component: HistoriesComponent },
       { path: 'physical-exams', component: PhysicalExamsComponent, children: [
         { path: '', redirectTo: 'height', pathMatch: 'full' },
-        { path: 'height', component: HeightComponent },
+        { path: 'height', component: HeightListComponent, children: [
+          { path: 'create', component: HeightEditComponent }
+        ] },
         { path: 'weight', component: WeightComponent },
         { path: 'temperature', component: TemperatureComponent },
         { path: 'blood-pressure', component: BloodPressureComponent },

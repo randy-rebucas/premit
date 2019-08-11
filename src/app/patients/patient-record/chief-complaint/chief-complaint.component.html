@@ -1,7 +1,10 @@
-<mat-list>
-    <mat-list-item>
-        <mat-chip-list>
-          <mat-chip *ngFor="let complaint of complaints">{{ complaint.text }}</mat-chip>
-        </mat-chip-list>
-    </mat-list-item>
-</mat-list>
+<div id="chief-complaint-wrapper">
+    <mat-form-field>
+      <input matInput placeholder="Input">
+    </mat-form-field>
+    <span class="spacer"></span>
+    <button mat-raised-button color="primary">Submit</button>
+</div>
+<div id="chief-complaint-list">
+  <p>No previous complaint yet!</p>
+</div>
