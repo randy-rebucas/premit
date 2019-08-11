@@ -58,11 +58,9 @@ export class HeightService {
   }
 
   insert(height: string, created: string, patient: string) {
-
     const recordData = {
       height, created, patient
     };
-    console.log(recordData);
     return this.http.post<{ message: string, record: HeightData }>(BACKEND_URL, recordData);
   }
 
@@ -74,8 +72,8 @@ export class HeightService {
     return this.http.put(BACKEND_URL + '/' + id, recordData);
   }
 
-  delete(patientId: string) {
-    return this.http.delete(BACKEND_URL + '/' + patientId);
+  delete(recordId: string) {
+    return this.http.delete(BACKEND_URL + '/' + recordId);
   }
 
 }

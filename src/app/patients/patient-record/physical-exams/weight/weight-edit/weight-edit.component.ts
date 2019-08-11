@@ -7,21 +7,21 @@ import { DatePipe } from '@angular/common';
 
 import { AuthService } from '../../../../../auth/auth.service';
 import { NotificationService } from 'src/app/shared/notification.service';
-import { HeightService } from '../../../services/height.service';
-import { HeightData } from '../../../models/height-data.model';
+import { WeightService } from '../../../services/weight.service';
+import { WeightData } from '../../../models/weight-data.model';
 
 @Component({
-  selector: 'app-height-edit',
-  templateUrl: './height-edit.component.html',
-  styleUrls: ['./height-edit.component.css']
+  selector: 'app-weight-edit',
+  templateUrl: './weight-edit.component.html',
+  styleUrls: ['./weight-edit.component.css']
 })
-export class HeightEditComponent implements OnInit, OnDestroy {
+export class WeightEditComponent implements OnInit, OnDestroy {
   perPage = 10;
   currentPage = 1;
 
   userIsAuthenticated = false;
   private authListenerSubs: Subscription;
-  heightData: HeightData;
+  weightData: WeightData;
   isLoading = false;
   private mode = 'create';
   private recordId: string;
@@ -33,13 +33,13 @@ export class HeightEditComponent implements OnInit, OnDestroy {
   maxDate = new Date();
 
   constructor(
-    public heightService: HeightService,
+    public weightService: WeightService,
     public route: ActivatedRoute,
     private authService: AuthService,
     private datePipe: DatePipe,
 
     private notificationService: NotificationService,
-    public dialogRef: MatDialogRef < HeightEditComponent >,
+    public dialogRef: MatDialogRef < WeightEditComponent >,
     @Inject(MAT_DIALOG_DATA) data
     ) {
       this.recordId = data.id;
@@ -56,7 +56,7 @@ export class HeightEditComponent implements OnInit, OnDestroy {
       });
 
     this.form = new FormGroup({
-      height: new FormControl(null, {
+      weight: new FormControl(null, {
         validators: [Validators.required, Validators.maxLength(5) ]
       }),
       record_date: new FormControl(new Date(), {
@@ -67,17 +67,17 @@ export class HeightEditComponent implements OnInit, OnDestroy {
     if (this.recordId) {
           this.mode = 'edit';
           this.isLoading = true;
-          this.heightService.get(this.recordId).subscribe(recordData => {
+          this.weightService.get(this.recordId).subscribe(recordData => {
             this.isLoading = false;
-            this.heightData = {
+            this.weightData = {
               id: recordData._id,
-              height: recordData.height,
+              weight: recordData.weight,
               created: recordData.created,
               patient: recordData.patient
             };
             this.form.setValue({
-              height: this.heightData.height,
-              record_date: this.heightData.created
+              weight: this.weightData.weight,
+              record_date: this.weightData.created
             });
           });
         } else {
@@ -91,25 +91,25 @@ export class HeightEditComponent implements OnInit, OnDestroy {
       return;
     }
     if (this.mode === 'create') {
-      this.heightService.insert(
-        this.form.value.height,
+      this.weightService.insert(
+        this.form.value.weight,
         this.form.value.record_date,
         this.patientId
       ).subscribe(() => {
-        this.heightService.getAll(this.perPage, this.currentPage, this.patientId);
+        this.weightService.getAll(this.perPage, this.currentPage, this.patientId);
       });
 
       this.form.reset();
       this.notificationService.success(':: Added successfully');
       this.onClose();
     } else {
-      this.heightService.update(
+      this.weightService.update(
         this.recordId,
-        this.form.value.height,
+        this.form.value.weight,
         this.form.value.record_date,
         this.patientId
       ).subscribe(() => {
-        this.heightService.getAll(this.perPage, this.currentPage, this.patientId);
+        this.weightService.getAll(this.perPage, this.currentPage, this.patientId);
       });
 
       this.form.reset();

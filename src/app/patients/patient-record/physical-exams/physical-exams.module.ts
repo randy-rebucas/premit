@@ -8,6 +8,8 @@ import { HeightComponent } from './height/height.component';
 import { HeightListComponent } from './height/height-list/height-list.component';
 import { HeightEditComponent } from './height/height-edit/height-edit.component';
 import { WeightComponent } from './weight/weight.component';
+import { WeightListComponent } from './weight/weight-list/weight-list.component';
+import { WeightEditComponent } from './weight/weight-edit/weight-edit.component';
 import { TemperatureComponent } from './temperature/temperature.component';
 import { BloodPressureComponent } from './blood-pressure/blood-pressure.component';
 import { RespiratoryRateComponent } from './respiratory-rate/respiratory-rate.component';
@@ -18,6 +20,8 @@ import { RespiratoryRateComponent } from './respiratory-rate/respiratory-rate.co
     HeightListComponent,
     HeightEditComponent,
     WeightComponent,
+    WeightListComponent,
+    WeightEditComponent,
     TemperatureComponent,
     BloodPressureComponent,
     RespiratoryRateComponent

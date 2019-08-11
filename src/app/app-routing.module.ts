@@ -24,6 +24,8 @@ import { HeightComponent } from './patients/patient-record/physical-exams/height
 import { HeightListComponent } from './patients/patient-record/physical-exams/height/height-list/height-list.component';
 import { HeightEditComponent } from './patients/patient-record/physical-exams/height/height-edit/height-edit.component';
 import { WeightComponent } from './patients/patient-record/physical-exams/weight/weight.component';
+import { WeightListComponent } from './patients/patient-record/physical-exams/weight/weight-list/weight-list.component';
+import { WeightEditComponent } from './patients/patient-record/physical-exams/weight/weight-edit/weight-edit.component';
 import { BloodPressureComponent } from './patients/patient-record/physical-exams/blood-pressure/blood-pressure.component';
 import { TemperatureComponent } from './patients/patient-record/physical-exams/temperature/temperature.component';
 import { RespiratoryRateComponent } from './patients/patient-record/physical-exams/respiratory-rate/respiratory-rate.component';
@@ -44,7 +46,9 @@ const appRoutes: Routes = [
         { path: 'height', component: HeightListComponent, children: [
           { path: 'create', component: HeightEditComponent }
         ] },
-        { path: 'weight', component: WeightComponent },
+        { path: 'weight', component: WeightListComponent, children: [
+          { path: 'create', component: WeightEditComponent }
+        ] },
         { path: 'temperature', component: TemperatureComponent },
         { path: 'blood-pressure', component: BloodPressureComponent },
         { path: 'respiratory-rate', component: RespiratoryRateComponent }

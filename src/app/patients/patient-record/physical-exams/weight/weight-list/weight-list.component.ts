@@ -4,22 +4,21 @@ import { AuthService } from '../../../../../auth/auth.service';
 import { Router, ActivatedRoute, Params, ParamMap, RouterStateSnapshot } from '@angular/router';
 import { NotificationService } from 'src/app/shared/notification.service';
 
-import { HeightData } from '../../../models/height-data.model';
-import { HeightService } from '../../../services/height.service';
-
 import { MAT_DIALOG_DATA, MatDialog, MatTableDataSource, MatPaginator, MatSort, PageEvent, MatDialogConfig } from '@angular/material';
 import { DatePipe } from '@angular/common';
 import { DialogService } from 'src/app/shared/dialog.service';
 
-import { HeightEditComponent } from '../height-edit/height-edit.component';
+import { WeightData } from '../../../models/weight-data.model';
+import { WeightService } from '../../../services/weight.service';
+import { WeightEditComponent } from '../weight-edit/weight-edit.component';
 
 @Component({
-  selector: 'app-height-list',
-  templateUrl: './height-list.component.html',
-  styleUrls: ['./height-list.component.css']
+  selector: 'app-weight-list',
+  templateUrl: './weight-list.component.html',
+  styleUrls: ['./weight-list.component.css']
 })
-export class HeightListComponent implements OnInit, OnDestroy {
-  records: HeightService[] = [];
+export class WeightListComponent implements OnInit, OnDestroy {
+  records: WeightService[] = [];
   isLoading = false;
   total = 0;
   perPage = 10;
@@ -34,8 +33,8 @@ export class HeightListComponent implements OnInit, OnDestroy {
   private authListenerSubs: Subscription;
 
   constructor(
-    @Optional() @Inject(MAT_DIALOG_DATA) public data: HeightService,
-    public heightService: HeightService,
+    @Optional() @Inject(MAT_DIALOG_DATA) public data: WeightService,
+    public weightService: WeightService,
     private dialog: MatDialog,
     private route: ActivatedRoute,
     private datePipe: DatePipe,
@@ -49,21 +48,21 @@ export class HeightListComponent implements OnInit, OnDestroy {
     }
 
     dataSource: MatTableDataSource<any>;
-    displayedColumns: string[] = ['height', 'created', 'action'];
+    displayedColumns: string[] = ['weight', 'created', 'action'];
     @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
     @ViewChild(MatSort, {static: true}) sort: MatSort;
 
   ngOnInit() {
     this.isLoading = true;
 
-    this.heightService.getAll(this.perPage, this.currentPage, this.patientId);
+    this.weightService.getAll(this.perPage, this.currentPage, this.patientId);
 
-    this.recordsSub = this.heightService
+    this.recordsSub = this.weightService
       .getUpdateListener()
-      .subscribe((heightData: {heights: HeightData[], count: number}) => {
+      .subscribe((weightData: {weights: WeightData[], count: number}) => {
         this.isLoading = false;
-        this.total = heightData.count;
-        this.dataSource = new MatTableDataSource(heightData.heights);
+        this.total = weightData.count;
+        this.dataSource = new MatTableDataSource(weightData.weights);
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;
       });
@@ -87,7 +86,7 @@ export class HeightListComponent implements OnInit, OnDestroy {
     this.isLoading = true;
     this.currentPage = pageData.pageIndex + 1;
     this.perPage = pageData.pageSize;
-    this.heightService.getAll(this.perPage, this.currentPage, this.patientId);
+    this.weightService.getAll(this.perPage, this.currentPage, this.patientId);
   }
 
   onCreate() {
@@ -99,7 +98,7 @@ export class HeightListComponent implements OnInit, OnDestroy {
       title: 'New record',
       patient: this.patientId
     };
-    this.dialog.open(HeightEditComponent, dialogConfig);
+    this.dialog.open(WeightEditComponent, dialogConfig);
   }
 
   onEdit(recordId) {
@@ -111,15 +110,15 @@ export class HeightListComponent implements OnInit, OnDestroy {
         title: 'Update record',
         patient: null
     };
-    this.dialog.open(HeightEditComponent, dialogConfig);
+    this.dialog.open(WeightEditComponent, dialogConfig);
   }
 
   onDelete(recordId) {
     this.dialogService.openConfirmDialog('Are you sure to delete this record ?')
     .afterClosed().subscribe(res => {
       if (res) {
-        this.heightService.delete(recordId).subscribe(() => {
-          this.heightService.getAll(this.perPage, this.currentPage, this.patientId);
+        this.weightService.delete(recordId).subscribe(() => {
+          this.weightService.getAll(this.perPage, this.currentPage, this.patientId);
           this.notificationService.warn('! Deleted successfully');
         });
       }
