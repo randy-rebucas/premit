@@ -3,6 +3,7 @@ import { FormGroup, FormControl, Validators, NgControl } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
 import { Subscription } from 'rxjs';
+import { DatePipe } from '@angular/common';
 
 import { AuthService } from '../../../../../auth/auth.service';
 import { NotificationService } from 'src/app/shared/notification.service';
@@ -35,6 +36,7 @@ export class HeightEditComponent implements OnInit, OnDestroy {
     public heightService: HeightService,
     public route: ActivatedRoute,
     private authService: AuthService,
+    private datePipe: DatePipe,
 
     private notificationService: NotificationService,
     public dialogRef: MatDialogRef < HeightEditComponent >,
@@ -91,7 +93,7 @@ export class HeightEditComponent implements OnInit, OnDestroy {
     if (this.mode === 'create') {
       this.heightService.insert(
         this.form.value.height,
-        this.form.value.record_date,
+        this.datePipe.transform(this.form.value.record_date, 'yyyy-MM-dd'),
         this.patientId
       ).subscribe(() => {
         this.heightService.getAll(this.perPage, this.currentPage, this.patientId);

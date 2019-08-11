@@ -94,7 +94,6 @@ export class HeightListComponent implements OnInit, OnDestroy {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.disableClose = true;
     dialogConfig.autoFocus = true;
-    // dialogConfig.width = '50%';
     dialogConfig.data = {
       id: null,
       title: 'New height record',
@@ -107,7 +106,6 @@ export class HeightListComponent implements OnInit, OnDestroy {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.disableClose = true;
     dialogConfig.autoFocus = true;
-    // dialogConfig.width = '50%';
     dialogConfig.data = {
         id: recordId,
         title: 'Update height record',

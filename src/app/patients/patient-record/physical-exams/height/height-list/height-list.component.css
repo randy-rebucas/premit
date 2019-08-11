@@ -19,6 +19,11 @@ td.mat-cell.cdk-column-action.mat-column-action {
   display: none;
 }
 
+#no-data {
+  width: 100%;
+  text-align: center;
+}
+
 .mat-paginator {
   background: transparent;
 }

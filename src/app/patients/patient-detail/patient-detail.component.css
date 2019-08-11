@@ -29,3 +29,6 @@ mat-card-header ::ng-deep .mat-card-header-text {
 .detail-left mat-card {
   margin-bottom: 1em;
 }
+mat-list-item a {
+  text-decoration: none;
+}

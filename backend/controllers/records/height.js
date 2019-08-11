@@ -46,10 +46,9 @@ exports.update = (req, res, next) => {
 };
 
 exports.getAll = (req, res, next) => {
-    const patient = +req.query.patient;
     const pageSize = +req.query.pagesize;
     const currentPage = +req.query.page;
-    const heightQuery = Height.find();
+    const heightQuery = Height.find({ 'patient': req.query.patient });
 
     let fetchedRecord;
     if (pageSize && currentPage) {

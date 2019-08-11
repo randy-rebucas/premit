@@ -58,6 +58,7 @@ export class HeightService {
   }
 
   insert(height: string, created: string, patient: string) {
+
     const recordData = {
       height, created, patient
     };

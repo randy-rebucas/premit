@@ -17,8 +17,11 @@ mat-grid-list {
 .physical-exam-wrapper > div:first-child {
   margin-right: 1em;
 }
-.mat-list-item-content a.active {
+mat-list-item a.active {
   text-decoration: none;
   font-weight: 600;
   color: #3f51b5;
+}
+mat-list-item a {
+  text-decoration: none;
 }
