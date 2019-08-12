@@ -35,6 +35,10 @@ import { TemperatureComponent } from './patients/patient-record/physical-exams/t
 import { TemperatureEditComponent } from './patients/patient-record/physical-exams/temperature/temperature-edit/temperature-edit.component';
 import { TemperatureListComponent } from './patients/patient-record/physical-exams/temperature/temperature-list/temperature-list.component';
 import { RespiratoryRateComponent } from './patients/patient-record/physical-exams/respiratory-rate/respiratory-rate.component';
+// tslint:disable-next-line:max-line-length
+import { RespiratoryRateEditComponent } from './patients/patient-record/physical-exams/respiratory-rate/respiratory-rate-edit/respiratory-rate-edit.component';
+// tslint:disable-next-line:max-line-length
+import { RespiratoryRateListComponent } from './patients/patient-record/physical-exams/respiratory-rate/respiratory-rate-list/respiratory-rate-list.component';
 
 const appRoutes: Routes = [
     // { path: '', redirectTo: '/patients', pathMatch: 'full' },
@@ -61,7 +65,9 @@ const appRoutes: Routes = [
         { path: 'blood-pressure', component: BloodPressureListComponent, children: [
           { path: 'create', component: BloodPressureEditComponent }
         ] },
-        { path: 'respiratory-rate', component: RespiratoryRateComponent }
+        { path: 'respiratory-rate', component: RespiratoryRateListComponent, children: [
+          { path: 'create', component: RespiratoryRateEditComponent }
+        ] }
       ] },
       { path: 'assessments', component: AssessmentsComponent },
       { path: 'prescriptions', component: PrescriptionsComponent },

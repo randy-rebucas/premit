@@ -17,6 +17,8 @@ import { BloodPressureComponent } from './blood-pressure/blood-pressure.componen
 import { BloodPressureListComponent } from './blood-pressure/blood-pressure-list/blood-pressure-list.component';
 import { BloodPressureEditComponent } from './blood-pressure/blood-pressure-edit/blood-pressure-edit.component';
 import { RespiratoryRateComponent } from './respiratory-rate/respiratory-rate.component';
+import { RespiratoryRateEditComponent } from './respiratory-rate/respiratory-rate-edit/respiratory-rate-edit.component';
+import { RespiratoryRateListComponent } from './respiratory-rate/respiratory-rate-list/respiratory-rate-list.component';
 
 @NgModule({
   declarations: [
@@ -32,7 +34,9 @@ import { RespiratoryRateComponent } from './respiratory-rate/respiratory-rate.co
     BloodPressureComponent,
     BloodPressureListComponent,
     BloodPressureEditComponent,
-    RespiratoryRateComponent
+    RespiratoryRateComponent,
+    RespiratoryRateListComponent,
+    RespiratoryRateEditComponent
   ],
   imports: [
     CommonModule,

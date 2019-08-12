@@ -29,6 +29,7 @@ export class BpService {
     )
     .pipe(
       map(bpData => {
+        console.log(bpData);
         return { bps: bpData.bps.map(bp => {
           return {
             id: bp._id,

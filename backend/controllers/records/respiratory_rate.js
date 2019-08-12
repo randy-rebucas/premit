@@ -62,7 +62,7 @@ exports.getAll = (req, res, next) => {
         .then(count => {
             res.status(200).json({
                 message: 'Fetched successfully!',
-                respiratoryrates: fetchedRecord,
+                rprs: fetchedRecord,
                 max: count
             });
         })
