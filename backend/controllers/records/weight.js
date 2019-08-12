@@ -48,13 +48,13 @@ exports.update = (req, res, next) => {
 exports.getAll = (req, res, next) => {
     const pageSize = +req.query.pagesize;
     const currentPage = +req.query.page;
-    const query = Weight.find({ 'patient': req.query.patient });
+    const weightQuery = Weight.find({ 'patient': req.query.patient });
 
     let fetchedRecord;
     if (pageSize && currentPage) {
-      query.skip(pageSize * (currentPage - 1)).limit(pageSize);
+        weightQuery.skip(pageSize * (currentPage - 1)).limit(pageSize);
     }
-    query
+    weightQuery
         .then(documents => {
             fetchedRecord = documents;
             return Weight.countDocuments();
@@ -74,7 +74,7 @@ exports.getAll = (req, res, next) => {
 };
 
 exports.get = (req, res, next) => {
-  Weight.findById(req.params.id).then(weight => {
+    Weight.findById(req.params.id).then(weight => {
             if (weight) {
                 res.status(200).json(weight);
             } else {
@@ -89,7 +89,7 @@ exports.get = (req, res, next) => {
 };
 
 exports.delete = (req, res, next) => {
-  Weight.deleteOne({ _id: req.params.id }) //pass doctors role for restriction
+    Weight.deleteOne({ _id: req.params.id }) //pass doctors role for restriction
         .then(result => {
             if (result.n > 0) {
                 res.status(200).json({ message: 'Deletion successfull!' });

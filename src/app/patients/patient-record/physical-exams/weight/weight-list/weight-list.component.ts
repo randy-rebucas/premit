@@ -4,13 +4,13 @@ import { AuthService } from '../../../../../auth/auth.service';
 import { Router, ActivatedRoute, Params, ParamMap, RouterStateSnapshot } from '@angular/router';
 import { NotificationService } from 'src/app/shared/notification.service';
 
-import { MAT_DIALOG_DATA, MatDialog, MatTableDataSource, MatPaginator, MatSort, PageEvent, MatDialogConfig } from '@angular/material';
-import { DatePipe } from '@angular/common';
-import { DialogService } from 'src/app/shared/dialog.service';
-
 import { WeightData } from '../../../models/weight-data.model';
 import { WeightService } from '../../../services/weight.service';
 import { WeightEditComponent } from '../weight-edit/weight-edit.component';
+
+import { MAT_DIALOG_DATA, MatDialog, MatTableDataSource, MatPaginator, MatSort, PageEvent, MatDialogConfig } from '@angular/material';
+import { DatePipe } from '@angular/common';
+import { DialogService } from 'src/app/shared/dialog.service';
 
 @Component({
   selector: 'app-weight-list',
@@ -108,7 +108,7 @@ export class WeightListComponent implements OnInit, OnDestroy {
     dialogConfig.data = {
         id: recordId,
         title: 'Update record',
-        patient: null
+        patient: this.patientId
     };
     this.dialog.open(WeightEditComponent, dialogConfig);
   }

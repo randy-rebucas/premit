@@ -22,30 +22,30 @@ export class WeightService {
     private datePipe: DatePipe
     ) {}
 
-  getAll(perPage: number, currentPage: number, patientId: string) {
-    const queryParams = `?patient=${patientId}&pagesize=${perPage}&page=${currentPage}`;
-    this.http.get<{message: string, weights: any, max: number }>(
-      BACKEND_URL + queryParams
-    )
-    .pipe(
-      map(weightData => {
-        return { heights: weightData.weights.map(weight => {
-          return {
-            id: weight._id,
-            height: weight.weight,
-            created: weight.created
-          };
-        }), max: weightData.max};
-      })
-    )
-    .subscribe((transformData) => {
-      this.weights = transformData.heights;
-      this.weightsUpdated.next({
-        weights: [...this.weights],
-        count: transformData.max
+    getAll(perPage: number, currentPage: number, patientId: string) {
+      const queryParams = `?patient=${patientId}&pagesize=${perPage}&page=${currentPage}`;
+      this.http.get<{message: string, weights: any, max: number }>(
+        BACKEND_URL + queryParams
+      )
+      .pipe(
+        map(weightData => {
+          return { weights: weightData.weights.map(weight => {
+            return {
+              id: weight._id,
+              weight: weight.weight,
+              created: weight.created
+            };
+          }), max: weightData.max};
+        })
+      )
+      .subscribe((transformData) => {
+        this.weights = transformData.weights;
+        this.weightsUpdated.next({
+          weights: [...this.weights],
+          count: transformData.max
+        });
       });
-    });
-  }
+    }
 
   getUpdateListener() {
     return this.weightsUpdated.asObservable();

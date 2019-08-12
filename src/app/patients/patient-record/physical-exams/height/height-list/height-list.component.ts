@@ -109,7 +109,7 @@ export class HeightListComponent implements OnInit, OnDestroy {
     dialogConfig.data = {
         id: recordId,
         title: 'Update record',
-        patient: null
+        patient: this.patientId
     };
     this.dialog.open(HeightEditComponent, dialogConfig);
   }
