@@ -14,6 +14,8 @@ import { TemperatureComponent } from './temperature/temperature.component';
 import { TemperatureListComponent } from './temperature/temperature-list/temperature-list.component';
 import { TemperatureEditComponent } from './temperature/temperature-edit/temperature-edit.component';
 import { BloodPressureComponent } from './blood-pressure/blood-pressure.component';
+import { BloodPressureListComponent } from './blood-pressure/blood-pressure-list/blood-pressure-list.component';
+import { BloodPressureEditComponent } from './blood-pressure/blood-pressure-edit/blood-pressure-edit.component';
 import { RespiratoryRateComponent } from './respiratory-rate/respiratory-rate.component';
 
 @NgModule({
@@ -28,6 +30,8 @@ import { RespiratoryRateComponent } from './respiratory-rate/respiratory-rate.co
     TemperatureListComponent,
     TemperatureEditComponent,
     BloodPressureComponent,
+    BloodPressureListComponent,
+    BloodPressureEditComponent,
     RespiratoryRateComponent
   ],
   imports: [
