@@ -1,6 +1,6 @@
 const express = require('express');
 
-const Controller = require('../../controllers/records/blood-pressure');
+const Controller = require('../../controllers/records/blood_pressure');
 
 const checkAuth = require('../../middleware/check-auth');
 
