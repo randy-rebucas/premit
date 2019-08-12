@@ -14,6 +14,7 @@ var patientRouter = require('./routes/patient');
 
 var heightRouter = require('./routes/records/height');
 var weightRouter = require('./routes/records/weight');
+var temperatureRouter = require('./routes/records/temperature');
 
 var app = express();
 
@@ -61,6 +62,7 @@ app.use('/api/patients', patientRouter);
 
 app.use('/api/heights', heightRouter);
 app.use('/api/weights', weightRouter);
+app.use('/api/temperatures', temperatureRouter);
 //app.use((req, res, next) => {
 //    res.sendFile(path.join(__dirname, 'angular', 'index.html'));
 //});

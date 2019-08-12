@@ -1,27 +1,42 @@
 .mat-grid-tile .mat-grid-tile-footer {
-  background: rgb(236, 236, 236);
-  color: #555;
+    background: rgb(236, 236, 236);
+    color: #555;
 }
-.list-left > ::ng-deep figure {
-  justify-content: flex-start !important;
-  align-items: flex-start !important;
+
+.list-left> ::ng-deep figure {
+    justify-content: flex-start !important;
+    align-items: flex-start !important;
 }
+
 mat-grid-list {
-  margin-top: 2em;
+    margin-top: 2em;
 }
+
 .physical-exam-wrapper {
-  margin-top: 2em;
-  display: flex;
-  max-height: 100%;
+    margin-top: 2em;
+    display: flex;
+    max-height: 100%;
 }
-.physical-exam-wrapper > div:first-child {
-  margin-right: 1em;
+
+.mat-list-base .mat-list-item,
+.mat-list-base .mat-list-option {
+    height: 34px;
 }
+
+.physical-exam-wrapper>div:first-child {
+    margin-right: 1em;
+}
+
+.physical-exam-right {
+    width: 50%;
+}
+
 mat-list-item a.active {
-  text-decoration: none;
-  font-weight: 600;
-  color: #3f51b5;
+    text-decoration: none;
+    font-weight: 600;
+    color: #3f51b5;
 }
+
 mat-list-item a {
-  text-decoration: none;
+    text-decoration: none;
 }

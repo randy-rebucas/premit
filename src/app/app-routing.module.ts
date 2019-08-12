@@ -28,6 +28,8 @@ import { WeightListComponent } from './patients/patient-record/physical-exams/we
 import { WeightEditComponent } from './patients/patient-record/physical-exams/weight/weight-edit/weight-edit.component';
 import { BloodPressureComponent } from './patients/patient-record/physical-exams/blood-pressure/blood-pressure.component';
 import { TemperatureComponent } from './patients/patient-record/physical-exams/temperature/temperature.component';
+import { TemperatureEditComponent } from './patients/patient-record/physical-exams/temperature/temperature-edit/temperature-edit.component';
+import { TemperatureListComponent } from './patients/patient-record/physical-exams/temperature/temperature-list/temperature-list.component';
 import { RespiratoryRateComponent } from './patients/patient-record/physical-exams/respiratory-rate/respiratory-rate.component';
 
 const appRoutes: Routes = [
@@ -49,7 +51,9 @@ const appRoutes: Routes = [
         { path: 'weight', component: WeightListComponent, children: [
           { path: 'create', component: WeightEditComponent }
         ] },
-        { path: 'temperature', component: TemperatureComponent },
+        { path: 'temperature', component: TemperatureListComponent, children: [
+          { path: 'create', component: TemperatureEditComponent }
+        ] },
         { path: 'blood-pressure', component: BloodPressureComponent },
         { path: 'respiratory-rate', component: RespiratoryRateComponent }
       ] },
