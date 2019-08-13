@@ -1,16 +1,18 @@
 <div class="mat-elevation-z8">
     <table mat-table [dataSource]="dataSource" matSort>
 
-        <!-- Weight Column -->
-        <ng-container matColumnDef="weight">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> Weight </th>
-            <td mat-cell *matCellDef="let row"> {{row.weight}} kg</td>
+        <!-- Note Column -->
+        <ng-container matColumnDef="note">
+            <th mat-header-cell *matHeaderCellDef mat-sort-header> Note </th>
+            <td mat-cell *matCellDef="let row"> {{ row.note.length > 100 ? row.note.substring(0,100)+"..." : row.note }}</td>
         </ng-container>
 
         <!-- Created Column -->
         <ng-container matColumnDef="created">
             <th mat-header-cell *matHeaderCellDef> Created </th>
-            <td mat-cell *matCellDef="let row"> {{ row.created | date:'medium' }} </td>
+            <td mat-cell *matCellDef="let row">
+              {{ row.created | date:'medium' }}
+            </td>
         </ng-container>
 
         <ng-container matColumnDef="action">
@@ -40,4 +42,4 @@
         <tr mat-footer-row *matFooterRowDef="['noData']" [ngClass]="{'hide': !(dataSource!=null && dataSource.data.length==0)}"></tr>
     </table>
     <mat-paginator [pageSizeOptions]="pageSizeOptions" [pageSize]="perPage"></mat-paginator>
-</div>
+  </div>

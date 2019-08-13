@@ -7,7 +7,7 @@ const patientSchema = mongoose.Schema({
   lastname: { type: String, required: true },
   contact: { type: String, required: true },
   gender: { type: String, required: true },
-  birthdate: { type: String, required: true },
+  birthdate: { type: Date, required: true },
   address: { type: String, required: true },
   imagePath: { type: String, required: true },
   creator: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true }

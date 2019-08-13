@@ -1,0 +1,46 @@
+<h2 mat-dialog-title>{{ title }}
+    <button class="btn-dialog-close" mat-stroked-button (click)="onClose()" tabIndex="-1"><mat-icon>clear</mat-icon></button>
+  </h2>
+  <mat-dialog-content class="mat-typography">
+    <form [formGroup]="form" class="normal-form" (submit)="onSave()" *ngIf="!isLoading">
+        <table class="example-full-width" cellspacing="0">
+            <tr>
+                <td>
+                    <mat-form-field>
+                        <input matInput type="text" formControlName="medicine" placeholder="Medicine">
+                        <mat-error *ngIf="form.get('medicine').invalid">Please enter medicine</mat-error>
+                    </mat-form-field>
+                </td>
+                <td>
+                    <mat-form-field>
+                        <input matInput type="text" formControlName="preparation" placeholder="Preparation">
+                        <mat-error *ngIf="form.get('preparation').invalid">Please enter preparation</mat-error>
+                    </mat-form-field>
+                </td>
+            </tr>
+        </table>
+        <table class="example-full-width" cellspacing="0">
+            <tr>
+                <td>
+                    <mat-form-field>
+                        <input matInput type="text" formControlName="sig" placeholder="Sig">
+                        <mat-error *ngIf="form.get('sig').invalid">Please enter sig</mat-error>
+                    </mat-form-field>
+                </td>
+                <td>
+                    <mat-form-field>
+                        <input matInput type="number" formControlName="quantity" placeholder="Quantity">
+                        <mat-error *ngIf="form.get('quantity').invalid">Please enter quantity</mat-error>
+                    </mat-form-field>
+                </td>
+            </tr>
+        </table>
+
+        <mat-form-field>
+            <input matInput readonly [matDatepicker]="picker" formControlName="record_date" [max]="maxDate" placeholder="Date">
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker color="primary"></mat-datepicker>
+        </mat-form-field>
+        <button mat-raised-button color="primary" type="submit">Save</button>
+    </form>
+  </mat-dialog-content>

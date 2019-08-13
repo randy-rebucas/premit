@@ -14,11 +14,19 @@ import { SettingsComponent } from './settings/settings.component';
 import { SettingsGeneralComponent } from './settings/setting-general/setting-general.component';
 import { SettingsNotificationComponent } from './settings/setting-notification/setting-notification.component';
 import { ChiefComplaintComponent } from './patients/patient-record/chief-complaint/chief-complaint.component';
+import { ChiefComplaintEditComponent } from './patients/patient-record/chief-complaint/chief-complaint-edit/chief-complaint-edit.component';
+import { ChiefComplaintListComponent } from './patients/patient-record/chief-complaint/chief-complaint-list/chief-complaint-list.component';
 import { HistoriesComponent } from './patients/patient-record/histories/histories.component';
+import { HistoriesListComponent } from './patients/patient-record/histories/histories-list/histories-list.component';
+import { HistoriesEditComponent } from './patients/patient-record/histories/histories-edit/histories-edit.component';
 import { PhysicalExamsComponent } from './patients/patient-record/physical-exams/physical-exams.component';
 import { AssessmentsComponent } from './patients/patient-record/assessments/assessments.component';
 import { PrescriptionsComponent } from './patients/patient-record/prescriptions/prescriptions.component';
+import { PrescriptionEditComponent } from './patients/patient-record/prescriptions/prescription-edit/prescription-edit.component';
+import { PrescriptionListComponent } from './patients/patient-record/prescriptions/prescription-list/prescription-list.component';
 import { ProgressNotesComponent } from './patients/patient-record/progress-notes/progress-notes.component';
+import { ProgressNoteListComponent } from './patients/patient-record/progress-notes/progress-note-list/progress-note-list.component';
+import { ProgressNoteEditComponent } from './patients/patient-record/progress-notes/progress-note-edit/progress-note-edit.component';
 import { TestResultsComponent } from './patients/patient-record/test-results/test-results.component';
 import { HeightComponent } from './patients/patient-record/physical-exams/height/height.component';
 import { HeightListComponent } from './patients/patient-record/physical-exams/height/height-list/height-list.component';
@@ -49,8 +57,12 @@ const appRoutes: Routes = [
     { path: 'patient-details/:patientId', component: PatientDetailComponent, canActivate: [AuthGuard], children: [
       { path: '', redirectTo: 'chief-complaint', pathMatch: 'full' },
       { path: 'encounter', component: EncounterComponent },
-      { path: 'chief-complaint', component: ChiefComplaintComponent },
-      { path: 'histories', component: HistoriesComponent },
+      { path: 'chief-complaint', component: ChiefComplaintListComponent, children: [
+        { path: 'create', component: ChiefComplaintEditComponent }
+      ] },
+      { path: 'histories', component: HistoriesListComponent, children: [
+        { path: 'create', component: HistoriesEditComponent }
+      ] },
       { path: 'physical-exams', component: PhysicalExamsComponent, children: [
         { path: '', redirectTo: 'height', pathMatch: 'full' },
         { path: 'height', component: HeightListComponent, children: [
@@ -70,8 +82,12 @@ const appRoutes: Routes = [
         ] }
       ] },
       { path: 'assessments', component: AssessmentsComponent },
-      { path: 'prescriptions', component: PrescriptionsComponent },
-      { path: 'progress-notes', component: ProgressNotesComponent },
+      { path: 'prescriptions', component: PrescriptionListComponent, children: [
+        { path: 'create', component: PrescriptionEditComponent }
+      ] },
+      { path: 'progress-notes', component: ProgressNoteListComponent, children: [
+        { path: 'create', component: ProgressNoteEditComponent }
+      ] },
       { path: 'test-results', component: TestResultsComponent }
     ] },
     { path: 'settings', component: SettingsComponent, canActivate: [AuthGuard], children: [

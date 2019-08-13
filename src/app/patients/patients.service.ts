@@ -74,7 +74,7 @@ export class PatientsService {
     patientData.append('lastname', lastname);
     patientData.append('contact', contact);
     patientData.append('gender', gender);
-    patientData.append('birthdate', birthdate === '' ? '' : this.datePipe.transform(birthdate, 'yyyy-MM-dd'));
+    patientData.append('birthdate', birthdate);
     patientData.append('address', address);
     patientData.append('image', image, firstname);
     return this.http.post<{ message: string, patient: PatientData }>(BACKEND_URL, patientData);
@@ -90,7 +90,7 @@ export class PatientsService {
       patientData.append('lastname', lastname);
       patientData.append('contact', contact);
       patientData.append('gender', gender);
-      patientData.append('birthdate', birthdate == '' ? '' : this.datePipe.transform(birthdate, 'yyyy-MM-dd'));
+      patientData.append('birthdate', birthdate);
       patientData.append('address', address);
       patientData.append('image', image, firstname);
     } else {

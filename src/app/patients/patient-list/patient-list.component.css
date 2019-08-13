@@ -36,20 +36,6 @@ mat-footer-row mat-footer-cell {
     padding: 2em 0 0;
 }
 
-.search-div {
-    position: relative;
-}
-
-.search-div button {
-    position: absolute;
-    left: 0;
-}
-
-.search-div mat-form-field {
-    width: 92% !important;
-    margin-left: 8%;
-}
-
 table.mat-table tbody tr td:last-child {
     width: 10%;
 }

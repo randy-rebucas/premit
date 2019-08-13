@@ -17,6 +17,10 @@ var weightRouter = require('./routes/records/weight');
 var temperatureRouter = require('./routes/records/temperature');
 var bpsRouter = require('./routes/records/blood_pressure');
 var rprRouter = require('./routes/records/respiratory_rate');
+var complaintRouter = require('./routes/records/complaint');
+var historyRouter = require('./routes/records/history');
+var prescriptionRouter = require('./routes/records/prescription');
+var notesRouter = require('./routes/records/progress_note');
 
 var app = express();
 
@@ -67,6 +71,11 @@ app.use('/api/weights', weightRouter);
 app.use('/api/temperatures', temperatureRouter);
 app.use('/api/bps', bpsRouter);
 app.use('/api/respiratory-rate', rprRouter);
+app.use('/api/chief-complaints', complaintRouter);
+app.use('/api/histories', historyRouter);
+app.use('/api/prescriptions', prescriptionRouter);
+app.use('/api/progress-notes', notesRouter);
+
 //app.use((req, res, next) => {
 //    res.sendFile(path.join(__dirname, 'angular', 'index.html'));
 //});

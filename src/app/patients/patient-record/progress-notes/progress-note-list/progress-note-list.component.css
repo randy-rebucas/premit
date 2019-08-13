@@ -71,5 +71,15 @@ td.mat-cell.cdk-column-action.mat-column-action button {
 tr:hover td.mat-cell.cdk-column-action.mat-column-action button {
   visibility: visible;
 }
-
-
+.mat-elevation-z8 {
+  margin-top: 2em;
+}
+.trim-info {
+  max-width: 50%;
+  display: inline-block;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  line-height: 15px;
+  position: relative;
+}

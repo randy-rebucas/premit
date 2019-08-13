@@ -1,16 +1,18 @@
 <div class="mat-elevation-z8">
   <table mat-table [dataSource]="dataSource" matSort>
 
-      <!-- Respiratory rate Column -->
-      <ng-container matColumnDef="respiratoryrate">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header> Respiratory rate </th>
-          <td mat-cell *matCellDef="let row"> {{row.respiratoryrate}} bpm</td>
+      <!-- Complaint Column -->
+      <ng-container matColumnDef="complaint">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Complaint </th>
+          <td mat-cell *matCellDef="let row"> {{ row.complaint.length > 100 ? row.complaint.substring(0,100)+"..." : row.complaint }} </td>
       </ng-container>
 
       <!-- Created Column -->
       <ng-container matColumnDef="created">
           <th mat-header-cell *matHeaderCellDef> Created </th>
-          <td mat-cell *matCellDef="let row"> {{ row.created | date:'medium' }} </td>
+          <td mat-cell *matCellDef="let row">
+            {{ row.created | date:'medium' }}
+          </td>
       </ng-container>
 
       <ng-container matColumnDef="action">
