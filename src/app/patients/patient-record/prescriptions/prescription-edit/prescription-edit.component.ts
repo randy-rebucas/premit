@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy, Inject } from '@angular/core';
-import { FormGroup, FormControl, Validators, NgControl } from '@angular/forms';
+import { FormGroup, FormControl, Validators, NgControl, FormBuilder, FormArray } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
 import { Subscription } from 'rxjs';
@@ -31,6 +31,8 @@ export class PrescriptionEditComponent implements OnInit, OnDestroy {
   patient: string;
   form: FormGroup;
 
+  checked = false;
+
   maxDate = new Date();
 
   constructor(
@@ -38,6 +40,7 @@ export class PrescriptionEditComponent implements OnInit, OnDestroy {
     public route: ActivatedRoute,
     private authService: AuthService,
     private datePipe: DatePipe,
+    private fb: FormBuilder,
 
     private notificationService: NotificationService,
     public dialogRef: MatDialogRef < PrescriptionEditComponent >,
@@ -56,23 +59,27 @@ export class PrescriptionEditComponent implements OnInit, OnDestroy {
         this.userIsAuthenticated = isAuthenticated;
       });
 
-    this.form = new FormGroup({
-      medicine: new FormControl(null, {
-        validators: [Validators.required, Validators.maxLength(150) ]
-      }),
-      preparation: new FormControl(null, {
-        validators: [Validators.required, Validators.maxLength(250) ]
-      }),
-      sig: new FormControl(null, {
-        validators: [Validators.required, Validators.maxLength(50) ]
-      }),
-      quantity: new FormControl(null, {
-        validators: [Validators.required, Validators.maxLength(5) ]
-      }),
-      record_date: new FormControl(new Date(), {
-        validators: [Validators.required]
-      })
+    this.form = this.fb.group({
+      record_date: [],
+      prescriptions: this.fb.array([this.addPrescriptionGroup()])
     });
+    // this.form = new FormGroup({
+    //   medicine: new FormControl(null, {
+    //     validators: [Validators.required, Validators.maxLength(150) ]
+    //   }),
+    //   preparation: new FormControl(null, {
+    //     validators: [Validators.required, Validators.maxLength(250) ]
+    //   }),
+    //   sig: new FormControl(null, {
+    //     validators: [Validators.required, Validators.maxLength(50) ]
+    //   }),
+    //   quantity: new FormControl(null, {
+    //     validators: [Validators.required, Validators.maxLength(5) ]
+    //   }),
+    //   record_date: new FormControl(new Date(), {
+    //     validators: [Validators.required]
+    //   })
+    // });
 
     if (this.recordId) {
           this.mode = 'edit';
@@ -102,7 +109,32 @@ export class PrescriptionEditComponent implements OnInit, OnDestroy {
         }
   }
 
+  addPrescriptionGroup() {
+    return this.fb.group({
+      maintenableFlg: [],
+      medicine: [],
+      preparation: [],
+      sig: [],
+      quantity: []
+    });
+  }
+
+  addPrescription() {
+    this.prescriptionArray.push(this.addPrescriptionGroup());
+  }
+
+  removePrescription(index) {
+    this.prescriptionArray.removeAt(index);
+    this.prescriptionArray.markAsDirty();
+    this.prescriptionArray.markAsTouched();
+  }
+
+  get prescriptionArray() {
+    return this.form.get('prescriptions') as FormArray;
+  }
+
   onSave() {
+    // console.log(this.form.value);
     if (this.form.invalid) {
       return;
     }
