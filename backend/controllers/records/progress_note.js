@@ -48,7 +48,7 @@ exports.update = (req, res, next) => {
 exports.getAll = (req, res, next) => {
     const pageSize = +req.query.pagesize;
     const currentPage = +req.query.page;
-    const noteQuery = Note.find({ 'patient': req.query.patient });
+    const noteQuery = Note.find({ 'patient': req.query.patient }).sort({'created': 'desc'});
 
     let fetchedRecord;
     if (pageSize && currentPage) {

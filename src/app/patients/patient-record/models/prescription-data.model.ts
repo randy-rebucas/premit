@@ -2,6 +2,7 @@ export interface PrescriptionData {
   id: string;
   prescriptions: Prescription[];
   created: string;
+  complaint: string;
   patient: string;
 }
 

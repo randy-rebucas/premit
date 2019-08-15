@@ -3,7 +3,7 @@ mongoose.set('useCreateIndex', true);
 
 const recordRespiratoryRateSchema = mongoose.Schema({
     respiratoryrate: { type: String, required: true },
-    created: { type: Date, default: Date.now },
+    created: { type: Date },
     patient: { type: mongoose.Schema.Types.ObjectId, ref: 'Patient', required: true }
 });
 

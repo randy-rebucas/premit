@@ -1,63 +1,48 @@
-<div class="mat-elevation-z8">
-    <table mat-table [dataSource]="dataSource" matSort>
 
-        <!-- Medicine Column -->
-        <ng-container matColumnDef="medicine">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> Medicine </th>
-            <td mat-cell *matCellDef="let row"> {{row.medicine}} </td>
-        </ng-container>
-
-        <!-- Preparation Column -->
-        <ng-container matColumnDef="preparation">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> Preparation </th>
-            <td mat-cell *matCellDef="let row"> {{row.preparation}} </td>
-        </ng-container>
-
-        <!-- Sig Column -->
-        <ng-container matColumnDef="sig">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> Sig </th>
-            <td mat-cell *matCellDef="let row"> {{row.sig}} </td>
-        </ng-container>
-
-        <!-- Quantity Column -->
-        <ng-container matColumnDef="quantity">
-            <th mat-header-cell *matHeaderCellDef mat-sort-header> Quantity </th>
-            <td mat-cell *matCellDef="let row"> # {{row.quantity}} </td>
-        </ng-container>
-
-        <!-- Created Column -->
-        <ng-container matColumnDef="created">
-            <th mat-header-cell *matHeaderCellDef> Created </th>
-            <td mat-cell *matCellDef="let row">
-              {{ row.created | date:'medium' }}
-            </td>
-        </ng-container>
-
-        <ng-container matColumnDef="action">
-            <th mat-header-cell *matHeaderCellDef style="text-align: right;">
-                <button mat-icon-button color="primary" (click)="onCreate()">
-                        <mat-icon>add</mat-icon>
-                    </button>
-            </th>
-            <td mat-cell *matCellDef="let row">
-                <button mat-icon-button (click)="onEdit(row.id)"><mat-icon>launch</mat-icon></button>
-                <button mat-icon-button color="warn" (click)="onDelete(row.id)"><mat-icon>delete_outline</mat-icon></button>
-            </td>
-        </ng-container>
-        <ng-container matColumnDef="loading">
-            <mat-footer-cell *matFooterCellDef colspan="3">
-                Loading data...
-            </mat-footer-cell>
-        </ng-container>
-        <ng-container matColumnDef="noData">
-            <mat-footer-cell *matFooterCellDef colspan="3" id="no-data">
-                No data.
-            </mat-footer-cell>
-        </ng-container>
-        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
-        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
-        <tr mat-footer-row *matFooterRowDef="['loading']" [ngClass]="{'hide': dataSource!=null}"></tr>
-        <tr mat-footer-row *matFooterRowDef="['noData']" [ngClass]="{'hide': !(dataSource!=null && dataSource.data.length==0)}"></tr>
-    </table>
-    <mat-paginator [pageSizeOptions]="pageSizeOptions" [pageSize]="perPage"></mat-paginator>
+<div style="margin: 2em 0;">
+    <button mat-button color="primary" (click)="onCreate()" style="margin-bottom: 1em;">
+        <mat-icon>add</mat-icon> Create Prescritpion
+    </button>
+    <mat-accordion class="example-headers-align">
+      <mat-expansion-panel *ngFor="let row of prs" hideToggle>
+        <mat-expansion-panel-header>
+          <mat-panel-title>
+            {{ row.created | date:'medium' }}
+          </mat-panel-title>
+          <mat-panel-description>
+              {{ row.complaint }}
+          </mat-panel-description>
+        </mat-expansion-panel-header>
+              <ul class="prescription list-head">
+                <li>Maintenable</li>
+                <li>Medicine</li>
+                <li>Prescription</li>
+                <li>Sig</li>
+                <li>Quantity</li>
+              </ul>
+                <div *ngFor="let prList of row.prescriptions">
+                  <ul class="prescription">
+                    <li>{{prList.maintenableFlg ? 'Yes': 'No'}}</li>
+                    <li>{{prList.medicine}}</li>
+                    <li>{{prList.preparation}}</li>
+                    <li>{{prList.sig}}</li>
+                    <li># {{prList.quantity}}</li>
+                  </ul>
+                </div>
+        <mat-action-row>
+          <button mat-icon-button (click)="onEdit(row.id)"><mat-icon>launch</mat-icon></button>
+          <button mat-icon-button color="warn" (click)="onDelete(row.id)"><mat-icon>delete_outline</mat-icon></button>
+          <button mat-icon-button color="primary" (click)="onPrint()"><mat-icon>print</mat-icon></button>
+        </mat-action-row>
+      </mat-expansion-panel>
+    </mat-accordion>
+    <!-- <mat-paginator [pageSizeOptions]="pageSizeOptions" [pageSize]="perPage"></mat-paginator> -->
+    <mat-paginator [length]="total"
+              [pageSize]="perPage"
+              [pageSizeOptions]="pageSizeOptions" (page)="onChangedPage($event)" *ngIf="prs.length > 0">
+    </mat-paginator>
+    <!-- <button mat-icon-button color="primary" (click)="onCreate()">
+        <mat-icon>add</mat-icon>
+    </button> -->
+    <p class="info-text mat-body-1" *ngIf="prs.length <= 0  && !isLoading">No Prescription added yet!</p>
   </div>

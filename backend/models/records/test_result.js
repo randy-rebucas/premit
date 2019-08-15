@@ -6,7 +6,7 @@ const recordTestResultSchema = mongoose.Schema({
     specimen: { type: String, required: true },
     conventional_unit: { type: String, required: true },
     si_unit: { type: Number, required: true },
-    created: { type: Date, default: Date.now },
+    created: { type: Date },
     patient: { type: mongoose.Schema.Types.ObjectId, ref: 'Patient', required: true }
 });
 

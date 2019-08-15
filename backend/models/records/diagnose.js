@@ -3,7 +3,7 @@ mongoose.set('useCreateIndex', true);
 
 const recordDiagnoseSchema = mongoose.Schema({
     diagnose: { type: String, required: true },
-    created: { type: Date, default: Date.now },
+    created: { type: Date },
     patient: { type: mongoose.Schema.Types.ObjectId, ref: 'Patient', required: true }
 });
 

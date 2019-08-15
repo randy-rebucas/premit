@@ -9,7 +9,8 @@ const recordPrescriptionSchema = mongoose.Schema({
       sig: { type: String, required: true },
       quantity: { type: Number, required: true }
     }],
-    created: { type: Date, default: Date.now },
+    complaint: { type: String },
+    created: { type: Date },
     patient: { type: mongoose.Schema.Types.ObjectId, ref: 'Patient', required: true }
 });
 

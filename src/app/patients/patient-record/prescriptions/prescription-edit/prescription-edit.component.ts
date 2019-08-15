@@ -10,6 +10,8 @@ import { NotificationService } from 'src/app/shared/notification.service';
 
 import { PrescriptionService } from '../../services/prescription.service';
 import { PrescriptionData } from '../../models/prescription-data.model';
+import { ComplaintService } from '../../services/complaint.service';
+import { ComplaintData } from '../../models/complaint-data.model';
 
 @Component({
   selector: 'app-prescription-edit',
@@ -23,6 +25,8 @@ export class PrescriptionEditComponent implements OnInit, OnDestroy {
   userIsAuthenticated = false;
   private authListenerSubs: Subscription;
   prescriptionData: PrescriptionData;
+  ccs: ComplaintData[];
+
   isLoading = false;
   private mode = 'create';
   private recordId: string;
@@ -35,7 +39,10 @@ export class PrescriptionEditComponent implements OnInit, OnDestroy {
 
   maxDate = new Date();
 
+  rData: any;
+
   constructor(
+    public complaintService: ComplaintService,
     public prescriptionService: PrescriptionService,
     public route: ActivatedRoute,
     private authService: AuthService,
@@ -59,43 +66,46 @@ export class PrescriptionEditComponent implements OnInit, OnDestroy {
         this.userIsAuthenticated = isAuthenticated;
       });
 
+    this.complaintService.getAll(this.perPage, this.currentPage, this.patientId);
+
+    this.complaintService
+      .getUpdateListener()
+      .subscribe((complaintData: {complaints: ComplaintData[]}) => {
+        this.ccs = complaintData.complaints;
+      });
+
+
     this.form = this.fb.group({
-      record_date: [],
+      record_date: [new Date(), [Validators.required]],
+      complaint: ['', [Validators.required]],
       prescriptions: this.fb.array([this.addPrescriptionGroup()])
     });
 
-    // if (this.recordId) {
-    //       this.mode = 'edit';
-    //       this.isLoading = true;
-    //       this.prescriptionService.get(this.recordId).subscribe(recordData => {
-    //         this.isLoading = false;
-    //         this.prescriptionData = {
-    //           id: recordData._id,
-    //           prescriptions: recordData.prescription,
-    //           created: recordData.created,
-    //           patient: recordData.patient
-    //         };
-    //         // this.form.setValue({
-    //         //   medicine: this.prescriptionData.medicine,
-    //         //   preparation: this.prescriptionData.preparation,
-    //         //   sig: this.prescriptionData.sig,
-    //         //   quantity: this.prescriptionData.quantity,
-    //         //   record_date: this.prescriptionData.created
-    //         // });
-    //       });
-    //     } else {
-    //       this.mode = 'create';
-    //       this.recordId = null;
-    //     }
+    if (this.recordId) {
+          this.mode = 'edit';
+          this.isLoading = true;
+          this.prescriptionService.get(this.recordId).subscribe(recordData => {
+            this.isLoading = false;
+            this.form.patchValue({
+              record_date: recordData.created,
+            });
+            recordData.prescriptions.forEach(x => {
+              this.prescriptionArray.push(this.fb.group(x));
+            });
+          });
+        } else {
+          this.mode = 'create';
+          this.recordId = null;
+        }
   }
 
   addPrescriptionGroup() {
     return this.fb.group({
       maintenableFlg: [],
-      medicine: [],
-      preparation: [],
-      sig: [],
-      quantity: []
+      medicine: ['', [Validators.required]],
+      preparation: ['', [Validators.required]],
+      sig: ['', [Validators.required]],
+      quantity: [1, [Validators.required]]
     });
   }
 
@@ -114,35 +124,35 @@ export class PrescriptionEditComponent implements OnInit, OnDestroy {
   }
 
   onSave() {
-    console.log(this.form.value);
     if (this.form.invalid) {
       return;
     }
     if (this.mode === 'create') {
       this.prescriptionService.insert(
         this.form.value.prescriptions,
+        this.form.value.complaint,
         this.form.value.record_date,
         this.patientId
       ).subscribe(() => {
+        this.form.reset();
+        this.notificationService.success(':: Added successfully');
+        this.onClose();
         this.prescriptionService.getAll(this.perPage, this.currentPage, this.patientId);
       });
-
-      this.form.reset();
-      this.notificationService.success(':: Added successfully');
-      this.onClose();
     } else {
-      this.prescriptionService.update(
-        this.recordId,
-        this.form.value.prescriptions,
-        this.form.value.record_date,
-        this.patientId
-      ).subscribe(() => {
-        this.prescriptionService.getAll(this.perPage, this.currentPage, this.patientId);
+      this.prescriptionService.delete(this.recordId).subscribe(() => {
+        this.prescriptionService.insert(
+          this.form.value.prescriptions,
+          this.form.value.complaint,
+          this.form.value.record_date,
+          this.patientId
+        ).subscribe(() => {
+          this.form.reset();
+          this.notificationService.success(':: Updated successfully');
+          this.onClose();
+          this.prescriptionService.getAll(this.perPage, this.currentPage, this.patientId);
+        });
       });
-
-      this.form.reset();
-      this.notificationService.success(':: Updated successfully');
-      this.onClose();
     }
   }
 

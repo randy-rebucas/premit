@@ -3,8 +3,9 @@ const Prescription = require('../../models/records/prescription');
 exports.create = (req, res, next) => {
 
     const prescription = new Prescription({
-        created: req.body.created,
-        patient: req.body.patient
+      complaint: req.body.complaint,
+      created: req.body.created,
+      patient: req.body.patient
     });
     prescriptionData = req.body.prescriptions;
     for (let index = 0; index < prescriptionData.length; index++) {
@@ -32,11 +33,27 @@ exports.update = (req, res, next) => {
       created: req.body.created,
       patient: req.body.patient
     });
+    var new_array = [];
     prescriptionData = req.body.prescriptions;
     for (let index = 0; index < prescriptionData.length; index++) {
-      prescription.prescriptions.push(prescriptionData[index]);
+      new_array.push(prescriptionData[index].maintenableFlg);
+      new_array.push(prescriptionData[index].maintenableFlg);
+      new_array.push(prescriptionData[index].medicine);
+      new_array.push(prescriptionData[index].preparation);
+      new_array.push(prescriptionData[index].sig);
+      new_array.push(prescriptionData[index].quantity);
     }
-    Prescription.updateOne({ _id: req.params.id }, //pass doctor role for restriction
+    prescription.prescriptions.push(new_array);
+    // prescription.prescriptions.findByIdAndUpdate({ _id: req.params.id })
+    Prescription.updateOne(
+      { _id: req.params.id }, //pass doctor role for restriction
+      // { "$set": { "requirement.$[outer].update.$[inner].number": 100000 } },
+      // {
+      //   "arrayFilters": [
+      //     { "outer._id": mongoose.Types.ObjectId(req.params.versionID) },
+      //     { "inner._id": mongoose.Types.ObjectId(req.params.versionNumID) }
+      //   ]
+      // },
       prescription
         ).then(result => {
             if (result.n > 0) {
@@ -55,7 +72,7 @@ exports.update = (req, res, next) => {
 exports.getAll = (req, res, next) => {
     const pageSize = +req.query.pagesize;
     const currentPage = +req.query.page;
-    const prescriptionQuery = Prescription.find({ 'patient': req.query.patient });
+    const prescriptionQuery = Prescription.find({ 'patient': req.query.patient }).sort({'created': 'desc'});
 
     let fetchedRecord;
     if (pageSize && currentPage) {

@@ -11,14 +11,25 @@ import { DialogService } from 'src/app/shared/dialog.service';
 import { PrescriptionData } from '../../models/prescription-data.model';
 import { PrescriptionService } from '../../services/prescription.service';
 import { PrescriptionEditComponent } from '../prescription-edit/prescription-edit.component';
+import { trigger, state, style, transition, animate } from '@angular/animations';
 
 @Component({
   selector: 'app-prescription-list',
   templateUrl: './prescription-list.component.html',
-  styleUrls: ['./prescription-list.component.css']
+  styleUrls: ['./prescription-list.component.css'],
+  animations: [
+    trigger('detailExpand', [
+      state('collapsed', style({height: '0px', minHeight: '0'})),
+      state('expanded', style({height: '*'})),
+      transition('expanded <=> collapsed', animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')),
+    ]),
+  ]
 })
+
 export class PrescriptionListComponent implements OnInit, OnDestroy {
   records: PrescriptionService[] = [];
+  prs: PrescriptionData[] = [];
+
   isLoading = false;
   total = 0;
   perPage = 10;
@@ -34,6 +45,7 @@ export class PrescriptionListComponent implements OnInit, OnDestroy {
   constructor(
     @Optional() @Inject(MAT_DIALOG_DATA) public data: PrescriptionService,
     public prescriptionService: PrescriptionService,
+
     private dialog: MatDialog,
     private route: ActivatedRoute,
     private datePipe: DatePipe,
@@ -46,11 +58,6 @@ export class PrescriptionListComponent implements OnInit, OnDestroy {
       this.patientId = splitUrl[2];
     }
 
-    dataSource: MatTableDataSource<any>;
-    displayedColumns: string[] = ['medicine', 'preparation', 'sig', 'quantity', 'created', 'action'];
-    @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
-    @ViewChild(MatSort, {static: true}) sort: MatSort;
-
   ngOnInit() {
     this.isLoading = true;
 
@@ -61,9 +68,7 @@ export class PrescriptionListComponent implements OnInit, OnDestroy {
       .subscribe((prescriptionData: {prescriptions: PrescriptionData[], count: number}) => {
         this.isLoading = false;
         this.total = prescriptionData.count;
-        this.dataSource = new MatTableDataSource(prescriptionData.prescriptions);
-        this.dataSource.paginator = this.paginator;
-        this.dataSource.sort = this.sort;
+        this.prs = prescriptionData.prescriptions;
       });
     this.userIsAuthenticated = this.authService.getIsAuth();
     this.authListenerSubs = this.authService
@@ -73,13 +78,7 @@ export class PrescriptionListComponent implements OnInit, OnDestroy {
       });
   }
 
-  applyFilter(filterValue: string) {
-    this.dataSource.filter = filterValue.trim().toLowerCase();
-
-    if (this.dataSource.paginator) {
-      this.dataSource.paginator.firstPage();
-    }
-  }
+  onPrint() {}
 
   onChangedPage(pageData: PageEvent) {
     this.isLoading = true;
