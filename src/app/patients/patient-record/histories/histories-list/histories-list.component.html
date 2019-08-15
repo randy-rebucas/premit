@@ -32,12 +32,12 @@
         </ng-container>
         <ng-container matColumnDef="loading">
             <mat-footer-cell *matFooterCellDef colspan="3">
-                Loading data...
+                <p class="mat-body">Loading...</p>
             </mat-footer-cell>
         </ng-container>
         <ng-container matColumnDef="noData">
             <mat-footer-cell *matFooterCellDef colspan="3" id="no-data">
-                No data.
+                <p class="mat-body">No history data.</p>
             </mat-footer-cell>
         </ng-container>
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
@@ -46,4 +46,5 @@
         <tr mat-footer-row *matFooterRowDef="['noData']" [ngClass]="{'hide': !(dataSource!=null && dataSource.data.length==0)}"></tr>
     </table>
     <mat-paginator [pageSizeOptions]="pageSizeOptions" [pageSize]="perPage"></mat-paginator>
+
   </div>

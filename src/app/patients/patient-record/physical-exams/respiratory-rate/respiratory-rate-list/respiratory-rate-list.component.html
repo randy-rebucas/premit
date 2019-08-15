@@ -26,12 +26,12 @@
       </ng-container>
       <ng-container matColumnDef="loading">
           <mat-footer-cell *matFooterCellDef colspan="3">
-              Loading data...
+              <p class="mat-body">Loading data...</p>
           </mat-footer-cell>
       </ng-container>
       <ng-container matColumnDef="noData">
           <mat-footer-cell *matFooterCellDef colspan="3" id="no-data">
-              No data.
+              <p class="mat-body">No respiratory rate data.</p>
           </mat-footer-cell>
       </ng-container>
       <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>

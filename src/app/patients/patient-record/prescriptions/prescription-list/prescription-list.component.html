@@ -1,6 +1,6 @@
 
 <div style="margin: 2em 0;">
-    <button mat-button color="primary" (click)="onCreate()" style="margin-bottom: 1em;">
+    <button mat-stroked-button color="primary" (click)="onCreate()" style="margin-bottom: 1em;">
         <mat-icon>add</mat-icon> Create Prescritpion
     </button>
     <mat-accordion class="example-headers-align">
@@ -44,5 +44,5 @@
     <!-- <button mat-icon-button color="primary" (click)="onCreate()">
         <mat-icon>add</mat-icon>
     </button> -->
-    <p class="info-text mat-body-1" *ngIf="prs.length <= 0  && !isLoading">No Prescription added yet!</p>
+    <p class="info-text mat-body" *ngIf="prs.length <= 0  && !isLoading">No Prescription added yet!</p>
   </div>
