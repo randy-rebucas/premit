@@ -14,17 +14,13 @@
 .mat-content:hover .display-right {
   visibility: visible;
 }
-.prescription {
-    list-style: none;
-    padding: 0;
-    display: flex;
-    flex-grow: 1;
+mat-list {
+  display: flex;
+  flex-grow: 1;
 }
-ul.prescription li {
-  width: 20%;
+.mat-list-base .mat-list-item, .mat-list-base .mat-list-option {
+  height: 32px;
 }
-ul.prescription.list-head {
-  background: #e4e4e4;
-  padding: .3rem;
-  font-weight: 500;
+.mat-list-base .mat-list-item {
+  font-size: 14px !important;
 }

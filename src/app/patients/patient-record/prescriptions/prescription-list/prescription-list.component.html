@@ -13,21 +13,23 @@
               {{ row.complaint }}
           </mat-panel-description>
         </mat-expansion-panel-header>
-              <ul class="prescription list-head">
-                <li>Maintenable</li>
-                <li>Medicine</li>
-                <li>Prescription</li>
-                <li>Sig</li>
-                <li>Quantity</li>
-              </ul>
+
+                <mat-list>
+                  <mat-list-item> Maintenable </mat-list-item>
+                  <mat-list-item> Medicine </mat-list-item>
+                  <mat-list-item> Prescription </mat-list-item>
+                  <mat-list-item> Sig </mat-list-item>
+                  <mat-list-item> Quantity </mat-list-item>
+                </mat-list>
                 <div *ngFor="let prList of row.prescriptions">
-                  <ul class="prescription">
-                    <li>{{prList.maintenableFlg ? 'Yes': 'No'}}</li>
-                    <li>{{prList.medicine}}</li>
-                    <li>{{prList.preparation}}</li>
-                    <li>{{prList.sig}}</li>
-                    <li># {{prList.quantity}}</li>
-                  </ul>
+                  <mat-list>
+                      <mat-list-item> {{prList.maintenableFlg ? 'Yes': 'No'}} </mat-list-item>
+                      <mat-list-item> {{prList.medicine}} </mat-list-item>
+                      <mat-list-item> {{prList.preparation}} </mat-list-item>
+                      <mat-list-item> {{prList.sig}} </mat-list-item>
+                      <mat-list-item> {{prList.quantity}} </mat-list-item>
+                  </mat-list>
+
                 </div>
         <mat-action-row>
           <button mat-icon-button (click)="onEdit(row.id)"><mat-icon>launch</mat-icon></button>
@@ -36,13 +38,11 @@
         </mat-action-row>
       </mat-expansion-panel>
     </mat-accordion>
-    <!-- <mat-paginator [pageSizeOptions]="pageSizeOptions" [pageSize]="perPage"></mat-paginator> -->
+    <mat-divider></mat-divider>
     <mat-paginator [length]="total"
               [pageSize]="perPage"
               [pageSizeOptions]="pageSizeOptions" (page)="onChangedPage($event)" *ngIf="prs.length > 0">
     </mat-paginator>
-    <!-- <button mat-icon-button color="primary" (click)="onCreate()">
-        <mat-icon>add</mat-icon>
-    </button> -->
+
     <p class="info-text mat-body" *ngIf="prs.length <= 0  && !isLoading">No Prescription added yet!</p>
   </div>
