@@ -32,10 +32,11 @@ export class PrescriptionService {
         return { prescriptions: prescriptionData.prescriptions.map(prescription => {
           return {
             id: prescription._id,
-            medicine: prescription.medicine,
-            preparation: prescription.preparation,
-            sig: prescription.sig,
-            quantity: prescription.quantity,
+            // medicine: prescription.medicine,
+            // preparation: prescription.preparation,
+            // sig: prescription.sig,
+            // quantity: prescription.quantity,
+            prescriptions: prescription.prescriptions,
             created: prescription.created
           };
         }), max: prescriptionData.max};
@@ -55,22 +56,22 @@ export class PrescriptionService {
   }
 
   get(id: string) {
-    return this.http.get<{ _id: string; medicine: string, preparation: string, sig: string, quantity: string, created: string, patient: string }>(
+    return this.http.get<{ _id: string; prescription: [], created: string, patient: string }>(
       BACKEND_URL + '/' + id
       );
   }
 
-  insert(medicine: string, preparation: string, sig: string, quantity: number, created: string, patient: string) {
+  insert(prescriptions: [], created: string, patient: string) {
     const recordData = {
-      medicine, preparation, sig, quantity, created, patient
+      prescriptions, created, patient
     };
     return this.http.post<{ message: string, record: PrescriptionData }>(BACKEND_URL, recordData);
   }
 
-  update(id: string, medicine: string, preparation: string, sig: string, quantity: number, created: string, patient: string) {
+  update(id: string, prescriptions: [], created: string, patient: string) {
     let recordData: PrescriptionData | FormData;
     recordData = {
-        id, medicine, preparation, sig, quantity, created, patient
+        id, prescriptions, created, patient
     };
     return this.http.put(BACKEND_URL + '/' + id, recordData);
   }

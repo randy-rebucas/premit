@@ -11,7 +11,7 @@
         <table class="example-full-width" cellspacing="0" formArrayName="prescriptions">
             <tr *ngFor="let group of prescriptionArray.controls; let i = index;" [formGroupName]="i">
                 <td>
-                    <mat-checkbox [(ngModel)]="checked" formControlName="maintenableFlg"></mat-checkbox>
+                    <mat-checkbox formControlName="maintenableFlg"></mat-checkbox>
                 </td>
                 <td>
                     <mat-form-field>
@@ -34,8 +34,8 @@
                     </mat-form-field>
                 </td>
                 <td>
-                    <button mat-icon-button (click)="addPrescription()"><mat-icon>add</mat-icon></button>
-                    <button mat-icon-button color="warn" (click)="removePrescription(i)"><mat-icon>delete_outline</mat-icon></button>
+                    <button mat-icon-button (click)="addPrescription()" type="button"><mat-icon>add</mat-icon></button>
+                    <button mat-icon-button color="warn" (click)="removePrescription(i)" type="button"><mat-icon>delete_outline</mat-icon></button>
                 </td>
             </tr>
         </table>

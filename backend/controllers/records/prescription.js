@@ -1,14 +1,16 @@
 const Prescription = require('../../models/records/prescription');
 
 exports.create = (req, res, next) => {
+
     const prescription = new Prescription({
-        medicine: req.body.medicine,
-        preparation: req.body.preparation,
-        sig: req.body.sig,
-        quantity: req.body.quantity,
         created: req.body.created,
         patient: req.body.patient
     });
+    prescriptionData = req.body.prescriptions;
+    for (let index = 0; index < prescriptionData.length; index++) {
+      prescription.prescriptions.push(prescriptionData[index]);
+    }
+
     prescription.save().then(createdRecord => {
             res.status(201).json({
                 message: 'Successfully added',
@@ -27,14 +29,13 @@ exports.create = (req, res, next) => {
 
 exports.update = (req, res, next) => {
     const prescription = new Prescription({
-        _id: req.body.id,
-        medicine: req.body.medicine,
-        preparation: req.body.preparation,
-        sig: req.body.sig,
-        quantity: req.body.quantity,
-        created: req.body.created_date,
-        patient: req.body.patient_id
+      created: req.body.created,
+      patient: req.body.patient
     });
+    prescriptionData = req.body.prescriptions;
+    for (let index = 0; index < prescriptionData.length; index++) {
+      prescription.prescriptions.push(prescriptionData[index]);
+    }
     Prescription.updateOne({ _id: req.params.id }, //pass doctor role for restriction
       prescription
         ).then(result => {

@@ -63,50 +63,30 @@ export class PrescriptionEditComponent implements OnInit, OnDestroy {
       record_date: [],
       prescriptions: this.fb.array([this.addPrescriptionGroup()])
     });
-    // this.form = new FormGroup({
-    //   medicine: new FormControl(null, {
-    //     validators: [Validators.required, Validators.maxLength(150) ]
-    //   }),
-    //   preparation: new FormControl(null, {
-    //     validators: [Validators.required, Validators.maxLength(250) ]
-    //   }),
-    //   sig: new FormControl(null, {
-    //     validators: [Validators.required, Validators.maxLength(50) ]
-    //   }),
-    //   quantity: new FormControl(null, {
-    //     validators: [Validators.required, Validators.maxLength(5) ]
-    //   }),
-    //   record_date: new FormControl(new Date(), {
-    //     validators: [Validators.required]
-    //   })
-    // });
 
-    if (this.recordId) {
-          this.mode = 'edit';
-          this.isLoading = true;
-          this.prescriptionService.get(this.recordId).subscribe(recordData => {
-            this.isLoading = false;
-            this.prescriptionData = {
-              id: recordData._id,
-              medicine: recordData.medicine,
-              preparation: recordData.preparation,
-              sig: recordData.sig,
-              quantity: +recordData.quantity,
-              created: recordData.created,
-              patient: recordData.patient
-            };
-            this.form.setValue({
-              medicine: this.prescriptionData.medicine,
-              preparation: this.prescriptionData.preparation,
-              sig: this.prescriptionData.sig,
-              quantity: this.prescriptionData.quantity,
-              record_date: this.prescriptionData.created
-            });
-          });
-        } else {
-          this.mode = 'create';
-          this.recordId = null;
-        }
+    // if (this.recordId) {
+    //       this.mode = 'edit';
+    //       this.isLoading = true;
+    //       this.prescriptionService.get(this.recordId).subscribe(recordData => {
+    //         this.isLoading = false;
+    //         this.prescriptionData = {
+    //           id: recordData._id,
+    //           prescriptions: recordData.prescription,
+    //           created: recordData.created,
+    //           patient: recordData.patient
+    //         };
+    //         // this.form.setValue({
+    //         //   medicine: this.prescriptionData.medicine,
+    //         //   preparation: this.prescriptionData.preparation,
+    //         //   sig: this.prescriptionData.sig,
+    //         //   quantity: this.prescriptionData.quantity,
+    //         //   record_date: this.prescriptionData.created
+    //         // });
+    //       });
+    //     } else {
+    //       this.mode = 'create';
+    //       this.recordId = null;
+    //     }
   }
 
   addPrescriptionGroup() {
@@ -134,16 +114,13 @@ export class PrescriptionEditComponent implements OnInit, OnDestroy {
   }
 
   onSave() {
-    // console.log(this.form.value);
+    console.log(this.form.value);
     if (this.form.invalid) {
       return;
     }
     if (this.mode === 'create') {
       this.prescriptionService.insert(
-        this.form.value.medicine,
-        this.form.value.preparation,
-        this.form.value.sig,
-        this.form.value.quantity,
+        this.form.value.prescriptions,
         this.form.value.record_date,
         this.patientId
       ).subscribe(() => {
@@ -156,10 +133,7 @@ export class PrescriptionEditComponent implements OnInit, OnDestroy {
     } else {
       this.prescriptionService.update(
         this.recordId,
-        this.form.value.medicine,
-        this.form.value.preparation,
-        this.form.value.sig,
-        this.form.value.quantity,
+        this.form.value.prescriptions,
         this.form.value.record_date,
         this.patientId
       ).subscribe(() => {
