@@ -53,7 +53,7 @@ export class PrescriptionService {
   }
 
   get(id: string) {
-    return this.http.get<{ _id: string; prescriptions: [], created: string, patient: string }>(
+    return this.http.get<{ _id: string; prescriptions: [], complaint: string, created: string, patient: string }>(
       BACKEND_URL + '/' + id
       );
   }

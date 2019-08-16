@@ -88,6 +88,7 @@ export class PrescriptionEditComponent implements OnInit, OnDestroy {
             this.isLoading = false;
             this.form.patchValue({
               record_date: recordData.created,
+              complaint: recordData.complaint,
             });
             recordData.prescriptions.forEach(x => {
               this.prescriptionArray.push(this.fb.group(x));

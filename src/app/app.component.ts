@@ -11,7 +11,8 @@ import { Title } from '@angular/platform-browser';
 export class AppComponent implements OnInit {
   title = 'Premit Remittance Services';
   apiUrl;
-
+  license: string;
+  
   constructor(
     private authService: AuthService,
     appconfig: AppConfiguration,
@@ -27,5 +28,6 @@ export class AppComponent implements OnInit {
 
   ngOnInit() {
     this.authService.autoAuthUser();
+    this.license = this.authService.getUserLicense();
   }
 }

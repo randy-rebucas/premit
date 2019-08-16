@@ -1,5 +1,6 @@
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
+const ip = require("ip");
 
 const User = require('../models/user');
 
@@ -10,7 +11,9 @@ exports.createUser = (req, res, next) => {
                 firstname: req.body.firstname,
                 lastname: req.body.lastname,
                 email: req.body.email,
-                password: hash
+                password: hash,
+                last_ip: ip.address(),
+                license_key: (Date.now().toString(36) + Math.random().toString(36).substr(2, 5)).toUpperCase(),
             });
             user.save()
                 .then(result => {
@@ -45,7 +48,7 @@ exports.userLogin = (req, res, next) => {
                     message: 'Auth failedno result'
                 });
             }
-            const token = jwt.sign({ email: fetchedUser.email, userId: fetchedUser._id },
+            const token = jwt.sign({ email: fetchedUser.email, license: fetchedUser.license_key, userId: fetchedUser._id },
                 process.env.JWT_KEY, { expiresIn: '12h' }
             );
             console.log(token);
@@ -53,7 +56,9 @@ exports.userLogin = (req, res, next) => {
             res.status(200).json({
                 token: token,
                 expiresIn: 43200, //3600,
-                userId: fetchedUser._id
+                userId: fetchedUser._id,
+                userEmail: fetchedUser.email,
+                userLicense: fetchedUser.license_key
             });
         })
         .catch(err => {
@@ -63,3 +68,31 @@ exports.userLogin = (req, res, next) => {
             });
         });
 }
+
+exports.getAll = (req, res, next) => {
+    const pageSize = +req.query.pagesize;
+    const currentPage = +req.query.page;
+    const query = User.find().sort({ 'created_at': 'desc' });
+
+    let fetchedRecord;
+    if (pageSize && currentPage) {
+        query.skip(pageSize * (currentPage - 1)).limit(pageSize);
+    }
+    query
+        .then(documents => {
+            fetchedRecord = documents;
+            return User.countDocuments();
+        })
+        .then(count => {
+            res.status(200).json({
+                message: 'Fetched successfully!',
+                users: fetchedRecord,
+                max: count
+            });
+        })
+        .catch(error => {
+            res.status(500).json({
+                message: error.message
+            });
+        });
+};

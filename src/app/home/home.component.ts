@@ -12,6 +12,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   @Input() title: string;
   userIsAuthenticated = false;
   private authListenerSubs: Subscription;
+  // license: string;
 
   constructor(private authService: AuthService,
               private router: Router) { }
@@ -23,6 +24,8 @@ export class HomeComponent implements OnInit, OnDestroy {
       .subscribe(isAuthenticated => {
         this.userIsAuthenticated = isAuthenticated;
       });
+
+    // this.license = this.authService.getUserLicense();
   }
 
   ngOnDestroy() {
