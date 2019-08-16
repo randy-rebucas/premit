@@ -14,6 +14,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   apiUrl;
   userIsAuthenticated = false;
   private authListenerSubs: Subscription;
+  license: string;
 
   constructor(
     private authService: AuthService,
@@ -30,6 +31,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
       .subscribe(isAuthenticated => {
         this.userIsAuthenticated = isAuthenticated;
       });
+
+    this.license = this.authService.getUserLicense();
   }
 
   onLogout() {

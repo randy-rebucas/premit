@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { FormGroup, FormControl, Validators, FormBuilder, FormArray } from '@angular/forms';
 import { mimeType } from 'src/app/patients/patient-edit/mime-type.validator';
 import { NotificationService } from 'src/app/shared/notification.service';
+import { SettingsService } from '../settings.service';
 
 @Component({
   selector: 'app-settings-general',
@@ -19,8 +20,9 @@ export class SettingsGeneralComponent implements OnInit, OnDestroy {
 
   constructor(private authService: AuthService,
               private router: Router,
+              public settingsService: SettingsService,
               private notificationService: NotificationService,
-              private formBuilder: FormBuilder) {}
+              private fb: FormBuilder) {}
 
   ngOnInit() {
     this.userIsAuthenticated = this.authService.getIsAuth();
@@ -30,31 +32,67 @@ export class SettingsGeneralComponent implements OnInit, OnDestroy {
         this.userIsAuthenticated = isAuthenticated;
       });
 
-    this.form = new FormGroup({
-        perPage: new FormControl('5', {
-          validators: [Validators.required, Validators.maxLength(2) ]
-        })
-      });
-    this.form.setValue({
-      perPage: 5
+    this.form = this.fb.group({
+        clinic_name: ['', [Validators.required]],
+        clinic_address: ['', [Validators.required]],
+        clinic_url: ['', [Validators.required]],
+        clinic_phone: this.fb.array([this.addClinicContactGroup()]),
+        clinic_hours: this.fb.array([this.addClinicHourGroup()])
       });
   }
 
-  onSaveGenSetting() {
-    // this.patientsService.addPatient(
-    //   this.form.value.firstname,
-    //   this.form.value.midlename,
-    //   this.form.value.lastname,
-    //   this.form.value.contact,
-    //   this.form.value.gender,
-    //   this.form.value.birthdate,
-    //   this.form.value.address,
-    //   this.form.value.image
-    // ).subscribe(() => {
-    //   this.patientsService.getPatients(this.patientsPerPage, this.currentPage);
-    // });
+  addClinicHourGroup() {
+    return this.fb.group({
+      morning: ['', [Validators.required]],
+      afternoon: ['', [Validators.required]]
+    });
+  }
 
-    this.notificationService.success(':: Added successfully');
+  addClinicContactGroup() {
+    return this.fb.group({
+      contact: ['', [Validators.required]]
+    });
+  }
+
+  get hourArray() {
+    return this.form.get('hours') as FormArray;
+  }
+
+  get contactArray() {
+    return this.form.get('contacts') as FormArray;
+  }
+
+  addHour() {
+    this.hourArray.push(this.addClinicHourGroup());
+  }
+
+  addContact() {
+    this.contactArray.push(this.addClinicContactGroup());
+  }
+
+  removeHour(index) {
+    this.hourArray.removeAt(index);
+    this.hourArray.markAsDirty();
+    this.hourArray.markAsTouched();
+  }
+
+  removeContact(index) {
+    this.contactArray.removeAt(index);
+    this.contactArray.markAsDirty();
+    this.contactArray.markAsTouched();
+  }
+
+  onSaveGenSetting() {
+    this.settingsService.insert(
+      this.form.value.clinic_name,
+      this.form.value.clinic_address,
+      this.form.value.clinic_url,
+      this.form.value.clinic_phone,
+      this.form.value.clinic_hours
+    ).subscribe(() => {
+      this.form.reset();
+      this.notificationService.success('::Updated successfully');
+    });
   }
 
   ngOnDestroy() {

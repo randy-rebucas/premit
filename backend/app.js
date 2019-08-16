@@ -10,6 +10,7 @@ var mongoose = require('mongoose');
 
 var indexRouter = require('./routes/index');
 var userRouter = require('./routes/user');
+var settingRouter = require('./routes/setting');
 var patientRouter = require('./routes/patient');
 
 var heightRouter = require('./routes/records/height');
@@ -66,6 +67,7 @@ app.use((req, res, next) => {
 app.use('/', indexRouter);
 app.use('/api/user', userRouter);
 app.use('/api/patients', patientRouter);
+app.use('/api/setting', settingRouter);
 
 app.use('/api/heights', heightRouter);
 app.use('/api/weights', weightRouter);

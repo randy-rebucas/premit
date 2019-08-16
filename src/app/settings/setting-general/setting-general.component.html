@@ -1,9 +1,54 @@
 <div class="field-wrapper">
     <form [formGroup]="form" class="normal-form" (submit)="onSaveGenSetting()">
         <mat-form-field>
-            <input matInput type="text" formControlName="perPage" placeholder="Per Page">
-            <mat-error *ngIf="form.get('perPage').invalid">Please enter per page</mat-error>
+            <input matInput type="text" formControlName="clinic_name" placeholder="Medicine">
         </mat-form-field>
+        <mat-form-field>
+            <input matInput type="text" formControlName="clinic_address" placeholder="Medicine">
+        </mat-form-field>
+        <mat-form-field>
+            <input matInput type="text" formControlName="clinic_url" placeholder="Medicine">
+        </mat-form-field>
+        <table class="example-full-width" cellspacing="0" formArrayName="clinic_phone">
+            <tr *ngFor="let group of contactArray.controls; let i = index;" [formGroupName]="i">
+                <td>
+                    <mat-form-field>
+                        <input matInput type="text" formControlName="contact" placeholder="Contact">
+                    </mat-form-field>
+                </td>
+                <td>
+                    <button mat-icon-button (click)="addContact()" type="button"><mat-icon>add</mat-icon></button>
+                    <button mat-icon-button color="warn" (click)="removeContact(i)" type="button"><mat-icon>delete_outline</mat-icon></button>
+                </td>
+            </tr>
+        </table>
+        <table class="example-full-width" cellspacing="0" formArrayName="clinic_hours">
+            <tr *ngFor="let group of hourArray.controls; let i = index;" [formGroupName]="i">
+                <td>
+                    <mat-form-field>
+                        <input matInput type="text" formControlName="morning" placeholder="Morning">
+                    </mat-form-field>
+                </td>
+                <td>
+                    <mat-form-field>
+                        <input matInput type="text" formControlName="afternoon" placeholder="Afternoon">
+                    </mat-form-field>
+                </td>
+                <td>
+                    <button mat-icon-button (click)="addHour()" type="button"><mat-icon>add</mat-icon></button>
+                    <button mat-icon-button color="warn" (click)="removeHour(i)" type="button"><mat-icon>delete_outline</mat-icon></button>
+                </td>
+            </tr>
+        </table>
         <button mat-raised-button color="primary" type="submit">Save</button>
     </form>
 </div>
+<!--
+    licenses:
+    
+clinic name,
+clinic hours,
+clinic address,
+clinic phone,
+clinic url
+-->

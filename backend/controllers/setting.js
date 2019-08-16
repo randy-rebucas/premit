@@ -1,12 +1,14 @@
 const Setting = require('../models/setting');
 
 exports.createSetting = (req, res, next) => {
-    const url = req.protocol + '://' + req.get('host');
     const setting = new Setting({
-        key: req.body.key,
-        value: req.body.value,
         section: req.body.section
     });
+    configData = req.body.config;
+    for (let index = 0; index < configData.length; index++) {
+        setting.config.push(configData[index]);
+    }
+
     setting.save().then(createdSetting => {
             res.status(201).json({
                 message: 'Setting added successfully',
@@ -30,7 +32,7 @@ exports.getSettings = (req, res, next) => {
 
     settingQuery
         .then(documents => {
-          fetchedSettings = documents;
+            fetchedSettings = documents;
             return Setting.countDocuments();
         })
         .then(count => {
@@ -41,13 +43,29 @@ exports.getSettings = (req, res, next) => {
         })
         .catch(error => {
             res.status(500).json({
-                message: 'Fetching patient failed!'
+                message: 'Fetching pasettingtient failed!'
+            });
+        });
+};
+
+exports.getSetting = (req, res, next) => {
+    Setting.find({ 'key': req.params.key }).then(setting => {
+            if (setting) {
+                console.log(setting);
+                res.status(200).json(setting);
+            } else {
+                res.status(404).json({ message: 'setting not found' });
+            }
+        })
+        .catch(error => {
+            res.status(500).json({
+                message: 'Fetching settings failed!'
             });
         });
 };
 
 exports.deleteSettings = (req, res, next) => {
-    Patient.deleteOne({ _id: req.params.id, creator: req.userData.userId }).then(result => {
+    Setting.deleteOne({ _id: req.params.id, creator: req.userData.userId }).then(result => {
             if (result.n > 0) {
                 res.status(200).json({ message: 'Deletion successfull!' });
             } else {
