@@ -1,54 +1,113 @@
 <div class="field-wrapper">
     <form [formGroup]="form" class="normal-form" (submit)="onSaveGenSetting()">
-        <mat-form-field>
-            <input matInput type="text" formControlName="clinic_name" placeholder="Medicine">
-        </mat-form-field>
-        <mat-form-field>
-            <input matInput type="text" formControlName="clinic_address" placeholder="Medicine">
-        </mat-form-field>
-        <mat-form-field>
-            <input matInput type="text" formControlName="clinic_url" placeholder="Medicine">
-        </mat-form-field>
-        <table class="example-full-width" cellspacing="0" formArrayName="clinic_phone">
-            <tr *ngFor="let group of contactArray.controls; let i = index;" [formGroupName]="i">
-                <td>
-                    <mat-form-field>
-                        <input matInput type="text" formControlName="contact" placeholder="Contact">
-                    </mat-form-field>
-                </td>
-                <td>
-                    <button mat-icon-button (click)="addContact()" type="button"><mat-icon>add</mat-icon></button>
-                    <button mat-icon-button color="warn" (click)="removeContact(i)" type="button"><mat-icon>delete_outline</mat-icon></button>
-                </td>
+        <table>
+          <tr>
+            <td>
+                <mat-form-field>
+                    <input matInput type="text" formControlName="clinic_name" placeholder="Clinic Name">
+                </mat-form-field>
+            </td>
+            <td colspan="2">
+                <mat-form-field>
+                    <input matInput type="text" formControlName="clinic_owner" placeholder="Clinic Owner">
+                </mat-form-field>
+            </td>
+          </tr>
+          <tr>
+            <td colspan="3">
+              <mat-form-field>
+                  <textarea matInput formControlName="clinic_address" rows="4"  placeholder="Clinic Address"></textarea>
+                </mat-form-field>
+            </td>
+          </tr>
+          <tr>
+            <td>
+                <mat-form-field>
+                    <input matInput type="text" formControlName="clinic_email" placeholder="Clinic Email">
+                </mat-form-field>
+            </td>
+            <td colspan="2">
+                <mat-form-field>
+                    <input matInput type="text" formControlName="clinic_url" placeholder="Clinic Website">
+                </mat-form-field>
+            </td>
+          </tr>
+          <tr>
+              <td>
+                  <mat-form-field>
+                      <input matInput type="text" formControlName="prc" placeholder="PRC">
+                  </mat-form-field>
+              </td>
+              <td>
+                  <mat-form-field>
+                      <input matInput type="text" formControlName="ptr" placeholder="PTR">
+                  </mat-form-field>
+              </td>
+              <td>
+                  <mat-form-field>
+                      <input matInput type="text" formControlName="s2" placeholder="S2">
+                  </mat-form-field>
+              </td>
             </tr>
         </table>
-        <table class="example-full-width" cellspacing="0" formArrayName="clinic_hours">
-            <tr *ngFor="let group of hourArray.controls; let i = index;" [formGroupName]="i">
-                <td>
+        <table cellspacing="0" formArrayName="clinic_phone">
+            <ng-container *ngIf="contactArray.length > 0">
+            <tr *ngFor="let contact of contactArray.controls; let i = index;" [formGroupName]="i">
+                <td class="contact-{{i}}">
                     <mat-form-field>
-                        <input matInput type="text" formControlName="morning" placeholder="Morning">
+                        <input matInput type="text" formControlName="contact" placeholder="Contact {{i+1}}">
                     </mat-form-field>
                 </td>
                 <td>
-                    <mat-form-field>
-                        <input matInput type="text" formControlName="afternoon" placeholder="Afternoon">
-                    </mat-form-field>
-                </td>
-                <td>
-                    <button mat-icon-button (click)="addHour()" type="button"><mat-icon>add</mat-icon></button>
-                    <button mat-icon-button color="warn" (click)="removeHour(i)" type="button"><mat-icon>delete_outline</mat-icon></button>
+                    <button mat-icon-button *ngIf="contactArray.controls.length < 3" (click)="addContact()" type="button"><mat-icon>add</mat-icon></button>
+                    <!-- row delete button, hidden if there is just one row -->
+                    <button mat-icon-button color="warn" *ngIf="contactArray.controls.length > 1" (click)="removeContact(i)" type="button"><mat-icon>delete_outline</mat-icon></button>
                 </td>
             </tr>
+          </ng-container>
+        </table>
+
+        <table cellspacing="0" formArrayName="clinic_hours">
+            <tr>
+              <td colspan="2">Morning</td>
+              <td colspan="2">Afternoon</td>
+            </tr>
+          <tr *ngFor="let hour of hourArray.controls; let i = index;" [formGroupName]="i">
+                <td>
+                    <mat-form-field>
+                        <input matInput type="text" [ngxTimepicker]="morningopenpicker" formControlName="morning_open" placeholder="opening hour" [disableClick]="true" readonly>
+                        <ngx-material-timepicker-toggle [for]="morningopenpicker"></ngx-material-timepicker-toggle>
+                        <ngx-material-timepicker #morningopenpicker></ngx-material-timepicker>
+                    </mat-form-field>
+                </td>
+                <td>
+                    <mat-form-field>
+                        <input matInput type="text" [ngxTimepicker]="morningclosepicker" formControlName="morning_close" placeholder="closing hour" [disableClick]="true" readonly>
+                        <ngx-material-timepicker-toggle [for]="morningclosepicker"></ngx-material-timepicker-toggle>
+                        <ngx-material-timepicker #morningclosepicker></ngx-material-timepicker>
+                    </mat-form-field>
+                </td>
+                <td>
+                    <mat-form-field>
+                        <input matInput type="text" [ngxTimepicker]="afternoonopenpicker" formControlName="afternoon_open" placeholder="opening hour" [disableClick]="true" readonly>
+                        <ngx-material-timepicker-toggle [for]="afternoonopenpicker"></ngx-material-timepicker-toggle>
+                        <ngx-material-timepicker #afternoonopenpicker></ngx-material-timepicker>
+                      </mat-form-field>
+                </td>
+                <td>
+                    <mat-form-field>
+                        <input matInput type="text" [ngxTimepicker]="afternoonclosepicker" formControlName="afternoon_close" placeholder="closing hour" [disableClick]="true" readonly>
+                        <ngx-material-timepicker-toggle [for]="afternoonclosepicker"></ngx-material-timepicker-toggle>
+                        <ngx-material-timepicker #afternoonclosepicker></ngx-material-timepicker>
+                      </mat-form-field>
+                </td>
+                <td>
+                    <button mat-icon-button *ngIf="hourArray.controls.length < 3" (click)="addHour()" type="button"><mat-icon>add</mat-icon></button>
+                    <button mat-icon-button color="warn" *ngIf="hourArray.controls.length > 1" (click)="removeHour(i)" type="button"><mat-icon>delete_outline</mat-icon></button>
+                </td>
+            </tr>
+
         </table>
         <button mat-raised-button color="primary" type="submit">Save</button>
     </form>
 </div>
-<!--
-    licenses:
-    
-clinic name,
-clinic hours,
-clinic address,
-clinic phone,
-clinic url
--->

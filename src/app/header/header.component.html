@@ -1,12 +1,9 @@
 <mat-toolbar color="primary">
     <span>
-      <a routerLink="/">{{ title }}</a>
+      <a routerLink="/">{{ title }}  <span *ngIf="userIsAuthenticated">License: {{license}}</span></a>
     </span>
     <span class="spacer"></span>
     <ul>
-        <li *ngIf="userIsAuthenticated">
-            {{license}}
-        </li>
         <li *ngIf="userIsAuthenticated">
             <a mat-button routerLink="/patients" routerLinkActive="mat-accent">Patients</a>
         </li>

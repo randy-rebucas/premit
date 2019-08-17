@@ -58,11 +58,20 @@ export class PrescriptionService {
       );
   }
 
-  insert(prescriptions: [], complaint: string, created: string, patient: string) {
+  insert(complaint: string, created: string, patient: string, prescriptions: []) {
     const recordData = {
-      prescriptions, complaint, created, patient
+      complaint, created, patient, prescriptions
     };
     return this.http.post<{ message: string, record: PrescriptionData }>(BACKEND_URL, recordData);
+  }
+
+  update(id: string, complaint: string, created: string, patient: string, prescriptions: []) {
+
+    const settingData = {
+        id: id, complaint: complaint, created: created, patient: patient, prescriptions: prescriptions
+      };
+
+    return this.http.put(BACKEND_URL + '/' + id, settingData);
   }
 
   delete(recordId: string) {

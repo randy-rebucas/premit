@@ -30,30 +30,18 @@ exports.create = (req, res, next) => {
 
 exports.update = (req, res, next) => {
     const prescription = new Prescription({
+      _id: req.body.id,
+      complaint: req.body.complaint,
       created: req.body.created,
       patient: req.body.patient
     });
-    var new_array = [];
     prescriptionData = req.body.prescriptions;
     for (let index = 0; index < prescriptionData.length; index++) {
-      new_array.push(prescriptionData[index].maintenableFlg);
-      new_array.push(prescriptionData[index].maintenableFlg);
-      new_array.push(prescriptionData[index].medicine);
-      new_array.push(prescriptionData[index].preparation);
-      new_array.push(prescriptionData[index].sig);
-      new_array.push(prescriptionData[index].quantity);
+      prescription.prescriptions.push(prescriptionData[index]);
     }
-    prescription.prescriptions.push(new_array);
-    // prescription.prescriptions.findByIdAndUpdate({ _id: req.params.id })
+
     Prescription.updateOne(
       { _id: req.params.id }, //pass doctor role for restriction
-      // { "$set": { "requirement.$[outer].update.$[inner].number": 100000 } },
-      // {
-      //   "arrayFilters": [
-      //     { "outer._id": mongoose.Types.ObjectId(req.params.versionID) },
-      //     { "inner._id": mongoose.Types.ObjectId(req.params.versionNumID) }
-      //   ]
-      // },
       prescription
         ).then(result => {
             if (result.n > 0) {

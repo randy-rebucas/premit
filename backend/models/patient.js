@@ -11,7 +11,7 @@ const patientSchema = mongoose.Schema({
     address: { type: String, required: true },
     imagePath: { type: String, required: true },
     created_at: { type: Date, default: Date.now },
-    creator: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true }
+    client_id: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true }
 });
 
 module.exports = mongoose.model('Patient', patientSchema);

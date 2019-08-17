@@ -8,5 +8,5 @@ export interface PatientData {
   birthdate: string;
   address: string;
   imagePath: string;
-  creator: string;
+  client: string;
 }

@@ -26,6 +26,7 @@ export class PatientEditComponent implements OnInit, OnDestroy {
   private mode = 'create';
   private patientId: string;
   title: string;
+  userId: string;
   private authStatusSub: Subscription;
 
   startDate = new Date(1990, 0, 1);
@@ -44,6 +45,7 @@ export class PatientEditComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit() {
+    this.userId = this.authService.getUserId();
     this.authStatusSub = this.authService
     .getAuthStatusListener()
     .subscribe(authStatus => {
@@ -90,7 +92,7 @@ export class PatientEditComponent implements OnInit, OnDestroy {
             birthdate: patientData.birthdate,
             address: patientData.address,
             imagePath: patientData.imagePath,
-            creator: patientData.creator
+            client: patientData.client_id
           };
           this.form.setValue({
             firstname: this.patient.firstname,
@@ -136,7 +138,7 @@ export class PatientEditComponent implements OnInit, OnDestroy {
         this.form.value.address,
         this.form.value.image
       ).subscribe(() => {
-        this.patientsService.getPatients(this.patientsPerPage, this.currentPage);
+        this.patientsService.getPatients(this.userId, this.patientsPerPage, this.currentPage);
       });
 
       this.form.reset();
@@ -154,7 +156,7 @@ export class PatientEditComponent implements OnInit, OnDestroy {
         this.form.value.address,
         this.form.value.image
       ).subscribe(() => {
-        this.patientsService.getPatients(this.patientsPerPage, this.currentPage);
+        this.patientsService.getPatients(this.userId, this.patientsPerPage, this.currentPage);
       });
 
       this.form.reset();

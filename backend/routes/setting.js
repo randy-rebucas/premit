@@ -11,7 +11,9 @@ router.get('', SettingController.getSettings);
 
 router.get('/:key', SettingController.getSetting);
 
-router.post('', checkAuth, SettingController.createSetting); //checkAuth, 
+router.put('/:id', checkAuth, SettingController.update);
+
+router.post('', checkAuth, SettingController.createSetting); //checkAuth,
 
 router.delete('/:id', checkAuth, SettingController.deleteSettings);
 

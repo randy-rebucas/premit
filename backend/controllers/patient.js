@@ -11,7 +11,7 @@ exports.createPatient = (req, res, next) => {
         birthdate: req.body.birthdate,
         address: req.body.address,
         imagePath: url + '/images/' + req.file.filename,
-        creator: req.userData.userId
+        client_id: req.userData.userId
     });
     patient.save().then(createdPatient => {
             res.status(201).json({
@@ -45,9 +45,9 @@ exports.updatePatient = (req, res, next) => {
         birthdate: req.body.birthdate,
         address: req.body.address,
         imagePath: imagePath,
-        creator: req.userData.userId
+        client_id: req.userData.userId
     });
-    Patient.updateOne({ _id: req.params.id, creator: req.userData.userId },
+    Patient.updateOne({ _id: req.params.id, client_id: req.userData.userId },
             patient
         ).then(result => {
             if (result.n > 0) {
@@ -66,7 +66,7 @@ exports.updatePatient = (req, res, next) => {
 exports.getPatients = (req, res, next) => {
     const pageSize = +req.query.pagesize;
     const currentPage = +req.query.page;
-    const patientQuery = Patient.find().sort({'firstname': 'asc'});
+    const patientQuery = Patient.find({ 'client_id': req.query.client }).sort({'firstname': 'asc'});
 
     let fetchedPatients;
     if (pageSize && currentPage) {
@@ -108,7 +108,7 @@ exports.getPatient = (req, res, next) => {
 };
 
 exports.deletePatient = (req, res, next) => {
-    Patient.deleteOne({ _id: req.params.id, creator: req.userData.userId }).then(result => {
+    Patient.deleteOne({ _id: req.params.id, client_id: req.userData.userId }).then(result => {
             if (result.n > 0) {
                 res.status(200).json({ message: 'Deletion successfull!' });
             } else {

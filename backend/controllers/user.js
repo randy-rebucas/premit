@@ -3,6 +3,7 @@ const jwt = require('jsonwebtoken');
 const ip = require("ip");
 
 const User = require('../models/user');
+const Setting = require('../models/setting');
 
 exports.createUser = (req, res, next) => {
     bcrypt.hash(req.body.password, 10)
@@ -17,10 +18,22 @@ exports.createUser = (req, res, next) => {
             });
             user.save()
                 .then(result => {
+                  const setting = new Setting({
+                    client_id: result._id,
+                    clinic_owner: result.firstname + ' ' + result.lastname
+                  });
+                  setting.save().then(createdSetting => {
                     res.status(201).json({
                         message: 'User created!',
                         result: result
                     });
+                  })
+                  .catch(error => {
+                      res.status(500).json({
+                          message: error
+                      });
+                  });
+
                 })
                 .catch(err => {
                     res.status(500).json({

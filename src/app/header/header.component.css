@@ -13,3 +13,8 @@ ul {
 .spacer {
     flex: 1 1 auto;
 }
+
+.mat-toolbar span a span {
+  font-size: 12px;
+  font-weight: 100;
+}

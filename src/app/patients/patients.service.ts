@@ -22,8 +22,8 @@ export class PatientsService {
     private datePipe: DatePipe
     ) {}
 
-  getPatients(patientPerPage: number, currentPage: number) {
-    const queryParams = `?pagesize=${patientPerPage}&page=${currentPage}`;
+  getPatients(clientId: string, patientPerPage: number, currentPage: number) {
+    const queryParams = `?client=${clientId}&pagesize=${patientPerPage}&page=${currentPage}`;
     this.http.get<{message: string, patients: any, maxPatients: number }>(
       BACKEND_URL + queryParams
     )
@@ -40,7 +40,7 @@ export class PatientsService {
             birthdate: patient.birthdate,
             address: patient.address,
             imagePath: patient.imagePath,
-            creator: patient.creator
+            client_id: patient.client_id
           };
         }), maxPatients: patientData.maxPatients};
       })
@@ -60,7 +60,7 @@ export class PatientsService {
 
   getPatient(id: string) {
     // tslint:disable-next-line: max-line-length
-    return this.http.get<{ _id: string; firstname: string, midlename: string, lastname: string, contact: string, gender: string, birthdate: string, address: string, imagePath: string, creator: string
+    return this.http.get<{ _id: string; firstname: string, midlename: string, lastname: string, contact: string, gender: string, birthdate: string, address: string, imagePath: string, client_id: string
     }>(
       BACKEND_URL + '/' + id
       );
@@ -95,7 +95,7 @@ export class PatientsService {
       patientData.append('image', image, firstname);
     } else {
       patientData = {
-        id: id, firstname: firstname, midlename: midlename, lastname: lastname, contact: contact, gender: gender, birthdate: birthdate, address: address, imagePath: image, creator: null
+        id: id, firstname: firstname, midlename: midlename, lastname: lastname, contact: contact, gender: gender, birthdate: birthdate, address: address, imagePath: image, client: null
       };
     }
 

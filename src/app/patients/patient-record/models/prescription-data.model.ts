@@ -1,9 +1,9 @@
 export interface PrescriptionData {
   id: string;
-  prescriptions: Prescription[];
-  created: string;
   complaint: string;
+  created: string;
   patient: string;
+  prescriptions: Prescription[];
 }
 
 export interface Prescription {

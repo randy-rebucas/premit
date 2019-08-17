@@ -90,9 +90,13 @@ export class PrescriptionEditComponent implements OnInit, OnDestroy {
               record_date: recordData.created,
               complaint: recordData.complaint,
             });
-            recordData.prescriptions.forEach(x => {
-              this.prescriptionArray.push(this.fb.group(x));
-            });
+            const prescriptionControl = this.form.controls.prescriptions as FormArray;
+            const prescription = recordData.prescriptions;
+            for (let i = 1; i < prescription.length; i++) {
+              prescriptionControl.push(this.addPrescriptionGroup());
+            }
+            this.form.patchValue({prescriptions: prescription});
+
           });
         } else {
           this.mode = 'create';
@@ -130,10 +134,10 @@ export class PrescriptionEditComponent implements OnInit, OnDestroy {
     }
     if (this.mode === 'create') {
       this.prescriptionService.insert(
-        this.form.value.prescriptions,
         this.form.value.complaint,
         this.form.value.record_date,
-        this.patientId
+        this.patientId,
+        this.form.value.prescriptions
       ).subscribe(() => {
         this.form.reset();
         this.notificationService.success(':: Added successfully');
@@ -141,18 +145,17 @@ export class PrescriptionEditComponent implements OnInit, OnDestroy {
         this.prescriptionService.getAll(this.perPage, this.currentPage, this.patientId);
       });
     } else {
-      this.prescriptionService.delete(this.recordId).subscribe(() => {
-        this.prescriptionService.insert(
-          this.form.value.prescriptions,
-          this.form.value.complaint,
-          this.form.value.record_date,
-          this.patientId
-        ).subscribe(() => {
-          this.form.reset();
-          this.notificationService.success(':: Updated successfully');
-          this.onClose();
-          this.prescriptionService.getAll(this.perPage, this.currentPage, this.patientId);
-        });
+      this.prescriptionService.update(
+        this.recordId,
+        this.form.value.complaint,
+        this.form.value.record_date,
+        this.patientId,
+        this.form.value.prescriptions,
+      ).subscribe(() => {
+        this.form.reset();
+        this.notificationService.success(':: Updated successfully');
+        this.onClose();
+        this.prescriptionService.getAll(this.perPage, this.currentPage, this.patientId);
       });
     }
   }

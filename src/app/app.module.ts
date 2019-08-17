@@ -25,6 +25,7 @@ import { SettingsNotificationComponent } from './settings/setting-notification/s
 import { DatePipe } from '@angular/common';
 import { MatDialogConfirmComponent } from './mat-dialog-confirm/mat-dialog-confirm.component';
 import { PatientRecordsModule } from './patients/patient-record/patient-records.module';
+import {NgxMaterialTimepickerModule} from 'ngx-material-timepicker';
 
 @NgModule({
   declarations: [
@@ -48,7 +49,8 @@ import { PatientRecordsModule } from './patients/patient-record/patient-records.
     PatientRecordsModule,
     FormsModule,
     ReactiveFormsModule,
-    AngularMaterialModule
+    AngularMaterialModule,
+    NgxMaterialTimepickerModule
   ],
   providers: [
     AppConfiguration,

@@ -3,23 +3,28 @@
 </h2>
 <mat-dialog-content class="mat-typography">
     <form [formGroup]="form" class="normal-form" (submit)="onSave()" *ngIf="!isLoading">
-
-        <mat-form-field>
-            <mat-label>Complaint</mat-label>
-            <mat-select formControlName="complaint">
-              <mat-option *ngFor="let cc of ccs" [value]="cc.complaint">
-                {{cc.complaint}}
-              </mat-option>
-            </mat-select>
-        </mat-form-field>
-
-        <mat-form-field>
-            <input matInput readonly [matDatepicker]="picker" formControlName="record_date" [max]="maxDate" placeholder="Date">
-            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
-            <mat-datepicker #picker color="primary"></mat-datepicker>
-        </mat-form-field>
-
-        <table class="example-full-width" cellspacing="0" formArrayName="prescriptions">
+        <table>
+          <tr>
+            <td>
+                <mat-form-field>
+                    <mat-label>Complaint</mat-label>
+                    <mat-select formControlName="complaint">
+                      <mat-option *ngFor="let cc of ccs" [value]="cc.complaint">
+                        {{cc.complaint}}
+                      </mat-option>
+                    </mat-select>
+                </mat-form-field>
+            </td>
+            <td>
+                <mat-form-field>
+                    <input matInput readonly [matDatepicker]="picker" formControlName="record_date" [max]="maxDate" placeholder="Date">
+                    <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                    <mat-datepicker #picker color="primary"></mat-datepicker>
+                </mat-form-field>
+            </td>
+          </tr>
+        </table>
+        <table cellspacing="0" formArrayName="prescriptions">
             <tr *ngFor="let group of prescriptionArray.controls; let i = index;" [formGroupName]="i">
                 <td>
                     <mat-checkbox formControlName="maintenableFlg"></mat-checkbox>
@@ -46,7 +51,7 @@
                 </td>
                 <td>
                     <button mat-icon-button (click)="addPrescription()" type="button"><mat-icon>add</mat-icon></button>
-                    <button mat-icon-button color="warn" (click)="removePrescription(i)" type="button"><mat-icon>delete_outline</mat-icon></button>
+                    <button mat-icon-button color="warn" *ngIf="prescriptionArray.controls.length > 1" (click)="removePrescription(i)" type="button"><mat-icon>delete_outline</mat-icon></button>
                 </td>
             </tr>
         </table>

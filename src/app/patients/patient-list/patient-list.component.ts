@@ -57,8 +57,8 @@ export class PatientListComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.isLoading = true;
-    this.patientsService.getPatients(this.patientsPerPage, this.currentPage);
     this.userId = this.authService.getUserId();
+    this.patientsService.getPatients(this.userId, this.patientsPerPage, this.currentPage);
     this.patientsSub = this.patientsService
       .getPatientUpdateListener()
       .subscribe((patientData: {patients: PatientData[], patientCount: number}) => {
@@ -90,7 +90,7 @@ export class PatientListComponent implements OnInit, OnDestroy {
     this.isLoading = true;
     this.currentPage = pageData.pageIndex + 1;
     this.patientsPerPage = pageData.pageSize;
-    this.patientsService.getPatients(this.patientsPerPage, this.currentPage);
+    this.patientsService.getPatients(this.userId, this.patientsPerPage, this.currentPage);
   }
 
   onCreate() {
@@ -123,7 +123,7 @@ export class PatientListComponent implements OnInit, OnDestroy {
       console.log(res);
       if (res) {
         this.patientsService.deletePatient(patientId).subscribe(() => {
-          this.patientsService.getPatients(this.patientsPerPage, this.currentPage);
+          this.patientsService.getPatients(this.userId, this.patientsPerPage, this.currentPage);
           this.notificationService.warn('! Deleted successfully');
         });
       }
