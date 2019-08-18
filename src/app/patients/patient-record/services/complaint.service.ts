@@ -58,6 +58,12 @@ export class ComplaintService {
       );
   }
 
+  getLatest(id: string) {
+    return this.http.get<{ _id: string; complaints: [], created: string, patient: string }>(
+      BACKEND_URL + '/' + id
+      );
+  }
+
   insert(created: string, patient: string, complaints: []) {
     const recordData = {
       created, patient, complaints

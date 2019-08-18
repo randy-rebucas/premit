@@ -1,0 +1,10 @@
+mat-grid-list {
+  margin: 2em 0;
+}
+.mat-elevation-z8 {
+  margin-top: 0 !important;
+}
+mat-grid-list ::ng-deep figure {
+  justify-content: flex-start !important;
+  align-items: flex-start !important;
+}

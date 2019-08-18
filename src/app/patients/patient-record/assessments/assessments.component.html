@@ -1,2 +1,11 @@
-<p>Up coming...</p>
-<!-- <p>diagnosis, treatment</p> -->
+<mat-grid-list cols="4" rowHeight="300px" [gutterSize]="'10px'">
+    <mat-grid-tile [colspan]="2" [rowspan]="2" style="background:lightblue;">
+      <app-encounter></app-encounter>
+    </mat-grid-tile>
+    <mat-grid-tile [colspan]="2" [rowspan]="1"  style="background:lightgreen;">
+        <app-chief-complaint-latest></app-chief-complaint-latest>
+    </mat-grid-tile>
+    <mat-grid-tile [colspan]="2" [rowspan]="1">
+        <router-outlet></router-outlet>
+    </mat-grid-tile>
+  </mat-grid-list>

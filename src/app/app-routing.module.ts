@@ -21,6 +21,8 @@ import { HistoriesListComponent } from './patients/patient-record/histories/hist
 import { HistoriesEditComponent } from './patients/patient-record/histories/histories-edit/histories-edit.component';
 import { PhysicalExamsComponent } from './patients/patient-record/physical-exams/physical-exams.component';
 import { AssessmentsComponent } from './patients/patient-record/assessments/assessments.component';
+import { AssessmentListComponent } from './patients/patient-record/assessments/assessment-list/assessment-list.component';
+import { AssessmentEditComponent } from './patients/patient-record/assessments/assessment-edit/assetment-edit.component';
 import { PrescriptionsComponent } from './patients/patient-record/prescriptions/prescriptions.component';
 import { PrescriptionEditComponent } from './patients/patient-record/prescriptions/prescription-edit/prescription-edit.component';
 import { PrescriptionListComponent } from './patients/patient-record/prescriptions/prescription-list/prescription-list.component';
@@ -47,6 +49,7 @@ import { RespiratoryRateComponent } from './patients/patient-record/physical-exa
 import { RespiratoryRateEditComponent } from './patients/patient-record/physical-exams/respiratory-rate/respiratory-rate-edit/respiratory-rate-edit.component';
 // tslint:disable-next-line:max-line-length
 import { RespiratoryRateListComponent } from './patients/patient-record/physical-exams/respiratory-rate/respiratory-rate-list/respiratory-rate-list.component';
+import { ChiefComplaintLatestComponent } from './patients/patient-record/chief-complaint/chief-complaint-latest/chief-complaint-latest.component';
 
 const appRoutes: Routes = [
     // { path: '', redirectTo: '/patients', pathMatch: 'full' },
@@ -81,7 +84,12 @@ const appRoutes: Routes = [
           { path: 'create', component: RespiratoryRateEditComponent }
         ] }
       ] },
-      { path: 'assessments', component: AssessmentsComponent },
+      { path: 'assessments', component: AssessmentsComponent, children: [
+        { path: '', component: AssessmentListComponent },
+        // { path: 'new', component: RecipeEditComponent },
+        // { path: ':id', component: RecipeDetailComponent },
+        { path: 'create', component: AssessmentEditComponent }
+      ] },
       { path: 'prescriptions', component: PrescriptionListComponent, children: [
         { path: 'create', component: PrescriptionEditComponent }
       ] },

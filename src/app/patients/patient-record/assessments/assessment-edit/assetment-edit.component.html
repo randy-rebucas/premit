@@ -1,0 +1,22 @@
+<h2 mat-dialog-title>{{ title }}
+    <button class="btn-dialog-close" mat-stroked-button (click)="onClose()" tabIndex="-1"><mat-icon>clear</mat-icon></button>
+  </h2>
+  <mat-dialog-content class="mat-typography">
+    <form [formGroup]="form" class="normal-form" (submit)="onSave()" *ngIf="!isLoading">
+        <table cellspacing="0" formArrayName="diagnosis" style="width: 100%;">
+            <tr *ngFor="let group of diagnosisArray.controls; let i = index;" [formGroupName]="i">
+                <td>
+                    <mat-form-field>
+                        <input matInput type="text" formControlName="diagnosis" placeholder="Diagnosis">
+                    </mat-form-field>
+                </td>
+                <td style="text-align: right; width: 18%;">
+                    <button mat-icon-button (click)="addDiagnose()" type="button"><mat-icon>add</mat-icon></button>
+                    <button mat-icon-button color="warn" *ngIf="diagnosisArray.controls.length > 1" (click)="removeDiagnose(i)" type="button"><mat-icon>delete_outline</mat-icon></button>
+                </td>
+            </tr>
+        </table>
+
+        <button mat-raised-button color="primary" type="submit">Save</button>
+    </form>
+  </mat-dialog-content>
