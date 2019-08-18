@@ -1,4 +1,5 @@
 const Complaint = require('../../models/records/complaint');
+const moment = require('moment');
 
 exports.create = (req, res, next) => {
     const complaint = new Complaint({
@@ -81,6 +82,30 @@ exports.getAll = (req, res, next) => {
 
 exports.get = (req, res, next) => {
   Complaint.findById(req.params.id).then(complaint => {
+            if (complaint) {
+                res.status(200).json(complaint);
+            } else {
+                res.status(404).json({ message: 'complaint not found' });
+            }
+        })
+        .catch(error => {
+            res.status(500).json({
+                message: error.message
+            });
+        });
+};
+
+exports.getCurrent = (req, res, next) => {
+  const today = moment().startOf('day');
+
+  Complaint.find({
+    created: {
+      $gte: today.toDate(),
+      $lte: moment(today).endOf('day').toDate()
+    }
+  })
+  .then(complaint => {
+    console.log(complaint);
             if (complaint) {
                 res.status(200).json(complaint);
             } else {

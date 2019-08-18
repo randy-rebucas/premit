@@ -4,6 +4,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { Subscription } from 'rxjs';
 
 import { AuthService } from '../../../../auth/auth.service';
+import { ComplaintService } from '../../services/complaint.service';
 
 @Component({
   selector: 'app-chief-complaint-latest',
@@ -11,7 +12,9 @@ import { AuthService } from '../../../../auth/auth.service';
   styleUrls: ['./chief-complaint-latest.component.css']
 })
 export class ChiefComplaintLatestComponent implements OnInit, OnDestroy {
-
+  complaints: [];
+  createdDate: string;
+  complaintId: string;
   userIsAuthenticated = false;
   private authListenerSubs: Subscription;
   isLoading = false;
@@ -21,10 +24,9 @@ export class ChiefComplaintLatestComponent implements OnInit, OnDestroy {
   title: string;
   form: FormGroup;
 
-  maxDate = new Date();
-
   constructor(public route: ActivatedRoute,
-              private authService: AuthService) {}
+              private authService: AuthService,
+              public complaintService: ComplaintService) {}
 
   ngOnInit() {
     this.userIsAuthenticated = this.authService.getIsAuth();
@@ -33,6 +35,16 @@ export class ChiefComplaintLatestComponent implements OnInit, OnDestroy {
       .subscribe(isAuthenticated => {
         this.userIsAuthenticated = isAuthenticated;
       });
+
+    this.complaintService.getLatest().subscribe(recordData => {
+      this.complaintId = recordData[0]._id;
+      this.createdDate = recordData[0].created;
+      this.complaints = recordData[0].complaints;
+    });
+  }
+
+  onCreate() {
+
   }
 
   ngOnDestroy() {

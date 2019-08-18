@@ -1,1 +1,10 @@
-<p>latest-complaint-works</p>
+<div>
+  <mat-list role="list">
+    <h3 mat-subheader>Current Complaint as of &nbsp;<strong> {{ createdDate | date }}</strong></h3>
+    <mat-list-item role="listitem" *ngFor="let complaint of complaints; let i = index;">#{{i}}. {{complaint.complaint}}</mat-list-item>
+  </mat-list>
+
+  <button mat-button color="primary" (click)="onCreate()">
+      <mat-icon>add</mat-icon> Create Assessment
+  </button>
+</div>

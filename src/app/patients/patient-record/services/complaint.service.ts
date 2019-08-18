@@ -58,9 +58,9 @@ export class ComplaintService {
       );
   }
 
-  getLatest(id: string) {
+  getLatest() {
     return this.http.get<{ _id: string; complaints: [], created: string, patient: string }>(
-      BACKEND_URL + '/' + id
+      BACKEND_URL + '/latest'
       );
   }
 
