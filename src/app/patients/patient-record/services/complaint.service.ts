@@ -33,7 +33,7 @@ export class ComplaintService {
         return { complaints: complaintData.complaints.map(complaint => {
           return {
             id: complaint._id,
-            complaint: complaint.complaint,
+            complaints: complaint.complaints,
             created: complaint.created
           };
         }), max: complaintData.max};
@@ -53,22 +53,21 @@ export class ComplaintService {
   }
 
   get(id: string) {
-    return this.http.get<{ _id: string; complaint: string, created: string, patient: string }>(
+    return this.http.get<{ _id: string; complaints: [], created: string, patient: string }>(
       BACKEND_URL + '/' + id
       );
   }
 
-  insert(complaint: string, created: string, patient: string) {
+  insert(created: string, patient: string, complaints: []) {
     const recordData = {
-      complaint, created, patient
+      created, patient, complaints
     };
     return this.http.post<{ message: string, record: ComplaintData }>(BACKEND_URL, recordData);
   }
 
-  update(id: string, complaint: string, created: string, patient: string) {
-    let recordData: ComplaintData | FormData;
-    recordData = {
-        id, complaint, created, patient
+  update(id: string, created: string, patient: string, complaints: []) {
+    const recordData = {
+        id, created, patient, complaints
     };
     return this.http.put(BACKEND_URL + '/' + id, recordData);
   }

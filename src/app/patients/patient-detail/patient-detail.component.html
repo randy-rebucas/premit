@@ -50,12 +50,12 @@
     </div>
     <div class="detail-right">
         <nav mat-tab-nav-bar>
+            <a mat-tab-link routerLink="./physical-exams" routerLinkActive #rlaPhysicalExams="routerLinkActive" [active]="rlaPhysicalExams.isActive">Physical exam</a>
             <a mat-tab-link routerLink="./histories" routerLinkActive #rlaHistories="routerLinkActive" [active]="rlaHistories.isActive">History</a>
             <a mat-tab-link routerLink="./chief-complaint" routerLinkActive #rlaChiefComplaint="routerLinkActive" [active]="rlaChiefComplaint.isActive">Chief complaint</a>
-            <a mat-tab-link routerLink="./physical-exams" routerLinkActive #rlaPhysicalExams="routerLinkActive" [active]="rlaPhysicalExams.isActive">Physical exam</a>
             <a mat-tab-link routerLink="./assessments" routerLinkActive #rlaAssessments="routerLinkActive" [active]="rlaAssessments.isActive">Assessment</a>
-            <a mat-tab-link routerLink="./prescriptions" routerLinkActive #rlaPrescriptions="routerLinkActive" [active]="rlaPrescriptions.isActive">Prescriptions</a>
             <a mat-tab-link routerLink="./progress-notes" routerLinkActive #rlaProgressNotes="routerLinkActive" [active]="rlaProgressNotes.isActive">Progress Notes</a>
+            <a mat-tab-link routerLink="./prescriptions" routerLinkActive #rlaPrescriptions="routerLinkActive" [active]="rlaPrescriptions.isActive">Prescriptions</a>
             <a mat-tab-link routerLink="./test-results" routerLinkActive #rlaTestResult="routerLinkActive" [active]="rlaTestResult.isActive">Test Results</a>
         </nav>
         <router-outlet></router-outlet>

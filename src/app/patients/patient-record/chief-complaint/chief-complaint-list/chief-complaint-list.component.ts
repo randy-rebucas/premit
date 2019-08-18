@@ -20,6 +20,7 @@ import { ChiefComplaintEditComponent } from '../chief-complaint-edit/chief-compl
 })
 export class ChiefComplaintListComponent implements OnInit, OnDestroy {
   records: ComplaintService[] = [];
+  complaints: ComplaintData[] = [];
   isLoading = false;
   total = 0;
   perPage = 10;
@@ -48,7 +49,7 @@ export class ChiefComplaintListComponent implements OnInit, OnDestroy {
     }
 
     dataSource: MatTableDataSource<any>;
-    displayedColumns: string[] = ['complaint', 'created', 'action'];
+    displayedColumns: string[] = ['complaints', 'created', 'action'];
     @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
     @ViewChild(MatSort, {static: true}) sort: MatSort;
 
@@ -60,8 +61,11 @@ export class ChiefComplaintListComponent implements OnInit, OnDestroy {
     this.recordsSub = this.complaintService
       .getUpdateListener()
       .subscribe((complaintData: {complaints: ComplaintData[], count: number}) => {
+        // console.log(complaintData);
         this.isLoading = false;
         this.total = complaintData.count;
+        this.complaints = complaintData.complaints;
+
         this.dataSource = new MatTableDataSource(complaintData.complaints);
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;
@@ -93,6 +97,7 @@ export class ChiefComplaintListComponent implements OnInit, OnDestroy {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.disableClose = true;
     dialogConfig.autoFocus = true;
+    dialogConfig.width = '30%';
     dialogConfig.data = {
       id: null,
       title: 'New record',
@@ -105,6 +110,7 @@ export class ChiefComplaintListComponent implements OnInit, OnDestroy {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.disableClose = true;
     dialogConfig.autoFocus = true;
+    dialogConfig.width = '30%';
     dialogConfig.data = {
         id: recordId,
         title: 'Update record',
@@ -123,6 +129,10 @@ export class ChiefComplaintListComponent implements OnInit, OnDestroy {
         });
       }
     });
+  }
+
+  onPrint() {
+
   }
 
   ngOnDestroy() {

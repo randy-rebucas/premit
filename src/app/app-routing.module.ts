@@ -55,7 +55,7 @@ const appRoutes: Routes = [
         { path: 'create', component: PatientEditComponent }
     ] },
     { path: 'patient-details/:patientId', component: PatientDetailComponent, canActivate: [AuthGuard], children: [
-      { path: '', redirectTo: 'chief-complaint', pathMatch: 'full' },
+      { path: '', redirectTo: 'physical-exams', pathMatch: 'full' },
       { path: 'encounter', component: EncounterComponent },
       { path: 'chief-complaint', component: ChiefComplaintListComponent, children: [
         { path: 'create', component: ChiefComplaintEditComponent }

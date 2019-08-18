@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy, Inject } from '@angular/core';
-import { FormGroup, FormControl, Validators, NgControl } from '@angular/forms';
+import { FormGroup, FormControl, Validators, NgControl, FormBuilder, FormArray } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
 import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
 import { Subscription } from 'rxjs';
@@ -37,6 +37,7 @@ export class ChiefComplaintEditComponent implements OnInit, OnDestroy {
     public route: ActivatedRoute,
     private authService: AuthService,
     private datePipe: DatePipe,
+    private fb: FormBuilder,
 
     private notificationService: NotificationService,
     public dialogRef: MatDialogRef < ChiefComplaintEditComponent >,
@@ -55,35 +56,50 @@ export class ChiefComplaintEditComponent implements OnInit, OnDestroy {
         this.userIsAuthenticated = isAuthenticated;
       });
 
-    this.form = new FormGroup({
-      complaint: new FormControl(null, {
-        validators: [Validators.required, Validators.maxLength(150) ]
-      }),
-      record_date: new FormControl(new Date(), {
-        validators: [Validators.required]
-      })
-    });
+    this.form = this.fb.group({
+        record_date: [new Date(), [Validators.required]],
+        complaints: this.fb.array([this.addComplaintGroup()])
+      });
 
     if (this.recordId) {
           this.mode = 'edit';
           this.isLoading = true;
           this.complaintService.get(this.recordId).subscribe(recordData => {
             this.isLoading = false;
-            this.complaintData = {
-              id: recordData._id,
-              complaint: recordData.complaint,
-              created: recordData.created,
-              patient: recordData.patient
-            };
-            this.form.setValue({
-              complaint: this.complaintData.complaint,
-              record_date: this.complaintData.created
+            this.form.patchValue({
+              record_date: recordData.created
             });
+            const complaintControl = this.form.controls.complaints as FormArray;
+            const complaintArray = recordData.complaints;
+            for (let i = 1; i < complaintArray.length; i++) {
+              complaintControl.push(this.addComplaintGroup());
+            }
+            this.form.patchValue({complaints: complaintArray});
           });
         } else {
           this.mode = 'create';
           this.recordId = null;
         }
+  }
+
+  addComplaintGroup() {
+    return this.fb.group({
+      complaint: ['', [Validators.required, Validators.maxLength(150)]]
+    });
+  }
+
+  addComplaint() {
+    this.complaintArray.push(this.addComplaintGroup());
+  }
+
+  removeComplaint(index) {
+    this.complaintArray.removeAt(index);
+    this.complaintArray.markAsDirty();
+    this.complaintArray.markAsTouched();
+  }
+
+  get complaintArray() {
+    return this.form.get('complaints') as FormArray;
   }
 
   onSave() {
@@ -92,9 +108,9 @@ export class ChiefComplaintEditComponent implements OnInit, OnDestroy {
     }
     if (this.mode === 'create') {
       this.complaintService.insert(
-        this.form.value.complaint,
         this.form.value.record_date,
-        this.patientId
+        this.patientId,
+        this.form.value.complaints
       ).subscribe(() => {
         this.complaintService.getAll(this.perPage, this.currentPage, this.patientId);
       });
@@ -105,9 +121,9 @@ export class ChiefComplaintEditComponent implements OnInit, OnDestroy {
     } else {
       this.complaintService.update(
         this.recordId,
-        this.form.value.complaint,
         this.form.value.record_date,
-        this.patientId
+        this.patientId,
+        this.form.value.complaints
       ).subscribe(() => {
         this.complaintService.getAll(this.perPage, this.currentPage, this.patientId);
       });

@@ -2,9 +2,13 @@
   <table mat-table [dataSource]="dataSource" matSort>
 
       <!-- Complaint Column -->
-      <ng-container matColumnDef="complaint">
-          <th mat-header-cell *matHeaderCellDef mat-sort-header> Complaint </th>
-          <td mat-cell *matCellDef="let row"> {{ row.complaint.length > 100 ? row.complaint.substring(0,100)+"..." : row.complaint }} </td>
+      <ng-container matColumnDef="complaints">
+          <th mat-header-cell *matHeaderCellDef mat-sort-header> Complaints </th>
+          <td mat-cell *matCellDef="let row">
+              <mat-chip-list>
+                <mat-chip *ngFor="let complaint of row.complaints" color="primary" selected>{{ complaint.complaint.length > 50 ? complaint.complaint.substring(0,50)+"..." : complaint.complaint }}</mat-chip>
+              </mat-chip-list>
+          </td>
       </ng-container>
 
       <!-- Created Column -->
@@ -22,6 +26,7 @@
                   </button>
           </th>
           <td mat-cell *matCellDef="let row">
+              <!-- <button mat-icon-button (click)="onEdit(row.id)"><mat-icon>assignment</mat-icon></button> -->
               <button mat-icon-button (click)="onEdit(row.id)"><mat-icon>launch</mat-icon></button>
               <button mat-icon-button color="warn" (click)="onDelete(row.id)"><mat-icon>delete_outline</mat-icon></button>
           </td>

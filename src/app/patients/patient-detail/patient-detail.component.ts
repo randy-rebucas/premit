@@ -42,7 +42,7 @@ export class PatientDetailComponent implements OnInit {
             birthdate: patientData.birthdate,
             address: patientData.address,
             imagePath: patientData.imagePath,
-            creator: patientData.creator
+            client: patientData.client_id
           };
           this.id = this.patient.id;
           this.firstname = this.patient.firstname;

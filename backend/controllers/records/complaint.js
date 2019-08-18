@@ -2,10 +2,13 @@ const Complaint = require('../../models/records/complaint');
 
 exports.create = (req, res, next) => {
     const complaint = new Complaint({
-      complaint: req.body.complaint,
         created: req.body.created,
         patient: req.body.patient
     });
+    complaintData = req.body.complaints;
+    for (let index = 0; index < complaintData.length; index++) {
+      complaint.complaints.push(complaintData[index]);
+    }
     complaint.save().then(createdRecord => {
             res.status(201).json({
                 message: 'Successfully added',
@@ -25,10 +28,13 @@ exports.create = (req, res, next) => {
 exports.update = (req, res, next) => {
     const complaint = new Complaint({
         _id: req.body.id,
-        complaint: req.body.complaint,
-        created: req.body.created_date,
-        patient: req.body.patient_id
+        created: req.body.created,
+        patient: req.body.patient
     });
+    complaintData = req.body.complaints;
+    for (let index = 0; index < complaintData.length; index++) {
+      complaint.complaints.push(complaintData[index]);
+    }
     Complaint.updateOne({ _id: req.params.id }, //pass doctor role for restriction
       complaint
         ).then(result => {

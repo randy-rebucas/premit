@@ -4,14 +4,24 @@
 <mat-dialog-content class="mat-typography">
   <form [formGroup]="form" class="normal-form" (submit)="onSave()" *ngIf="!isLoading">
       <mat-form-field>
-        <textarea matInput formControlName="complaint" rows="4" placeholder="Complaint"></textarea>
-          <mat-error *ngIf="form.get('complaint').invalid">Please enter complaint</mat-error>
-      </mat-form-field>
-      <mat-form-field>
           <input matInput readonly [matDatepicker]="picker" formControlName="record_date" [max]="maxDate" placeholder="Date">
           <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
           <mat-datepicker #picker color="primary"></mat-datepicker>
       </mat-form-field>
+      <table cellspacing="0" formArrayName="complaints" style="width: 100%;">
+          <tr *ngFor="let group of complaintArray.controls; let i = index;" [formGroupName]="i">
+              <td>
+                  <mat-form-field>
+                      <input matInput type="text" formControlName="complaint" placeholder="Complaint">
+                  </mat-form-field>
+              </td>
+              <td style="text-align: right; width: 18%;">
+                  <button mat-icon-button (click)="addComplaint()" type="button"><mat-icon>add</mat-icon></button>
+                  <button mat-icon-button color="warn" *ngIf="complaintArray.controls.length > 1" (click)="removeComplaint(i)" type="button"><mat-icon>delete_outline</mat-icon></button>
+              </td>
+          </tr>
+      </table>
+
       <button mat-raised-button color="primary" type="submit">Save</button>
   </form>
 </mat-dialog-content>
