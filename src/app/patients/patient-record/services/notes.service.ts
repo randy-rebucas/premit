@@ -22,19 +22,19 @@ export class NotesService {
     private datePipe: DatePipe
     ) {}
 
-  getAll(perPage: number, currentPage: number, patientId: string) {
-    const queryParams = `?patient=${patientId}&pagesize=${perPage}&page=${currentPage}`;
+  getAll(perPage: number, currentPage: number, complaintId: string) {
+    const queryParams = `?complaintId=${complaintId}&pagesize=${perPage}&page=${currentPage}`;
     this.http.get<{message: string, notes: any, max: number }>(
       BACKEND_URL + queryParams
     )
     .pipe(
       map(noteData => {
-        console.log(noteData);
         return { notes: noteData.notes.map(note => {
           return {
             id: note._id,
-            note: note.note,
-            created: note.created
+            created: note.created,
+            complaintId: note.complaintId,
+            note: note.note
           };
         }), max: noteData.max};
       })
@@ -53,22 +53,28 @@ export class NotesService {
   }
 
   get(id: string) {
-    return this.http.get<{ _id: string; note: string, created: string, patient: string }>(
+    return this.http.get<{ _id: string; created: string, complaintId: string, note: string }>(
       BACKEND_URL + '/' + id
       );
   }
 
-  insert(note: string, created: string, patient: string) {
+  getLatest() {
+    return this.http.get<{ _id: string; created: string, complaintId: string, note: string }>(
+      BACKEND_URL + '/latest'
+      );
+  }
+
+  insert(created: string, complaintId: string, note: string) {
     const recordData = {
-      note, created, patient
+      created, complaintId, note
     };
     return this.http.post<{ message: string, record: NoteData }>(BACKEND_URL, recordData);
   }
 
-  update(id: string, note: string, created: string, patient: string) {
+  update(id: string, created: string, complaintId: string, note: string) {
     let recordData: NoteData | FormData;
     recordData = {
-        id, note, created, patient
+        id, created, complaintId, note
     };
     return this.http.put(BACKEND_URL + '/' + id, recordData);
   }

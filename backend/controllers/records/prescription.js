@@ -1,12 +1,13 @@
 const Prescription = require('../../models/records/prescription');
+const moment = require('moment');
 
 exports.create = (req, res, next) => {
 
     const prescription = new Prescription({
-      complaint: req.body.complaint,
       created: req.body.created,
-      patient: req.body.patient
+      complaintId: req.body.complaintId
     });
+
     prescriptionData = req.body.prescriptions;
     for (let index = 0; index < prescriptionData.length; index++) {
       prescription.prescriptions.push(prescriptionData[index]);
@@ -31,9 +32,8 @@ exports.create = (req, res, next) => {
 exports.update = (req, res, next) => {
     const prescription = new Prescription({
       _id: req.body.id,
-      complaint: req.body.complaint,
       created: req.body.created,
-      patient: req.body.patient
+      complaintId: req.body.complaintId
     });
     prescriptionData = req.body.prescriptions;
     for (let index = 0; index < prescriptionData.length; index++) {
@@ -60,7 +60,7 @@ exports.update = (req, res, next) => {
 exports.getAll = (req, res, next) => {
     const pageSize = +req.query.pagesize;
     const currentPage = +req.query.page;
-    const prescriptionQuery = Prescription.find({ 'patient': req.query.patient }).sort({'created': 'desc'});
+    const prescriptionQuery = Prescription.find({ 'complaintId': req.query.complaintId }).sort({'created': 'desc'});
 
     let fetchedRecord;
     if (pageSize && currentPage) {
@@ -98,6 +98,29 @@ exports.get = (req, res, next) => {
                 message: error.message
             });
         });
+};
+
+exports.getCurrent = (req, res, next) => {
+  const today = moment().startOf('day');
+
+  Prescription.find({
+          created: {
+              $gte: today.toDate(),
+              $lte: moment(today).endOf('day').toDate()
+          }
+      })
+      .then(prescription => {
+          if (prescription) {
+              res.status(200).json(prescription);
+          } else {
+              res.status(404).json({ message: 'prescription not found' });
+          }
+      })
+      .catch(error => {
+          res.status(500).json({
+              message: error.message
+          });
+      });
 };
 
 exports.delete = (req, res, next) => {

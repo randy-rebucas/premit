@@ -14,3 +14,7 @@ mat-grid-list ::ng-deep figure {
 .mat-grid-tile {
     border: 1px solid rgba(0, 0, 0, .12);
 }
+
+.mat-grid-tile:not(:first-child) {
+  overflow: auto;
+}

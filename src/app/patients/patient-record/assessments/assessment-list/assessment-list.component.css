@@ -18,3 +18,7 @@ td.mat-cell.cdk-column-action.mat-column-action button {
 tr:hover td.mat-cell.cdk-column-action.mat-column-action button {
     visibility: visible;
 }
+
+mat-subheader {
+  font-size: 16px;
+}

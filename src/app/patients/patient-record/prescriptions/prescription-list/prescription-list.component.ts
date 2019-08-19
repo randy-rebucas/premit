@@ -12,70 +12,90 @@ import { PrescriptionData } from '../../models/prescription-data.model';
 import { PrescriptionService } from '../../services/prescription.service';
 import { PrescriptionEditComponent } from '../prescription-edit/prescription-edit.component';
 import { trigger, state, style, transition, animate } from '@angular/animations';
+import { ComplaintService } from '../../services/complaint.service';
 
 @Component({
   selector: 'app-prescription-list',
   templateUrl: './prescription-list.component.html',
-  styleUrls: ['./prescription-list.component.css'],
-  animations: [
-    trigger('detailExpand', [
-      state('collapsed', style({height: '0px', minHeight: '0'})),
-      state('expanded', style({height: '*'})),
-      transition('expanded <=> collapsed', animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')),
-    ]),
-  ]
+  styleUrls: ['./prescription-list.component.css']
+  // animations: [
+  //   trigger('detailExpand', [
+  //     state('collapsed', style({height: '0px', minHeight: '0'})),
+  //     state('expanded', style({height: '*'})),
+  //     transition('expanded <=> collapsed', animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)')),
+  //   ]),
+  // ]
 })
 
 export class PrescriptionListComponent implements OnInit, OnDestroy {
   records: PrescriptionService[] = [];
   prs: PrescriptionData[] = [];
-
   isLoading = false;
+
   total = 0;
   perPage = 10;
   currentPage = 1;
-
   pageSizeOptions = [5, 10, 25, 100];
 
   userIsAuthenticated = false;
   patientId: string;
+  complaintId: string;
 
   private recordsSub: Subscription;
   private authListenerSubs: Subscription;
+
   constructor(
     @Optional() @Inject(MAT_DIALOG_DATA) public data: PrescriptionService,
     public prescriptionService: PrescriptionService,
-
     private dialog: MatDialog,
-    private route: ActivatedRoute,
     private datePipe: DatePipe,
     private dialogService: DialogService,
     private authService: AuthService,
     private router: Router,
-    private notificationService: NotificationService) {
+    private notificationService: NotificationService,
+    public complaintService: ComplaintService) {
       const snapshot: RouterStateSnapshot = this.router.routerState.snapshot;
       const splitUrl = snapshot.url.split('/');
       this.patientId = splitUrl[2];
     }
 
+    dataSource: MatTableDataSource<any>;
+    displayedColumns: string[] = ['prescriptions', 'action'];
+    @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
+    @ViewChild(MatSort, {static: true}) sort: MatSort;
+
   ngOnInit() {
     this.isLoading = true;
 
-    this.prescriptionService.getAll(this.perPage, this.currentPage, this.patientId);
+    // this.prescriptionService.getAll(this.perPage, this.currentPage, this.patientId);
 
-    this.recordsSub = this.prescriptionService
-      .getUpdateListener()
-      .subscribe((prescriptionData: {prescriptions: PrescriptionData[], count: number}) => {
-        this.isLoading = false;
-        this.total = prescriptionData.count;
-        this.prs = prescriptionData.prescriptions;
-      });
     this.userIsAuthenticated = this.authService.getIsAuth();
     this.authListenerSubs = this.authService
       .getAuthStatusListener()
       .subscribe(isAuthenticated => {
         this.userIsAuthenticated = isAuthenticated;
       });
+
+    this.complaintService.getLatest().subscribe(
+        recordData => {
+          this.complaintId = null;
+          if (Object.keys(recordData).length) {
+            this.complaintId = recordData[0]._id;
+
+            this.prescriptionService.getAll(this.perPage, this.currentPage, recordData[0]._id);
+
+            this.recordsSub = this.prescriptionService
+            .getUpdateListener()
+            .subscribe((prescriptionData: {prescriptions: PrescriptionData[], count: number}) => {
+              this.isLoading = false;
+              this.total = prescriptionData.count;
+              this.dataSource = new MatTableDataSource(prescriptionData.prescriptions);
+              this.dataSource.paginator = this.paginator;
+              this.dataSource.sort = this.sort;
+            });
+          }
+        }
+      );
   }
 
   onPrint() {}
@@ -87,14 +107,14 @@ export class PrescriptionListComponent implements OnInit, OnDestroy {
     this.prescriptionService.getAll(this.perPage, this.currentPage, this.patientId);
   }
 
-  onCreate() {
+  onCreate(complaintId) {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.disableClose = true;
     dialogConfig.autoFocus = true;
     dialogConfig.data = {
       id: null,
       title: 'New record',
-      patient: this.patientId
+      complaintIds: complaintId
     };
     this.dialog.open(PrescriptionEditComponent, dialogConfig);
   }

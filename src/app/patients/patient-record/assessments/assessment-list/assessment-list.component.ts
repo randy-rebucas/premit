@@ -1,10 +1,10 @@
 import { Component, OnInit, OnDestroy, Optional, Inject, ViewChild } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { AuthService } from '../../../../auth/auth.service';
-import { Router, ActivatedRoute, Params, ParamMap, RouterStateSnapshot } from '@angular/router';
+import { Router, RouterStateSnapshot } from '@angular/router';
 import { NotificationService } from 'src/app/shared/notification.service';
 
-import { MAT_DIALOG_DATA, MatDialog, MatTableDataSource, MatPaginator, MatSort, PageEvent, MatDialogConfig } from '@angular/material';
+import { MAT_DIALOG_DATA, MatDialog, MatTableDataSource, MatPaginator, MatSort, MatDialogConfig } from '@angular/material';
 import { DatePipe } from '@angular/common';
 import { DialogService } from 'src/app/shared/dialog.service';
 
@@ -22,26 +22,23 @@ export class AssessmentListComponent implements OnInit, OnDestroy {
   records: AssessmentService[] = [];
   assessments: AssessmentData[] = [];
   isLoading = false;
+
   total = 0;
   perPage = 10;
   currentPage = 1;
-
   pageSizeOptions = [5, 10, 25, 100];
 
   userIsAuthenticated = false;
   patientId: string;
-  assessmentId: string;
-  diagnosis: [];
-  treatments: [];
   complaintId: string;
 
   private recordsSub: Subscription;
   private authListenerSubs: Subscription;
+
   constructor(
     @Optional() @Inject(MAT_DIALOG_DATA) public data: AssessmentService,
     public assessmentService: AssessmentService,
     private dialog: MatDialog,
-    private route: ActivatedRoute,
     private datePipe: DatePipe,
     private dialogService: DialogService,
     private authService: AuthService,
@@ -88,19 +85,6 @@ export class AssessmentListComponent implements OnInit, OnDestroy {
         }
       }
     );
-
-    this.assessmentService.getLatest().subscribe(
-      recordData => {
-        this.assessmentId = null;
-        this.diagnosis = null;
-        this.treatments = null;
-        if (Object.keys(recordData).length) {
-          this.assessmentId = recordData[0]._id;
-          this.diagnosis = recordData[0].diagnosis;
-          this.treatments = recordData[0].treatments;
-        }
-      }
-    );
   }
 
   onCreate(complaintId) {
@@ -139,9 +123,9 @@ export class AssessmentListComponent implements OnInit, OnDestroy {
               this.complaintId = null;
               if (Object.keys(recordData).length) {
                 this.complaintId = recordData[0]._id;
-      
+
                 this.assessmentService.getAll(this.perPage, this.currentPage, recordData[0]._id);
-      
+
                 this.recordsSub = this.assessmentService
                 .getUpdateListener()
                 .subscribe((assessmentData: {assessments: AssessmentData[], count: number}) => {

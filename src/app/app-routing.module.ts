@@ -59,13 +59,25 @@ const appRoutes: Routes = [
     ] },
     { path: 'patient-details/:patientId', component: PatientDetailComponent, canActivate: [AuthGuard], children: [
       { path: '', redirectTo: 'physical-exams', pathMatch: 'full' },
-      { path: 'encounter', component: EncounterComponent },
       { path: 'chief-complaint', component: ChiefComplaintListComponent, children: [
         { path: 'create', component: ChiefComplaintEditComponent }
       ] },
       { path: 'histories', component: HistoriesListComponent, children: [
         { path: 'create', component: HistoriesEditComponent }
       ] },
+      { path: 'assessments', component: AssessmentsComponent, children: [
+        { path: '', component: AssessmentListComponent },
+        { path: 'create', component: AssessmentEditComponent }
+      ] },
+      { path: 'prescriptions', component: PrescriptionsComponent, children: [
+        { path: '', component: PrescriptionListComponent },
+        { path: 'create', component: PrescriptionEditComponent }
+      ] },
+      { path: 'progress-notes', component: ProgressNotesComponent, children: [
+        { path: '', component: ProgressNoteListComponent },
+        { path: 'create', component: ProgressNoteEditComponent }
+      ] },
+      { path: 'test-results', component: TestResultsComponent },
       { path: 'physical-exams', component: PhysicalExamsComponent, children: [
         { path: '', redirectTo: 'height', pathMatch: 'full' },
         { path: 'height', component: HeightListComponent, children: [
@@ -83,20 +95,7 @@ const appRoutes: Routes = [
         { path: 'respiratory-rate', component: RespiratoryRateListComponent, children: [
           { path: 'create', component: RespiratoryRateEditComponent }
         ] }
-      ] },
-      { path: 'assessments', component: AssessmentsComponent, children: [
-        { path: '', component: AssessmentListComponent },
-        // { path: 'new', component: RecipeEditComponent },
-        // { path: ':id', component: RecipeDetailComponent },
-        { path: 'create', component: AssessmentEditComponent }
-      ] },
-      { path: 'prescriptions', component: PrescriptionsComponent, children: [ //PrescriptionListComponent
-        { path: 'create', component: PrescriptionEditComponent }
-      ] },
-      { path: 'progress-notes', component: ProgressNoteListComponent, children: [
-        { path: 'create', component: ProgressNoteEditComponent }
-      ] },
-      { path: 'test-results', component: TestResultsComponent }
+      ] }
     ] },
     { path: 'settings', component: SettingsComponent, canActivate: [AuthGuard], children: [
       { path: '', redirectTo: '/settings/general', pathMatch: 'full' },

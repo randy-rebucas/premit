@@ -2,9 +2,8 @@ const mongoose = require('mongoose');
 mongoose.set('useCreateIndex', true);
 
 const recordPrescriptionSchema = mongoose.Schema({
-    complaint: { type: String },
     created: { type: Date },
-    patient: { type: mongoose.Schema.Types.ObjectId, ref: 'Patient', required: true },
+    complaintId: { type: mongoose.Schema.Types.ObjectId, ref: 'Complaint', required: true },
     prescriptions: [{
       maintenableFlg: { type: Boolean },
       medicine: { type: String },

@@ -20,6 +20,7 @@ import { ProgressNoteEditComponent } from '../progress-note-edit/progress-note-e
 export class ProgressNoteListComponent implements OnInit, OnDestroy {
   records: NotesService[] = [];
   isLoading = false;
+
   total = 0;
   perPage = 10;
   currentPage = 1;
@@ -28,6 +29,7 @@ export class ProgressNoteListComponent implements OnInit, OnDestroy {
 
   userIsAuthenticated = false;
   patientId: string;
+  complaintId: string;
 
   private recordsSub: Subscription;
   private authListenerSubs: Subscription;
@@ -54,23 +56,32 @@ export class ProgressNoteListComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.isLoading = true;
 
-    this.notesService.getAll(this.perPage, this.currentPage, this.patientId);
-
-    this.recordsSub = this.notesService
-      .getUpdateListener()
-      .subscribe((noteData: {notes: NoteData[], count: number}) => {
-        this.isLoading = false;
-        this.total = noteData.count;
-        this.dataSource = new MatTableDataSource(noteData.notes);
-        this.dataSource.paginator = this.paginator;
-        this.dataSource.sort = this.sort;
-      });
     this.userIsAuthenticated = this.authService.getIsAuth();
     this.authListenerSubs = this.authService
       .getAuthStatusListener()
       .subscribe(isAuthenticated => {
         this.userIsAuthenticated = isAuthenticated;
       });
+    this.notesService.getLatest().subscribe(
+        recordData => {
+          this.complaintId = null;
+          if (Object.keys(recordData).length) {
+            this.complaintId = recordData[0]._id;
+
+            this.notesService.getAll(this.perPage, this.currentPage, recordData[0]._id);
+
+            this.recordsSub = this.notesService
+            .getUpdateListener()
+            .subscribe((noteData: {notes: NoteData[], count: number}) => {
+              this.isLoading = false;
+              this.total = noteData.count;
+              this.dataSource = new MatTableDataSource(noteData.notes);
+              this.dataSource.paginator = this.paginator;
+              this.dataSource.sort = this.sort;
+            });
+          }
+        }
+      );
   }
 
   applyFilter(filterValue: string) {
@@ -81,21 +92,14 @@ export class ProgressNoteListComponent implements OnInit, OnDestroy {
     }
   }
 
-  onChangedPage(pageData: PageEvent) {
-    this.isLoading = true;
-    this.currentPage = pageData.pageIndex + 1;
-    this.perPage = pageData.pageSize;
-    this.notesService.getAll(this.perPage, this.currentPage, this.patientId);
-  }
-
-  onCreate() {
+  onCreate(complaintId) {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.disableClose = true;
     dialogConfig.autoFocus = true;
     dialogConfig.data = {
       id: null,
       title: 'New record',
-      patient: this.patientId
+      complaintIds: complaintId
     };
     this.dialog.open(ProgressNoteEditComponent, dialogConfig);
   }

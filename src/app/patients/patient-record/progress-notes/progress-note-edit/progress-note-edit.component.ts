@@ -28,6 +28,7 @@ export class ProgressNoteEditComponent implements OnInit, OnDestroy {
   patientId: string;
   title: string;
   patient: string;
+  complaintId: string;
   form: FormGroup;
 
   maxDate = new Date();
@@ -43,7 +44,7 @@ export class ProgressNoteEditComponent implements OnInit, OnDestroy {
     @Inject(MAT_DIALOG_DATA) data
     ) {
       this.recordId = data.id;
-      this.patientId = data.patient;
+      this.complaintId = data.complaintIds;
       this.title = data.title;
     }
 
@@ -71,13 +72,13 @@ export class ProgressNoteEditComponent implements OnInit, OnDestroy {
             this.isLoading = false;
             this.noteData = {
               id: recordData._id,
-              note: recordData.note,
               created: recordData.created,
-              patient: recordData.patient
+              complaintId: recordData.complaintId,
+              note: recordData.note,
             };
             this.form.setValue({
-              note: this.noteData.note,
-              record_date: this.noteData.created
+              record_date: this.noteData.created,
+              note: this.noteData.note
             });
           });
         } else {
@@ -92,29 +93,43 @@ export class ProgressNoteEditComponent implements OnInit, OnDestroy {
     }
     if (this.mode === 'create') {
       this.notesService.insert(
-        this.form.value.note,
         this.form.value.record_date,
-        this.patientId
+        this.complaintId,
+        this.form.value.note
       ).subscribe(() => {
-        this.notesService.getAll(this.perPage, this.currentPage, this.patientId);
+        this.form.reset();
+        this.onClose();
+        this.notificationService.success(':: Added successfully');
+        this.notesService.getLatest().subscribe(
+          recordData => {
+            this.complaintId = null;
+            if (Object.keys(recordData).length) {
+              this.complaintId = recordData[0]._id;
+              this.notesService.getAll(this.perPage, this.currentPage, recordData[0]._id);
+            }
+          }
+        );
       });
-
-      this.form.reset();
-      this.notificationService.success(':: Added successfully');
-      this.onClose();
     } else {
       this.notesService.update(
         this.recordId,
-        this.form.value.note,
         this.form.value.record_date,
-        this.patientId
+        this.complaintId,
+        this.form.value.note
       ).subscribe(() => {
-        this.notesService.getAll(this.perPage, this.currentPage, this.patientId);
+        this.form.reset();
+        this.onClose();
+        this.notificationService.success(':: Added successfully');
+        this.notesService.getLatest().subscribe(
+          recordData => {
+            this.complaintId = null;
+            if (Object.keys(recordData).length) {
+              this.complaintId = recordData[0]._id;
+              this.notesService.getAll(this.perPage, this.currentPage, recordData[0]._id);
+            }
+          }
+        );
       });
-
-      this.form.reset();
-      this.notificationService.success(':: Updated successfully');
-      this.onClose();
     }
   }
 

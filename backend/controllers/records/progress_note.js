@@ -1,4 +1,5 @@
 const Note = require('../../models/records/progress_note');
+const moment = require('moment');
 
 exports.create = (req, res, next) => {
     const note = new Note({
@@ -86,6 +87,29 @@ exports.get = (req, res, next) => {
                 message: error.message
             });
         });
+};
+
+exports.getCurrent = (req, res, next) => {
+  const today = moment().startOf('day');
+
+  Note.find({
+          created: {
+              $gte: today.toDate(),
+              $lte: moment(today).endOf('day').toDate()
+          }
+      })
+      .then(note => {
+          if (note) {
+              res.status(200).json(note);
+          } else {
+              res.status(404).json({ message: 'note not found' });
+          }
+      })
+      .catch(error => {
+          res.status(500).json({
+              message: error.message
+          });
+      });
 };
 
 exports.delete = (req, res, next) => {

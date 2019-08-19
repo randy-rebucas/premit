@@ -33,6 +33,7 @@ export class PrescriptionEditComponent implements OnInit, OnDestroy {
   patientId: string;
   title: string;
   patient: string;
+  complaintId: string;
   form: FormGroup;
 
   checked = false;
@@ -54,7 +55,7 @@ export class PrescriptionEditComponent implements OnInit, OnDestroy {
     @Inject(MAT_DIALOG_DATA) data
     ) {
       this.recordId = data.id;
-      this.patientId = data.patient;
+      this.complaintId = data.complaintIds;
       this.title = data.title;
     }
 
@@ -66,18 +67,8 @@ export class PrescriptionEditComponent implements OnInit, OnDestroy {
         this.userIsAuthenticated = isAuthenticated;
       });
 
-    this.complaintService.getAll(this.perPage, this.currentPage, this.patientId);
-
-    this.complaintService
-      .getUpdateListener()
-      .subscribe((complaintData: {complaints: ComplaintData[]}) => {
-        this.ccs = complaintData.complaints;
-      });
-
-
     this.form = this.fb.group({
       record_date: [new Date(), [Validators.required]],
-      complaint: ['', [Validators.required]],
       prescriptions: this.fb.array([this.addPrescriptionGroup()])
     });
 
@@ -86,9 +77,9 @@ export class PrescriptionEditComponent implements OnInit, OnDestroy {
           this.isLoading = true;
           this.prescriptionService.get(this.recordId).subscribe(recordData => {
             this.isLoading = false;
+
             this.form.patchValue({
-              record_date: recordData.created,
-              complaint: recordData.complaint,
+              record_date: recordData.created
             });
             const prescriptionControl = this.form.controls.prescriptions as FormArray;
             const prescription = recordData.prescriptions;
@@ -129,33 +120,48 @@ export class PrescriptionEditComponent implements OnInit, OnDestroy {
   }
 
   onSave() {
+    console.log(this.form.value);
     if (this.form.invalid) {
       return;
     }
     if (this.mode === 'create') {
       this.prescriptionService.insert(
-        this.form.value.complaint,
         this.form.value.record_date,
-        this.patientId,
+        this.complaintId,
         this.form.value.prescriptions
       ).subscribe(() => {
         this.form.reset();
-        this.notificationService.success(':: Added successfully');
         this.onClose();
-        this.prescriptionService.getAll(this.perPage, this.currentPage, this.patientId);
+        this.notificationService.success(':: Added successfully');
+        this.complaintService.getLatest().subscribe(
+          recordData => {
+            this.complaintId = null;
+            if (Object.keys(recordData).length) {
+              this.complaintId = recordData[0]._id;
+              this.prescriptionService.getAll(this.perPage, this.currentPage, recordData[0]._id);
+            }
+          }
+        );
       });
     } else {
       this.prescriptionService.update(
         this.recordId,
-        this.form.value.complaint,
         this.form.value.record_date,
-        this.patientId,
-        this.form.value.prescriptions,
+        this.complaintId,
+        this.form.value.prescriptions
       ).subscribe(() => {
         this.form.reset();
-        this.notificationService.success(':: Updated successfully');
         this.onClose();
-        this.prescriptionService.getAll(this.perPage, this.currentPage, this.patientId);
+        this.notificationService.success(':: Updated successfully');
+        this.complaintService.getLatest().subscribe(
+          recordData => {
+            this.complaintId = null;
+            if (Object.keys(recordData).length) {
+              this.complaintId = recordData[0]._id;
+              this.prescriptionService.getAll(this.perPage, this.currentPage, recordData[0]._id);
+            }
+          }
+        );
       });
     }
   }

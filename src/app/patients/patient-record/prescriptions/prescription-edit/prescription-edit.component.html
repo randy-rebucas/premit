@@ -5,7 +5,7 @@
     <form [formGroup]="form" class="normal-form" (submit)="onSave()" *ngIf="!isLoading">
         <table>
           <tr>
-            <td>
+            <!-- <td>
                 <mat-form-field>
                     <mat-label>Complaint</mat-label>
                     <mat-select formControlName="complaint">
@@ -14,7 +14,7 @@
                       </mat-option>
                     </mat-select>
                 </mat-form-field>
-            </td>
+            </td> -->
             <td>
                 <mat-form-field>
                     <input matInput readonly [matDatepicker]="picker" formControlName="record_date" [max]="maxDate" placeholder="Date">

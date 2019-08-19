@@ -22,8 +22,8 @@ export class PrescriptionService {
     private datePipe: DatePipe
     ) {}
 
-  getAll(perPage: number, currentPage: number, patientId: string) {
-    const queryParams = `?patient=${patientId}&pagesize=${perPage}&page=${currentPage}`;
+  getAll(perPage: number, currentPage: number, complaintId: string) {
+    const queryParams = `?complaintId=${complaintId}&pagesize=${perPage}&page=${currentPage}`;
     this.http.get<{message: string, prescriptions: any, max: number }>(
       BACKEND_URL + queryParams
     )
@@ -32,9 +32,9 @@ export class PrescriptionService {
         return { prescriptions: prescriptionData.prescriptions.map(prescription => {
           return {
             id: prescription._id,
-            prescriptions: prescription.prescriptions,
             created: prescription.created,
-            complaint: prescription.complaint
+            complaintId: prescription.complaintId,
+            prescriptions: prescription.prescriptions,
           };
         }), max: prescriptionData.max};
       })
@@ -58,20 +58,19 @@ export class PrescriptionService {
       );
   }
 
-  insert(complaint: string, created: string, patient: string, prescriptions: []) {
+  insert(created: string, complaintId: string, prescriptions: []) {
     const recordData = {
-      complaint, created, patient, prescriptions
+      created, complaintId, prescriptions
     };
     return this.http.post<{ message: string, record: PrescriptionData }>(BACKEND_URL, recordData);
   }
 
-  update(id: string, complaint: string, created: string, patient: string, prescriptions: []) {
+  update(id: string, created: string, complaintId: string, prescriptions: []) {
 
-    const settingData = {
-        id: id, complaint: complaint, created: created, patient: patient, prescriptions: prescriptions
+    const recordData = {
+        id, created, complaintId, prescriptions
       };
-
-    return this.http.put(BACKEND_URL + '/' + id, settingData);
+    return this.http.put(BACKEND_URL + '/' + id, recordData);
   }
 
   delete(recordId: string) {

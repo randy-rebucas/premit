@@ -71,7 +71,7 @@ export class AssessmentEditComponent implements OnInit, OnDestroy {
           this.isLoading = true;
           this.assessmentService.get(this.recordId).subscribe(recordData => {
             this.isLoading = false;
-            console.log(recordData);
+
             const diagnosisControl = this.form.controls.diagnosis as FormArray;
             const diagnosisArray = recordData.diagnosis;
             for (let i = 1; i < diagnosisArray.length; i++) {
@@ -133,7 +133,6 @@ export class AssessmentEditComponent implements OnInit, OnDestroy {
   }
 
   onSave() {
-    console.log(this.form.value);
     if (this.form.invalid) {
       return;
     }
@@ -153,24 +152,11 @@ export class AssessmentEditComponent implements OnInit, OnDestroy {
             }
           }
         );
-        // this.assessmentService.getLatest().subscribe(
-        //   recordData => {
-        //     this.assessmentId = null;
-        //     this.diagnosis = null;
-        //     this.treatments = null;
-        //     if (Object.keys(recordData).length) {
-        //       this.assessmentId = recordData[0]._id;
-        //       this.diagnosis = recordData[0].diagnosis;
-        //       this.treatments = recordData[0].treatments;
-        //     }
-        //   }
-        // );
       });
       this.form.reset();
       this.notificationService.success(':: Added successfully');
       this.onClose();
     } else {
-      
       this.assessmentService.update(
         this.recordId,
         this.form.value.record_date,
@@ -187,18 +173,6 @@ export class AssessmentEditComponent implements OnInit, OnDestroy {
             }
           }
         );
-        // this.assessmentService.getLatest().subscribe(
-        //   recordData => {
-        //     this.assessmentId = null;
-        //     this.diagnosis = null;
-        //     this.treatments = null;
-        //     if (Object.keys(recordData).length) {
-        //       this.assessmentId = recordData[0]._id;
-        //       this.diagnosis = recordData[0].diagnosis;
-        //       this.treatments = recordData[0].treatments;
-        //     }
-        //   }
-        // );
       });
 
       this.form.reset();
