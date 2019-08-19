@@ -8,7 +8,7 @@ import { DatePipe } from '@angular/common';
 import { environment } from '../../../../environments/environment';
 import { AssessmentData } from '../models/assessment-data.model';
 
-const BACKEND_URL = environment.apiUrl + '/chief-complaints';
+const BACKEND_URL = environment.apiUrl + '/assessments';
 
 @Injectable({providedIn: 'root'})
 
@@ -22,51 +22,60 @@ export class AssessmentService {
     private datePipe: DatePipe
     ) {}
 
-  getAll(perPage: number, currentPage: number, complaintId: string) {
-    const queryParams = `?complaintId=${complaintId}&pagesize=${perPage}&page=${currentPage}`;
-    this.http.get<{message: string, assessments: any, max: number }>(
-      BACKEND_URL + queryParams
-    )
-    .pipe(
-      map(assessmentData => {
-        return { assessments: assessmentData.assessments.map(assessment => {
-          return {
-            id: assessment._id,
-            diagnosis: assessment.diagnosis,
-            treatments: assessment.treatments
-          };
-        }), max: assessmentData.max};
-      })
-    )
-    .subscribe((transformData) => {
-      this.assessments = transformData.assessments;
-      this.assessmentsUpdated.next({
-        assessments: [...this.assessments],
-        count: transformData.max
+    getAll(perPage: number, currentPage: number, complaintId: string) {
+      const queryParams = `?complaintId=${complaintId}&pagesize=${perPage}&page=${currentPage}`;
+      this.http.get<{message: string, assessments: any, max: number }>(
+        BACKEND_URL + queryParams
+      )
+      .pipe(
+        map(assessmentData => {
+          console.log(assessmentData);
+          return { complaints: assessmentData.assessments.map(assessment => {
+            return {
+              id: assessment._id,
+              created: assessment.created,
+              complaintId: assessment.complaintId,
+              diagnosis: assessment.diagnosis,
+              treatments: assessment.treatments
+            };
+          }), max: assessmentData.max};
+        })
+      )
+      .subscribe((transformData) => {
+        this.assessments = transformData.complaints;
+        this.assessmentsUpdated.next({
+          assessments: [...this.assessments],
+          count: transformData.max
+        });
       });
-    });
-  }
+    }
 
   getUpdateListener() {
     return this.assessmentsUpdated.asObservable();
   }
 
   get(id: string) {
-    return this.http.get<{ _id: string; diagnosis: [], treatments: [] }>(
+    return this.http.get<{ _id: string; complaintId: string, diagnosis: [], treatments: [] }>(
       BACKEND_URL + '/' + id
       );
   }
 
-  insert(diagnosis: [], treatments: []) {
+  getLatest() {
+    return this.http.get<{ _id: string; complaintId: string, diagnosis: [], treatments: [] }>(
+      BACKEND_URL + '/latest'
+      );
+  }
+
+  insert(created: string, complaintId: string, diagnosis: [], treatments: []) {
     const recordData = {
-      diagnosis, treatments
+      created, complaintId, diagnosis, treatments
     };
     return this.http.post<{ message: string, record: AssessmentData }>(BACKEND_URL, recordData);
   }
 
-  update(id: string, diagnosis: [], treatments: []) {
+  update(id: string, created: string, complaintId: string, diagnosis: [], treatments: []) {
     const recordData = {
-        id, diagnosis, treatments
+        id, created, complaintId, diagnosis, treatments
     };
     return this.http.put(BACKEND_URL + '/' + id, recordData);
   }

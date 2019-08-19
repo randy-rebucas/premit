@@ -1,0 +1,20 @@
+table {
+    width: 100%;
+}
+
+.hide {
+    display: none;
+}
+
+#no-data {
+    width: 100%;
+    text-align: center;
+}
+
+td.mat-cell.cdk-column-action.mat-column-action button {
+    visibility: hidden;
+}
+
+tr:hover td.mat-cell.cdk-column-action.mat-column-action button {
+    visibility: visible;
+}

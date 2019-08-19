@@ -11,6 +11,7 @@ import { DialogService } from 'src/app/shared/dialog.service';
 import { AssessmentData } from '../../models/assessment-data.model';
 import { AssessmentService } from '../../services/assessment.service';
 import { AssessmentEditComponent } from '../assessment-edit/assetment-edit.component';
+import { ComplaintService } from '../../services/complaint.service';
 
 @Component({
   selector: 'app-assessment-list',
@@ -29,6 +30,10 @@ export class AssessmentListComponent implements OnInit, OnDestroy {
 
   userIsAuthenticated = false;
   patientId: string;
+  assessmentId: string;
+  diagnosis: [];
+  treatments: [];
+  complaintId: string;
 
   private recordsSub: Subscription;
   private authListenerSubs: Subscription;
@@ -41,58 +46,64 @@ export class AssessmentListComponent implements OnInit, OnDestroy {
     private dialogService: DialogService,
     private authService: AuthService,
     private router: Router,
-    private notificationService: NotificationService) {
+    private notificationService: NotificationService,
+    public complaintService: ComplaintService) {
       const snapshot: RouterStateSnapshot = this.router.routerState.snapshot;
       const splitUrl = snapshot.url.split('/');
       this.patientId = splitUrl[2];
     }
 
     dataSource: MatTableDataSource<any>;
-    displayedColumns: string[] = ['complaints', 'created', 'action'];
+    displayedColumns: string[] = ['diagnosis', 'treatments', 'action'];
     @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
     @ViewChild(MatSort, {static: true}) sort: MatSort;
 
   ngOnInit() {
     this.isLoading = true;
 
-    this.assessmentService.getAll(this.perPage, this.currentPage, this.patientId);
-
-    this.recordsSub = this.assessmentService
-      .getUpdateListener()
-      .subscribe((assessmentData: {assessments: AssessmentData[], count: number}) => {
-        // console.log(complaintData);
-        this.isLoading = false;
-        this.total = assessmentData.count;
-        this.assessments = assessmentData.assessments;
-
-        this.dataSource = new MatTableDataSource(assessmentData.assessments);
-        this.dataSource.paginator = this.paginator;
-        this.dataSource.sort = this.sort;
-      });
     this.userIsAuthenticated = this.authService.getIsAuth();
     this.authListenerSubs = this.authService
       .getAuthStatusListener()
       .subscribe(isAuthenticated => {
         this.userIsAuthenticated = isAuthenticated;
       });
+
+    this.complaintService.getLatest().subscribe(
+      recordData => {
+        this.complaintId = null;
+        if (Object.keys(recordData).length) {
+          this.complaintId = recordData[0]._id;
+
+          this.assessmentService.getAll(this.perPage, this.currentPage, recordData[0]._id);
+
+          this.recordsSub = this.assessmentService
+          .getUpdateListener()
+          .subscribe((assessmentData: {assessments: AssessmentData[], count: number}) => {
+            this.isLoading = false;
+            this.total = assessmentData.count;
+            this.dataSource = new MatTableDataSource(assessmentData.assessments);
+            this.dataSource.paginator = this.paginator;
+            this.dataSource.sort = this.sort;
+          });
+        }
+      }
+    );
+
+    this.assessmentService.getLatest().subscribe(
+      recordData => {
+        this.assessmentId = null;
+        this.diagnosis = null;
+        this.treatments = null;
+        if (Object.keys(recordData).length) {
+          this.assessmentId = recordData[0]._id;
+          this.diagnosis = recordData[0].diagnosis;
+          this.treatments = recordData[0].treatments;
+        }
+      }
+    );
   }
 
-  applyFilter(filterValue: string) {
-    this.dataSource.filter = filterValue.trim().toLowerCase();
-
-    if (this.dataSource.paginator) {
-      this.dataSource.paginator.firstPage();
-    }
-  }
-
-  onChangedPage(pageData: PageEvent) {
-    this.isLoading = true;
-    this.currentPage = pageData.pageIndex + 1;
-    this.perPage = pageData.pageSize;
-    this.assessmentService.getAll(this.perPage, this.currentPage, this.patientId);
-  }
-
-  onCreate() {
+  onCreate(complaintId) {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.disableClose = true;
     dialogConfig.autoFocus = true;
@@ -100,7 +111,7 @@ export class AssessmentListComponent implements OnInit, OnDestroy {
     dialogConfig.data = {
       id: null,
       title: 'New record',
-      patient: this.patientId
+      complaintIds: complaintId
     };
     this.dialog.open(AssessmentEditComponent, dialogConfig);
   }
@@ -123,7 +134,19 @@ export class AssessmentListComponent implements OnInit, OnDestroy {
     .afterClosed().subscribe(res => {
       if (res) {
         this.assessmentService.delete(recordId).subscribe(() => {
-          this.assessmentService.getAll(this.perPage, this.currentPage, this.patientId);
+          this.assessmentService.getLatest().subscribe(
+            recordData => {
+              console.log(recordData[0]);
+              this.assessmentId = null;
+              this.diagnosis = null;
+              this.treatments = null;
+              if (Object.keys(recordData).length) {
+                this.assessmentId = recordData[0]._id;
+                this.diagnosis = recordData[0].diagnosis;
+                this.treatments = recordData[0].treatments;
+              }
+            }
+          );
           this.notificationService.warn('! Deleted successfully');
         });
       }

@@ -1,4 +1,5 @@
 const RespiratoryRate = require('../../models/records/respiratory_rate');
+const moment = require('moment');
 
 exports.create = (req, res, next) => {
     const respiratoryrate = new RespiratoryRate({
@@ -48,7 +49,7 @@ exports.update = (req, res, next) => {
 exports.getAll = (req, res, next) => {
     const pageSize = +req.query.pagesize;
     const currentPage = +req.query.page;
-    const resrateQuery = RespiratoryRate.find({ 'patient': req.query.patient }).sort({'created': 'desc'});
+    const resrateQuery = RespiratoryRate.find({ 'patient': req.query.patient }).sort({ 'created': 'desc' });
 
     let fetchedRecord;
     if (pageSize && currentPage) {
@@ -79,6 +80,29 @@ exports.get = (req, res, next) => {
                 res.status(200).json(respiratoryrate);
             } else {
                 res.status(404).json({ message: 'respiratory rate not found' });
+            }
+        })
+        .catch(error => {
+            res.status(500).json({
+                message: error.message
+            });
+        });
+};
+
+exports.getCurrent = (req, res, next) => {
+    const today = moment().startOf('day');
+
+    RespiratoryRate.find({
+            created: {
+                $gte: today.toDate(),
+                $lte: moment(today).endOf('day').toDate()
+            }
+        })
+        .then(respiratoryrate => {
+            if (respiratoryrate) {
+                res.status(200).json(respiratoryrate);
+            } else {
+                res.status(404).json({ message: 'respiratoryrate not found' });
             }
         })
         .catch(error => {

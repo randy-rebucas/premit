@@ -1,1 +1,57 @@
-<p>encounter-works</p>
+<div class="physical-exam" *ngIf="height != null">
+    <mat-list role="list">
+        <h3 mat-subheader>Current Height as of &nbsp;<strong> {{ heightCreatedAt | date }}</strong></h3>
+        <mat-list-item role="listitem" style="font-size: 30px;padding-left: 22%;">{{height}} cm</mat-list-item>
+        <i class="material-icons" style="position: absolute;left: 22%;">arrow_upward</i>
+        <mat-icon style="transform: rotate(90deg);
+        position: absolute;
+        left: 60px;
+        font-size: 90px;
+        top: 20%;color: rgba(0,0,0,.54);">straighten</mat-icon>
+    </mat-list>
+</div>
+<div class="physical-exam" *ngIf="weight != null">
+    <mat-list role="list">
+        <h3 mat-subheader>Current Weight as of &nbsp;<strong> {{ weightCreatedAt | date }}</strong></h3>
+        <mat-list-item role="listitem" style="font-size: 30px;padding-left: 32%;">{{weight}} kg</mat-list-item>
+        <i class="material-icons" style="position: absolute;left: 30%;">rotate_left</i>
+        <mat-icon style="position: absolute;
+        left: 0;
+        font-size: 90px;
+        top: 20%;color: rgba(0,0,0,.54);">settings_input_svideo</mat-icon>
+    </mat-list>
+</div>
+<div class="physical-exam" *ngIf="temperature != null">
+    <mat-list role="list">
+        <h3 mat-subheader>Current Temperature as of &nbsp;<strong> {{ temperatureCreatedAt | date }}</strong></h3>
+        <mat-list-item role="listitem" style="font-size: 30px;padding-left: 24%;">{{temperature}} &#8451;</mat-list-item>
+        <i class="material-icons" style="position: absolute;left: 26%;">wb_incandescent </i>
+        <mat-icon style="position: absolute;
+        left: 0;
+        font-size: 90px;
+        top: 20%;color: rgba(0,0,0,.54);">whatshot</mat-icon>
+    </mat-list>
+</div>
+<div class="physical-exam" *ngIf="systolic != null">
+    <mat-list role="list">
+        <h3 mat-subheader>Current Bp as of &nbsp;<strong> {{ bpCreatedAt | date }}</strong></h3>
+        <mat-list-item role="listitem" style="font-size: 30px;
+        padding-left: 34%; padding-top: .5em;">{{systolic}}/{{diastolic}} <br/> mmHg
+        </mat-list-item>
+        <mat-icon style="position: absolute;
+        left: 0;
+        font-size: 90px;
+        top: 20%;color: rgba(0,0,0,.54);">alarm</mat-icon>
+    </mat-list>
+</div>
+<div class="physical-exam" *ngIf="respiratoryRate != null">
+    <mat-list role="list">
+        <h3 mat-subheader>Current Respiratory rate as of &nbsp;<strong> {{ respiratoryRateCreatedAt | date }}</strong></h3>
+        <mat-list-item role="listitem" style="font-size: 30px;padding-left: 32%;">{{respiratoryRate}} bpm</mat-list-item>
+        <i class="material-icons" style="position: absolute;left: 35%;">timer</i>
+        <mat-icon style="position: absolute;
+        left: 18px;
+        font-size: 90px;
+        top: 20%;color: rgba(0,0,0,.54);">vibration</mat-icon>
+    </mat-list>
+</div>

@@ -1,22 +1,46 @@
 <h2 mat-dialog-title>{{ title }}
     <button class="btn-dialog-close" mat-stroked-button (click)="onClose()" tabIndex="-1"><mat-icon>clear</mat-icon></button>
-  </h2>
-  <mat-dialog-content class="mat-typography">
+</h2>
+<mat-dialog-content class="mat-typography">
     <form [formGroup]="form" class="normal-form" (submit)="onSave()" *ngIf="!isLoading">
-        <table cellspacing="0" formArrayName="diagnosis" style="width: 100%;">
-            <tr *ngFor="let group of diagnosisArray.controls; let i = index;" [formGroupName]="i">
-                <td>
-                    <mat-form-field>
-                        <input matInput type="text" formControlName="diagnosis" placeholder="Diagnosis">
-                    </mat-form-field>
-                </td>
-                <td style="text-align: right; width: 18%;">
-                    <button mat-icon-button (click)="addDiagnose()" type="button"><mat-icon>add</mat-icon></button>
-                    <button mat-icon-button color="warn" *ngIf="diagnosisArray.controls.length > 1" (click)="removeDiagnose(i)" type="button"><mat-icon>delete_outline</mat-icon></button>
-                </td>
-            </tr>
-        </table>
+        <mat-form-field>
+            <input matInput readonly [matDatepicker]="picker" formControlName="record_date" [max]="maxDate" placeholder="Date">
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker color="primary"></mat-datepicker>
+        </mat-form-field>
+        <div>
+            <h3 mat-subheader>Add Diagnosis</h3>
+            <table cellspacing="0" formArrayName="diagnosis" style="width: 100%;">
+                <tr *ngFor="let diagnose of diagnosisArray.controls; let d = index;" [formGroupName]="d">
+                    <td>
+                        <mat-form-field>
+                            <input matInput type="text" formControlName="diagnose" placeholder="Diagnose">
+                        </mat-form-field>
+                    </td>
+                    <td style="text-align: right; width: 18%;">
+                        <button mat-icon-button *ngIf="diagnosisArray.controls.length < 3" (click)="addDiagnose()" type="button"><mat-icon>add</mat-icon></button>
+                        <button mat-icon-button color="warn" *ngIf="diagnosisArray.controls.length > 1" (click)="removeDiagnose(d)" type="button"><mat-icon>delete_outline</mat-icon></button>
+                    </td>
+                </tr>
+            </table>
+        </div>
 
+        <div>
+            <h3 mat-subheader>Add Treatments</h3>
+            <table cellspacing="0" formArrayName="treatments" style="width: 100%;">
+                <tr *ngFor="let treatment of treatmentsArray.controls; let t = index;" [formGroupName]="t">
+                    <td>
+                        <mat-form-field>
+                            <input matInput type="text" formControlName="treatment" placeholder="Treatment">
+                        </mat-form-field>
+                    </td>
+                    <td style="text-align: right; width: 18%;">
+                        <button mat-icon-button *ngIf="treatmentsArray.controls.length < 3" (click)="addTreatment()" type="button"><mat-icon>add</mat-icon></button>
+                        <button mat-icon-button color="warn" *ngIf="treatmentsArray.controls.length > 1" (click)="removeTreatment(t)" type="button"><mat-icon>delete_outline</mat-icon></button>
+                    </td>
+                </tr>
+            </table>
+        </div>
         <button mat-raised-button color="primary" type="submit">Save</button>
     </form>
-  </mat-dialog-content>
+</mat-dialog-content>

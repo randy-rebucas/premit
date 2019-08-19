@@ -57,6 +57,12 @@ export class WeightService {
       );
   }
 
+  getLatest() {
+    return this.http.get<{ _id: string; weight: string, created: string, patient: string }>(
+      BACKEND_URL + '/latest'
+      );
+  }
+
   insert(weight: string, created: string, patient: string) {
     const recordData = {
       weight, created, patient

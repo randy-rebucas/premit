@@ -57,6 +57,12 @@ export class TemperatureService {
       );
   }
 
+  getLatest() {
+    return this.http.get<{ _id: string; temperature: string, created: string, patient: string }>(
+      BACKEND_URL + '/latest'
+      );
+  }
+
   insert(temperature: string, created: string, patient: string) {
     const recordData = {
         temperature, created, patient

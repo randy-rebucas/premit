@@ -63,9 +63,6 @@ export class BloodPressureEditComponent implements OnInit, OnDestroy {
       diastolic: new FormControl(null, {
         validators: [Validators.required, Validators.maxLength(5) ]
       }),
-      heartrate: new FormControl(null, {
-        validators: [Validators.required, Validators.maxLength(5) ]
-      }),
       record_date: new FormControl(new Date(), {
         validators: [Validators.required]
       })
@@ -80,14 +77,12 @@ export class BloodPressureEditComponent implements OnInit, OnDestroy {
               id: recordData._id,
               systolic: recordData.systolic,
               diastolic: recordData.diastolic,
-              heartrate: recordData.heartrate,
               created: recordData.created,
               patient: recordData.patient
             };
             this.form.setValue({
                 systolic: this.bpData.systolic,
                 diastolic: this.bpData.diastolic,
-                heartrate: this.bpData.heartrate,
               record_date: this.bpData.created
             });
           });
@@ -105,7 +100,6 @@ export class BloodPressureEditComponent implements OnInit, OnDestroy {
       this.bpService.insert(
         this.form.value.systolic,
         this.form.value.diastolic,
-        this.form.value.heartrate,
         this.form.value.record_date,
         this.patientId
       ).subscribe(() => {
@@ -120,7 +114,6 @@ export class BloodPressureEditComponent implements OnInit, OnDestroy {
         this.recordId,
         this.form.value.systolic,
         this.form.value.diastolic,
-        this.form.value.heartrate,
         this.form.value.record_date,
         this.patientId
       ).subscribe(() => {

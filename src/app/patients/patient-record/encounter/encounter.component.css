@@ -1,0 +1,10 @@
+.physical-exam {
+    display: inline-flex;
+    width: 50%;
+    min-height: 200px;
+    position: relative;
+}
+
+.physical-exam .mat-list-item-content ::ng-deep {
+    font-size: 30px !important;
+}

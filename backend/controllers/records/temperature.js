@@ -1,4 +1,5 @@
 const Temperature = require('../../models/records/temperature');
+const moment = require('moment');
 
 exports.create = (req, res, next) => {
     const temperature = new Temperature({
@@ -48,7 +49,7 @@ exports.update = (req, res, next) => {
 exports.getAll = (req, res, next) => {
     const pageSize = +req.query.pagesize;
     const currentPage = +req.query.page;
-    const temperatureQuery = Temperature.find({ 'patient': req.query.patient }).sort({'created': 'desc'});
+    const temperatureQuery = Temperature.find({ 'patient': req.query.patient }).sort({ 'created': 'desc' });
 
     let fetchedRecord;
     if (pageSize && currentPage) {
@@ -79,6 +80,29 @@ exports.get = (req, res, next) => {
                 res.status(200).json(temperature);
             } else {
                 res.status(404).json({ message: 'temperature not found' });
+            }
+        })
+        .catch(error => {
+            res.status(500).json({
+                message: error.message
+            });
+        });
+};
+
+exports.getCurrent = (req, res, next) => {
+    const today = moment().startOf('day');
+
+    Temperature.find({
+            created: {
+                $gte: today.toDate(),
+                $lte: moment(today).endOf('day').toDate()
+            }
+        })
+        .then(weight => {
+            if (weight) {
+                res.status(200).json(weight);
+            } else {
+                res.status(404).json({ message: 'weight not found' });
             }
         })
         .catch(error => {

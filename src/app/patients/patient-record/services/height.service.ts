@@ -57,6 +57,12 @@ export class HeightService {
       );
   }
 
+  getLatest() {
+    return this.http.get<{ _id: string; height: string, created: string, patient: string }>(
+      BACKEND_URL + '/latest'
+      );
+  }
+
   insert(height: string, created: string, patient: string) {
     const recordData = {
       height, created, patient

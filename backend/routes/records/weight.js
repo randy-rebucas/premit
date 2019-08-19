@@ -12,6 +12,8 @@ router.put('/:id', checkAuth, Controller.update);
 
 router.get('', Controller.getAll);
 
+router.get('/latest', Controller.getCurrent);
+
 router.get('/:id', Controller.get);
 
 router.delete('/:id', checkAuth, Controller.delete);

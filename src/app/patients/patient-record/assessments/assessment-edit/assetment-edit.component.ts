@@ -9,6 +9,7 @@ import { AuthService } from '../../../../auth/auth.service';
 import { NotificationService } from 'src/app/shared/notification.service';
 import { AssessmentService } from '../../services/assessment.service';
 import { AssessmentData } from '../../models/assessment-data.model';
+import { ComplaintService } from '../../services/complaint.service';
 
 @Component({
   selector: 'app-assessment-edit',
@@ -19,13 +20,17 @@ export class AssessmentEditComponent implements OnInit, OnDestroy {
   perPage = 10;
   currentPage = 1;
 
+  assessmentId: string;
+  diagnosis: [];
+  treatments: [];
+
   userIsAuthenticated = false;
   private authListenerSubs: Subscription;
   assessmentData: AssessmentData;
   isLoading = false;
   private mode = 'create';
   private recordId: string;
-  patientId: string;
+  complaintId: string;
   title: string;
   form: FormGroup;
 
@@ -33,6 +38,7 @@ export class AssessmentEditComponent implements OnInit, OnDestroy {
 
   constructor(
     public assessmentService: AssessmentService,
+    public complaintService: ComplaintService,
     public route: ActivatedRoute,
     private authService: AuthService,
     private fb: FormBuilder,
@@ -42,7 +48,7 @@ export class AssessmentEditComponent implements OnInit, OnDestroy {
     @Inject(MAT_DIALOG_DATA) data
     ) {
       this.recordId = data.id;
-      this.patientId = data.patient;
+      this.complaintId = data.complaintIds;
       this.title = data.title;
     }
 
@@ -55,6 +61,7 @@ export class AssessmentEditComponent implements OnInit, OnDestroy {
       });
 
     this.form = this.fb.group({
+      record_date: [new Date(), [Validators.required]],
         diagnosis: this.fb.array([this.addDiagnosisGroup()]),
         treatments: this.fb.array([this.addTreatmentsGroup()])
       });
@@ -64,14 +71,15 @@ export class AssessmentEditComponent implements OnInit, OnDestroy {
           this.isLoading = true;
           this.assessmentService.get(this.recordId).subscribe(recordData => {
             this.isLoading = false;
-            const diagnosisControl = this.form.controls.complaints as FormArray;
+            console.log(recordData);
+            const diagnosisControl = this.form.controls.diagnosis as FormArray;
             const diagnosisArray = recordData.diagnosis;
             for (let i = 1; i < diagnosisArray.length; i++) {
               diagnosisControl.push(this.addDiagnosisGroup());
             }
-            this.form.patchValue({diagnoses: diagnosisArray});
+            this.form.patchValue({diagnosis: diagnosisArray});
 
-            const treatmentsControl = this.form.controls.complaints as FormArray;
+            const treatmentsControl = this.form.controls.treatments as FormArray;
             const treatmentsArray = recordData.treatments;
             for (let i = 1; i < treatmentsArray.length; i++) {
               treatmentsControl.push(this.addTreatmentsGroup());
@@ -86,13 +94,13 @@ export class AssessmentEditComponent implements OnInit, OnDestroy {
 
   addDiagnosisGroup() {
     return this.fb.group({
-      diagnosis: ['', [Validators.required, Validators.maxLength(150)]]
+      diagnose: ['', [Validators.required, Validators.maxLength(150)]]
     });
   }
 
   addTreatmentsGroup() {
     return this.fb.group({
-      treatments: ['', [Validators.required, Validators.maxLength(150)]]
+      treatment: ['', [Validators.required, Validators.maxLength(150)]]
     });
   }
 
@@ -101,7 +109,7 @@ export class AssessmentEditComponent implements OnInit, OnDestroy {
   }
 
   addTreatment() {
-    this.diagnosisArray.push(this.addTreatmentsGroup());
+    this.treatmentsArray.push(this.addTreatmentsGroup());
   }
 
   removeDiagnose(index) {
@@ -125,27 +133,72 @@ export class AssessmentEditComponent implements OnInit, OnDestroy {
   }
 
   onSave() {
+    console.log(this.form.value);
     if (this.form.invalid) {
       return;
     }
     if (this.mode === 'create') {
       this.assessmentService.insert(
-        this.form.value.diagnoses,
+        this.form.value.record_date,
+        this.complaintId,
+        this.form.value.diagnosis,
         this.form.value.treatments
       ).subscribe(() => {
-        this.assessmentService.getAll(this.perPage, this.currentPage, this.patientId);
+        this.complaintService.getLatest().subscribe(
+          recordData => {
+            this.complaintId = null;
+            if (Object.keys(recordData).length) {
+              this.complaintId = recordData[0]._id;
+              this.assessmentService.getAll(this.perPage, this.currentPage, recordData[0]._id);
+            }
+          }
+        );
+        // this.assessmentService.getLatest().subscribe(
+        //   recordData => {
+        //     this.assessmentId = null;
+        //     this.diagnosis = null;
+        //     this.treatments = null;
+        //     if (Object.keys(recordData).length) {
+        //       this.assessmentId = recordData[0]._id;
+        //       this.diagnosis = recordData[0].diagnosis;
+        //       this.treatments = recordData[0].treatments;
+        //     }
+        //   }
+        // );
       });
-
       this.form.reset();
       this.notificationService.success(':: Added successfully');
       this.onClose();
     } else {
+      
       this.assessmentService.update(
         this.recordId,
-        this.form.value.diagnoses,
+        this.form.value.record_date,
+        this.complaintId,
+        this.form.value.diagnosis,
         this.form.value.treatments
       ).subscribe(() => {
-        this.assessmentService.getAll(this.perPage, this.currentPage, this.patientId);
+        this.complaintService.getLatest().subscribe(
+          recordData => {
+            this.complaintId = null;
+            if (Object.keys(recordData).length) {
+              this.complaintId = recordData[0]._id;
+              this.assessmentService.getAll(this.perPage, this.currentPage, recordData[0]._id);
+            }
+          }
+        );
+        // this.assessmentService.getLatest().subscribe(
+        //   recordData => {
+        //     this.assessmentId = null;
+        //     this.diagnosis = null;
+        //     this.treatments = null;
+        //     if (Object.keys(recordData).length) {
+        //       this.assessmentId = recordData[0]._id;
+        //       this.diagnosis = recordData[0].diagnosis;
+        //       this.treatments = recordData[0].treatments;
+        //     }
+        //   }
+        // );
       });
 
       this.form.reset();

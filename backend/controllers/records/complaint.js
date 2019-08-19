@@ -8,7 +8,7 @@ exports.create = (req, res, next) => {
     });
     complaintData = req.body.complaints;
     for (let index = 0; index < complaintData.length; index++) {
-      complaint.complaints.push(complaintData[index]);
+        complaint.complaints.push(complaintData[index]);
     }
     complaint.save().then(createdRecord => {
             res.status(201).json({
@@ -34,10 +34,10 @@ exports.update = (req, res, next) => {
     });
     complaintData = req.body.complaints;
     for (let index = 0; index < complaintData.length; index++) {
-      complaint.complaints.push(complaintData[index]);
+        complaint.complaints.push(complaintData[index]);
     }
     Complaint.updateOne({ _id: req.params.id }, //pass doctor role for restriction
-      complaint
+            complaint
         ).then(result => {
             if (result.n > 0) {
                 res.status(200).json({ message: 'Update successful!' });
@@ -55,11 +55,11 @@ exports.update = (req, res, next) => {
 exports.getAll = (req, res, next) => {
     const pageSize = +req.query.pagesize;
     const currentPage = +req.query.page;
-    const complaintQuery = Complaint.find({ 'patient': req.query.patient }).sort({'created': 'desc'});
+    const complaintQuery = Complaint.find({ 'patient': req.query.patient }).sort({ 'created': 'desc' });
 
     let fetchedRecord;
     if (pageSize && currentPage) {
-      complaintQuery.skip(pageSize * (currentPage - 1)).limit(pageSize);
+        complaintQuery.skip(pageSize * (currentPage - 1)).limit(pageSize);
     }
     complaintQuery
         .then(documents => {
@@ -81,7 +81,7 @@ exports.getAll = (req, res, next) => {
 };
 
 exports.get = (req, res, next) => {
-  Complaint.findById(req.params.id).then(complaint => {
+    Complaint.findById(req.params.id).then(complaint => {
             if (complaint) {
                 res.status(200).json(complaint);
             } else {
@@ -96,16 +96,15 @@ exports.get = (req, res, next) => {
 };
 
 exports.getCurrent = (req, res, next) => {
-  const today = moment().startOf('day');
+    const today = moment().startOf('day');
 
-  Complaint.find({
-    created: {
-      $gte: today.toDate(),
-      $lte: moment(today).endOf('day').toDate()
-    }
-  })
-  .then(complaint => {
-    console.log(complaint);
+    Complaint.find({
+            created: {
+                $gte: today.toDate(),
+                $lte: moment(today).endOf('day').toDate()
+            }
+        })
+        .then(complaint => {
             if (complaint) {
                 res.status(200).json(complaint);
             } else {
@@ -120,7 +119,7 @@ exports.getCurrent = (req, res, next) => {
 };
 
 exports.delete = (req, res, next) => {
-  Complaint.deleteOne({ _id: req.params.id }) //pass doctors role for restriction
+    Complaint.deleteOne({ _id: req.params.id }) //pass doctors role for restriction
         .then(result => {
             if (result.n > 0) {
                 res.status(200).json({ message: 'Deletion successfull!' });

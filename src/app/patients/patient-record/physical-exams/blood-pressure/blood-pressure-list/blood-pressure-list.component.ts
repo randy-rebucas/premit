@@ -48,7 +48,7 @@ export class BloodPressureListComponent implements OnInit, OnDestroy {
     }
 
     dataSource: MatTableDataSource<any>;
-    displayedColumns: string[] = ['systolic', 'diastolic', 'heartrate', 'created', 'action'];
+    displayedColumns: string[] = ['systolic', 'diastolic', 'created', 'action'];
     @ViewChild(MatPaginator, {static: true}) paginator: MatPaginator;
     @ViewChild(MatSort, {static: true}) sort: MatSort;
 

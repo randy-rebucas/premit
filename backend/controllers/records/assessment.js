@@ -1,16 +1,24 @@
-const Weight = require('../../models/records/weight');
+const Assessment = require('../../models/records/assessment');
 const moment = require('moment');
 
 exports.create = (req, res, next) => {
-    const weight = new Weight({
-        weight: req.body.weight,
+    console.log(req.body);
+    const assessment = new Assessment({
         created: req.body.created,
-        patient: req.body.patient
+        complaintId: req.body.complaintId
     });
-    weight.save().then(createdRecord => {
+    assessmentData = req.body.diagnosis;
+    for (let index = 0; index < assessmentData.length; index++) {
+        assessment.diagnosis.push(assessmentData[index]);
+    }
+    treatmentData = req.body.treatments;
+    for (let index = 0; index < treatmentData.length; index++) {
+        assessment.treatments.push(treatmentData[index]);
+    }
+    assessment.save().then(createdRecord => {
             res.status(201).json({
                 message: 'Successfully added',
-                weight: {
+                assessment: {
                     ...createdRecord,
                     id: createdRecord._id,
                 }
@@ -24,14 +32,22 @@ exports.create = (req, res, next) => {
 };
 
 exports.update = (req, res, next) => {
-    const weight = new Weight({
+
+    const assessment = new Assessment({
         _id: req.body.id,
-        weight: req.body.weight,
-        created: req.body.created_date,
-        patient: req.body.patient_id
+        created: req.body.created,
+        complaintId: req.body.complaintId
     });
-    Weight.updateOne({ _id: req.params.id }, //pass doctor role for restriction
-            weight
+    assessmentData = req.body.diagnosis;
+    for (let index = 0; index < assessmentData.length; index++) {
+        assessment.diagnosis.push(assessmentData[index]);
+    }
+    treatmentData = req.body.treatments;
+    for (let index = 0; index < treatmentData.length; index++) {
+        assessment.treatments.push(treatmentData[index]);
+    }
+    Assessment.updateOne({ _id: req.params.id }, //pass doctor role for restriction
+            assessment
         ).then(result => {
             if (result.n > 0) {
                 res.status(200).json({ message: 'Update successful!' });
@@ -49,21 +65,22 @@ exports.update = (req, res, next) => {
 exports.getAll = (req, res, next) => {
     const pageSize = +req.query.pagesize;
     const currentPage = +req.query.page;
-    const weightQuery = Weight.find({ 'patient': req.query.patient }).sort({ 'created': 'desc' });
+    const assessmentQuery = Assessment.find({ 'complaintId': req.query.complaintId }).sort({ 'created': 'desc' });
 
     let fetchedRecord;
     if (pageSize && currentPage) {
-        weightQuery.skip(pageSize * (currentPage - 1)).limit(pageSize);
+        assessmentQuery.skip(pageSize * (currentPage - 1)).limit(pageSize);
     }
-    weightQuery
+    assessmentQuery
         .then(documents => {
+            console.log(documents);
             fetchedRecord = documents;
-            return Weight.countDocuments();
+            return Assessment.countDocuments();
         })
         .then(count => {
             res.status(200).json({
                 message: 'Fetched successfully!',
-                weights: fetchedRecord,
+                assessments: fetchedRecord,
                 max: count
             });
         })
@@ -75,11 +92,11 @@ exports.getAll = (req, res, next) => {
 };
 
 exports.get = (req, res, next) => {
-    Weight.findById(req.params.id).then(weight => {
-            if (weight) {
-                res.status(200).json(weight);
+    Assessment.findById(req.params.id).then(complaint => {
+            if (complaint) {
+                res.status(200).json(complaint);
             } else {
-                res.status(404).json({ message: 'weight not found' });
+                res.status(404).json({ message: 'complaint not found' });
             }
         })
         .catch(error => {
@@ -92,17 +109,17 @@ exports.get = (req, res, next) => {
 exports.getCurrent = (req, res, next) => {
     const today = moment().startOf('day');
 
-    Weight.find({
+    Assessment.find({
             created: {
                 $gte: today.toDate(),
                 $lte: moment(today).endOf('day').toDate()
             }
         })
-        .then(weight => {
-            if (weight) {
-                res.status(200).json(weight);
+        .then(assessment => {
+            if (assessment) {
+                res.status(200).json(assessment);
             } else {
-                res.status(404).json({ message: 'weight not found' });
+                res.status(404).json({ message: 'assessment not found' });
             }
         })
         .catch(error => {
@@ -113,7 +130,7 @@ exports.getCurrent = (req, res, next) => {
 };
 
 exports.delete = (req, res, next) => {
-    Weight.deleteOne({ _id: req.params.id }) //pass doctors role for restriction
+    Assessment.deleteOne({ _id: req.params.id }) //pass doctors role for restriction
         .then(result => {
             if (result.n > 0) {
                 res.status(200).json({ message: 'Deletion successfull!' });

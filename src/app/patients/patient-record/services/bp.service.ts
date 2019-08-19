@@ -35,7 +35,6 @@ export class BpService {
             id: bp._id,
             systolic: bp.systolic,
             diastolic: bp.diastolic,
-            heartrate: bp.heartrate,
             created: bp.created
           };
         }), max: bpData.max};
@@ -55,22 +54,28 @@ export class BpService {
   }
 
   get(id: string) {
-    return this.http.get<{ _id: string; systolic: string, diastolic: string, heartrate: string, created: string, patient: string }>(
+    return this.http.get<{ _id: string; systolic: string, diastolic: string, created: string, patient: string }>(
       BACKEND_URL + '/' + id
       );
   }
 
-  insert(systolic: string, diastolic: string, heartrate: string, created: string, patient: string) {
+  getLatest() {
+    return this.http.get<{ _id: string; systolic: string, diastolic: string, created: string, patient: string }>(
+      BACKEND_URL + '/latest'
+      );
+  }
+
+  insert(systolic: string, diastolic: string, created: string, patient: string) {
     const recordData = {
-        systolic, diastolic, heartrate, created, patient
+        systolic, diastolic, created, patient
     };
     return this.http.post<{ message: string, record: BpData }>(BACKEND_URL, recordData);
   }
 
-  update(id: string, systolic: string, diastolic: string, heartrate: string, created: string, patient: string) {
+  update(id: string, systolic: string, diastolic: string, created: string, patient: string) {
     let recordData: BpData | FormData;
     recordData = {
-        id, systolic, diastolic, heartrate, created, patient
+        id, systolic, diastolic, created, patient
     };
     return this.http.put(BACKEND_URL + '/' + id, recordData);
   }

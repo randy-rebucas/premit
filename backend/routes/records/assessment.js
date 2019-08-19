@@ -1,6 +1,6 @@
 const express = require('express');
 
-const Controller = require('../../controllers/records/respiratory_rate');
+const Controller = require('../../controllers/records/assessment');
 
 const checkAuth = require('../../middleware/check-auth');
 
@@ -17,5 +17,6 @@ router.get('/latest', Controller.getCurrent);
 router.get('/:id', Controller.get);
 
 router.delete('/:id', checkAuth, Controller.delete);
+
 
 module.exports = router;

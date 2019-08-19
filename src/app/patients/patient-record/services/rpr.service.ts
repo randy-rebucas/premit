@@ -58,6 +58,12 @@ export class RprService {
       );
   }
 
+  getLatest() {
+    return this.http.get<{ _id: string; respiratoryrate: string, created: string, patient: string }>(
+      BACKEND_URL + '/latest'
+      );
+  }
+
   insert(respiratoryrate: string, created: string, patient: string) {
     const recordData = {
       respiratoryrate, created, patient

@@ -90,7 +90,7 @@ const appRoutes: Routes = [
         // { path: ':id', component: RecipeDetailComponent },
         { path: 'create', component: AssessmentEditComponent }
       ] },
-      { path: 'prescriptions', component: PrescriptionListComponent, children: [
+      { path: 'prescriptions', component: PrescriptionsComponent, children: [ //PrescriptionListComponent
         { path: 'create', component: PrescriptionEditComponent }
       ] },
       { path: 'progress-notes', component: ProgressNoteListComponent, children: [

@@ -1,4 +1,5 @@
 const Height = require('../../models/records/height');
+const moment = require('moment');
 
 exports.create = (req, res, next) => {
     const height = new Height({
@@ -48,7 +49,7 @@ exports.update = (req, res, next) => {
 exports.getAll = (req, res, next) => {
     const pageSize = +req.query.pagesize;
     const currentPage = +req.query.page;
-    const heightQuery = Height.find({ 'patient': req.query.patient }).sort({'created': 'desc'});
+    const heightQuery = Height.find({ 'patient': req.query.patient }).sort({ 'created': 'desc' });
 
     let fetchedRecord;
     if (pageSize && currentPage) {
@@ -75,6 +76,29 @@ exports.getAll = (req, res, next) => {
 
 exports.get = (req, res, next) => {
     Height.findById(req.params.id).then(height => {
+            if (height) {
+                res.status(200).json(height);
+            } else {
+                res.status(404).json({ message: 'height not found' });
+            }
+        })
+        .catch(error => {
+            res.status(500).json({
+                message: error.message
+            });
+        });
+};
+
+exports.getCurrent = (req, res, next) => {
+    const today = moment().startOf('day');
+
+    Height.find({
+            created: {
+                $gte: today.toDate(),
+                $lte: moment(today).endOf('day').toDate()
+            }
+        })
+        .then(height => {
             if (height) {
                 res.status(200).json(height);
             } else {

@@ -1,9 +1,7 @@
 mat-list {
-  width: 100%;
+    width: 100%;
 }
+
 app-chief-complaint-latest {
-  width: 100%;
-}
-button.mat-stroked-button {
-  margin-left: 1.5em;
+    width: 100%;
 }
