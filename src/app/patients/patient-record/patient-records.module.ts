@@ -16,6 +16,7 @@ import { PhysicalExamsComponent } from './physical-exams/physical-exams.componen
 import { AssessmentsComponent } from './assessments/assessments.component';
 import { AssessmentEditComponent } from './assessments/assessment-edit/assetment-edit.component';
 import { AssessmentListComponent } from './assessments/assessment-list/assessment-list.component';
+import { AssessmentLatestComponent } from './assessments/assessment-latest/assessment-latest.component';
 import { PrescriptionsComponent } from './prescriptions/prescriptions.component';
 import { PrescriptionEditComponent } from './prescriptions/prescription-edit/prescription-edit.component';
 import { PrescriptionListComponent } from './prescriptions/prescription-list/prescription-list.component';
@@ -40,6 +41,7 @@ import { PhysicalExamsModule } from './physical-exams/physical-exams.module';
     AssessmentsComponent,
     AssessmentEditComponent,
     AssessmentListComponent,
+    AssessmentLatestComponent,
     PrescriptionsComponent,
     PrescriptionEditComponent,
     PrescriptionListComponent,

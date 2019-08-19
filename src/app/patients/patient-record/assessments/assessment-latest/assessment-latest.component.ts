@@ -5,15 +5,15 @@ import { Subscription } from 'rxjs';
 
 import { AuthService } from '../../../../auth/auth.service';
 import { ComplaintService } from '../../services/complaint.service';
-import { AssessmentEditComponent } from '../../assessments/assessment-edit/assetment-edit.component';
+import { AssessmentEditComponent } from '../assessment-edit/assetment-edit.component';
 import { MAT_DIALOG_DATA, MatDialogConfig, MatDialog } from '@angular/material';
 
 @Component({
-  selector: 'app-chief-complaint-latest',
-  templateUrl: './chief-complaint-latest.component.html',
-  styleUrls: ['./chief-complaint-latest.component.css']
+  selector: 'app-assessment-latest',
+  templateUrl: './assessment-latest.component.html',
+  styleUrls: ['./assessment-latest.component.css']
 })
-export class ChiefComplaintLatestComponent implements OnInit, OnDestroy {
+export class AssessmentLatestComponent implements OnInit, OnDestroy {
   complaints: [];
   createdDate: string;
   complaintId: string;
@@ -41,16 +41,29 @@ export class ChiefComplaintLatestComponent implements OnInit, OnDestroy {
         this.userIsAuthenticated = isAuthenticated;
       });
 
-    this.complaintService.getLatest().subscribe(recordData => {
-      this.complaintId = null;
-      this.createdDate = null;
-      this.complaints = null;
-      if (Object.keys(recordData).length) {
-        this.complaintId = recordData[0]._id;
-        this.createdDate = recordData[0].created;
-        this.complaints = recordData[0].complaints;
-      }
-    });
+    // this.complaintService.getLatest().subscribe(recordData => {
+    //   this.complaintId = null;
+    //   this.createdDate = null;
+    //   this.complaints = null;
+    //   if (Object.keys(recordData).length) {
+    //     this.complaintId = recordData[0]._id;
+    //     this.createdDate = recordData[0].created;
+    //     this.complaints = recordData[0].complaints;
+    //   }
+    // });
+  }
+
+  onCreate(complaintId) {
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.disableClose = true;
+    dialogConfig.autoFocus = true;
+    dialogConfig.width = '30%';
+    dialogConfig.data = {
+      id: null,
+      title: 'New record',
+      complaintIds: complaintId
+    };
+    this.dialog.open(AssessmentEditComponent, dialogConfig);
   }
 
   ngOnDestroy() {
