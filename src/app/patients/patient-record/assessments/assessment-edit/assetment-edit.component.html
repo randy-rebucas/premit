@@ -14,7 +14,7 @@
                 <tr *ngFor="let diagnose of diagnosisArray.controls; let d = index;" [formGroupName]="d">
                     <td>
                         <mat-form-field>
-                            <input matInput type="text" formControlName="diagnose" placeholder="Diagnose">
+                            <input matInput type="text" formControlName="diagnose" placeholder="Diagnose {{d+1}}">
                         </mat-form-field>
                     </td>
                     <td style="text-align: right; width: 18%;">
@@ -31,7 +31,7 @@
                 <tr *ngFor="let treatment of treatmentsArray.controls; let t = index;" [formGroupName]="t">
                     <td>
                         <mat-form-field>
-                            <input matInput type="text" formControlName="treatment" placeholder="Treatment">
+                            <input matInput type="text" formControlName="treatment" placeholder="Treatment {{t+1}}">
                         </mat-form-field>
                     </td>
                     <td style="text-align: right; width: 18%;">

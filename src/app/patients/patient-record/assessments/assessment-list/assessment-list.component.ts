@@ -134,16 +134,23 @@ export class AssessmentListComponent implements OnInit, OnDestroy {
     .afterClosed().subscribe(res => {
       if (res) {
         this.assessmentService.delete(recordId).subscribe(() => {
-          this.assessmentService.getLatest().subscribe(
+          this.complaintService.getLatest().subscribe(
             recordData => {
-              console.log(recordData[0]);
-              this.assessmentId = null;
-              this.diagnosis = null;
-              this.treatments = null;
+              this.complaintId = null;
               if (Object.keys(recordData).length) {
-                this.assessmentId = recordData[0]._id;
-                this.diagnosis = recordData[0].diagnosis;
-                this.treatments = recordData[0].treatments;
+                this.complaintId = recordData[0]._id;
+      
+                this.assessmentService.getAll(this.perPage, this.currentPage, recordData[0]._id);
+      
+                this.recordsSub = this.assessmentService
+                .getUpdateListener()
+                .subscribe((assessmentData: {assessments: AssessmentData[], count: number}) => {
+                  this.isLoading = false;
+                  this.total = assessmentData.count;
+                  this.dataSource = new MatTableDataSource(assessmentData.assessments);
+                  this.dataSource.paginator = this.paginator;
+                  this.dataSource.sort = this.sort;
+                });
               }
             }
           );
