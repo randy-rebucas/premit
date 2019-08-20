@@ -12,11 +12,11 @@
           <tr *ngFor="let group of complaintArray.controls; let i = index;" [formGroupName]="i">
               <td>
                   <mat-form-field>
-                      <input matInput type="text" formControlName="complaint" placeholder="Complaint">
+                      <input matInput type="text" formControlName="complaint" placeholder="Complaint {{i+1}}">
                   </mat-form-field>
               </td>
               <td style="text-align: right; width: 18%;">
-                  <button mat-icon-button (click)="addComplaint()" type="button"><mat-icon>add</mat-icon></button>
+                  <button mat-icon-button *ngIf="complaintArray.controls.length < 5" (click)="addComplaint()" type="button"><mat-icon>add</mat-icon></button>
                   <button mat-icon-button color="warn" *ngIf="complaintArray.controls.length > 1" (click)="removeComplaint(i)" type="button"><mat-icon>delete_outline</mat-icon></button>
               </td>
           </tr>

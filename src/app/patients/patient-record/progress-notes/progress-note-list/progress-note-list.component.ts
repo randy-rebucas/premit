@@ -11,6 +11,7 @@ import { DialogService } from 'src/app/shared/dialog.service';
 import { NoteData } from '../../models/note.model';
 import { NotesService } from '../../services/notes.service';
 import { ProgressNoteEditComponent } from '../progress-note-edit/progress-note-edit.component';
+import { ComplaintService } from '../../services/complaint.service';
 
 @Component({
   selector: 'app-progress-note-list',
@@ -42,7 +43,8 @@ export class ProgressNoteListComponent implements OnInit, OnDestroy {
     private dialogService: DialogService,
     private authService: AuthService,
     private router: Router,
-    private notificationService: NotificationService) {
+    private notificationService: NotificationService,
+    public complaintService: ComplaintService) {
       const snapshot: RouterStateSnapshot = this.router.routerState.snapshot;
       const splitUrl = snapshot.url.split('/');
       this.patientId = splitUrl[2];
@@ -62,7 +64,8 @@ export class ProgressNoteListComponent implements OnInit, OnDestroy {
       .subscribe(isAuthenticated => {
         this.userIsAuthenticated = isAuthenticated;
       });
-    this.notesService.getLatest().subscribe(
+
+    this.complaintService.getLatest().subscribe(
         recordData => {
           this.complaintId = null;
           if (Object.keys(recordData).length) {

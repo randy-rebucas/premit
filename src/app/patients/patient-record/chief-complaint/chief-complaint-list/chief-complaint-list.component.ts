@@ -27,9 +27,11 @@ export class ChiefComplaintListComponent implements OnInit, OnDestroy {
   currentPage = 1;
 
   pageSizeOptions = [5, 10, 25, 100];
+  id: string;
 
   userIsAuthenticated = false;
   patientId: string;
+  show = false;
 
   private recordsSub: Subscription;
   private authListenerSubs: Subscription;
@@ -46,6 +48,9 @@ export class ChiefComplaintListComponent implements OnInit, OnDestroy {
       const snapshot: RouterStateSnapshot = this.router.routerState.snapshot;
       const splitUrl = snapshot.url.split('/');
       this.patientId = splitUrl[2];
+
+      console.log(snapshot);
+      this.show = false;
     }
 
     dataSource: MatTableDataSource<any>;
@@ -55,13 +60,11 @@ export class ChiefComplaintListComponent implements OnInit, OnDestroy {
 
   ngOnInit() {
     this.isLoading = true;
-
     this.complaintService.getAll(this.perPage, this.currentPage, this.patientId);
 
     this.recordsSub = this.complaintService
       .getUpdateListener()
       .subscribe((complaintData: {complaints: ComplaintData[], count: number}) => {
-        // console.log(complaintData);
         this.isLoading = false;
         this.total = complaintData.count;
         this.complaints = complaintData.complaints;
@@ -70,11 +73,21 @@ export class ChiefComplaintListComponent implements OnInit, OnDestroy {
         this.dataSource.paginator = this.paginator;
         this.dataSource.sort = this.sort;
       });
+
     this.userIsAuthenticated = this.authService.getIsAuth();
     this.authListenerSubs = this.authService
       .getAuthStatusListener()
       .subscribe(isAuthenticated => {
         this.userIsAuthenticated = isAuthenticated;
+      });
+
+    this.route.paramMap.subscribe(params => {
+        this.id = params.get('complaintId');
+        if (this.id) {
+          this.show = true;
+        } else {
+          this.show = false;
+        }
       });
   }
 
@@ -91,6 +104,16 @@ export class ChiefComplaintListComponent implements OnInit, OnDestroy {
     this.currentPage = pageData.pageIndex + 1;
     this.perPage = pageData.pageSize;
     this.complaintService.getAll(this.perPage, this.currentPage, this.patientId);
+  }
+
+  onFilter(recordId) {
+    this.show = true;
+    this.router.navigate(['./', recordId], {relativeTo: this.route});
+  }
+
+  onBack() {
+    this.show = false;
+    this.router.navigate(['./'], {relativeTo: this.route});
   }
 
   onCreate() {

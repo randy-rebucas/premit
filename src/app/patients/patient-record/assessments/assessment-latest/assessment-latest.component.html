@@ -1,10 +1,10 @@
+<mat-grid-tile-header>
+    <h3>Current Complaint as of &nbsp;<strong> {{ createdDate | date }}</strong></h3>
+  </mat-grid-tile-header>
 <mat-list role="list">
-  <h3 mat-subheader *ngIf="assessmentId == null  && !isLoading">No complaints for today!</h3>
-  <div *ngIf="assessmentId != null">
-      <h3 mat-subheader>Current Assessment as of &nbsp;<strong> {{ createdDate | date }}</strong></h3>
-      <h3 mat-subheader>Diagnosis</h3>
-      <mat-list-item role="listitem" *ngFor="let diagnose of diagnosis; let d = index;">{{diagnose.diagnose}}</mat-list-item>
-      <h3 mat-subheader>Treatments</h3>
-      <mat-list-item role="listitem" *ngFor="let treatment of treatments; let t = index;">{{treatment.treatment}}</mat-list-item>
-  </div>
+  <h3 mat-subheader *ngIf="assessmentId == null  && !isLoading">No assessment for today!</h3>
+  <h3 mat-subheader>Diagnosis</h3>
+  <mat-list-item role="listitem" *ngFor="let diagnose of diagnosis; let d = index;">{{diagnose.diagnose}}</mat-list-item>
+  <h3 mat-subheader>Treatments</h3>
+  <mat-list-item role="listitem" *ngFor="let treatment of treatments; let t = index;">{{treatment.treatment}}</mat-list-item>
 </mat-list>

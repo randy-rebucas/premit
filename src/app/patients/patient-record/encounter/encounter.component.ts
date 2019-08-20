@@ -34,6 +34,8 @@ export class EncounterComponent implements OnInit, OnDestroy {
   respiratoryRate: string;
   respiratoryRateCreatedAt: Date;
 
+  breakpoint: number;
+
   constructor(private authService: AuthService,
               private router: Router,
               private notificationService: NotificationService,
@@ -97,6 +99,11 @@ export class EncounterComponent implements OnInit, OnDestroy {
         this.respiratoryRateCreatedAt = recordData[0].created;
       }
     });
+    this.breakpoint = (window.innerWidth <= 400) ? 1 : 4;
+  }
+
+  onResize(event) {
+    this.breakpoint = (event.target.innerWidth <= 400) ? 1 : 4;
   }
 
   ngOnDestroy() {

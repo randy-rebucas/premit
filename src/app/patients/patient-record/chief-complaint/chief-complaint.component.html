@@ -1,11 +1,17 @@
-<div id="chief-complaint-wrapper">
-    <mat-form-field>
-      <input matInput placeholder="Input">
-    </mat-form-field>
-    <span class="spacer"></span>
-    <button mat-raised-button color="primary">Submit</button>
-</div>
-<div id="chief-complaint-list">
+<!-- <mat-grid-list [cols]="breakpoint" rowHeight="300px" gutterSize="10px">
+  <mat-grid-tile [colspan]="2" [rowspan]="2">
+      <app-encounter></app-encounter>
+  </mat-grid-tile>
+  <mat-grid-tile [colspan]="2" [rowspan]="1">
+    <app-chief-complaint-latest></app-chief-complaint-latest>
+  </mat-grid-tile>
+  <mat-grid-tile [colspan]="2" [rowspan]="1">
+    <router-outlet></router-outlet>
+  </mat-grid-tile>
+</mat-grid-list> -->
+
+<app-chief-complaint-list></app-chief-complaint-list>
+
   <!--
   abdominal pain,
   flank pain,
@@ -33,4 +39,3 @@ eye problem obstetrical problem
 fall orthopedic injury
 fever other (FT)
   -->
-</div>

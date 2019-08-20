@@ -5,7 +5,7 @@ exports.create = (req, res, next) => {
     const note = new Note({
       note: req.body.note,
         created: req.body.created,
-        patient: req.body.patient
+        complaintId: req.body.complaintId
     });
     note.save().then(createdRecord => {
             res.status(201).json({
@@ -28,7 +28,7 @@ exports.update = (req, res, next) => {
         _id: req.body.id,
         note: req.body.note,
         created: req.body.created_date,
-        patient: req.body.patient_id
+        complaintId: req.body.complaintId
     });
     Note.updateOne({ _id: req.params.id }, //pass doctor role for restriction
       note
@@ -49,7 +49,7 @@ exports.update = (req, res, next) => {
 exports.getAll = (req, res, next) => {
     const pageSize = +req.query.pagesize;
     const currentPage = +req.query.page;
-    const noteQuery = Note.find({ 'patient': req.query.patient }).sort({'created': 'desc'});
+    const noteQuery = Note.find({ 'complaintId': req.query.complaintId }).sort({'created': 'desc'});
 
     let fetchedRecord;
     if (pageSize && currentPage) {
@@ -79,7 +79,7 @@ exports.get = (req, res, next) => {
             if (note) {
                 res.status(200).json(note);
             } else {
-                res.status(404).json({ message: 'complaint not found' });
+                res.status(404).json({ message: 'note not found' });
             }
         })
         .catch(error => {

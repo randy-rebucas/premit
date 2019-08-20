@@ -5,7 +5,6 @@ exports.create = (req, res, next) => {
     const bp = new BloodPressure({
         systolic: req.body.systolic,
         diastolic: req.body.diastolic,
-        heartrate: req.body.heartrate,
         created: req.body.created,
         patient: req.body.patient
     });
@@ -30,7 +29,6 @@ exports.update = (req, res, next) => {
         _id: req.body.id,
         systolic: req.body.systolic,
         diastolic: req.body.diastolic,
-        heartrate: req.body.heartrate,
         created: req.body.created_date,
         patient: req.body.patient_id
     });

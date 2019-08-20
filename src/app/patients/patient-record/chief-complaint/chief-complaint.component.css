@@ -1,7 +1,15 @@
-#chief-complaint-wrapper {
-  margin-top: 1em;
+
+mat-grid-list ::ng-deep figure {
+  justify-content: flex-start !important;
+  align-items: flex-start !important;
 }
-mat-form-field {
-  width: 90%;
-  margin-right: 2em;
+mat-grid-list {
+  margin-top: 10px;
+}
+.mat-grid-tile {
+  border: 1px solid rgba(0, 0, 0, .12);
+}
+
+.mat-grid-tile:not(:first-child) {
+overflow: auto;
 }

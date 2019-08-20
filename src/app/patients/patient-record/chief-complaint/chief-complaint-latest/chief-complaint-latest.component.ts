@@ -7,6 +7,7 @@ import { AuthService } from '../../../../auth/auth.service';
 import { ComplaintService } from '../../services/complaint.service';
 import { AssessmentEditComponent } from '../../assessments/assessment-edit/assetment-edit.component';
 import { MAT_DIALOG_DATA, MatDialogConfig, MatDialog } from '@angular/material';
+import { ComplaintData } from '../../models/complaint-data.model';
 
 @Component({
   selector: 'app-chief-complaint-latest',
@@ -25,6 +26,9 @@ export class ChiefComplaintLatestComponent implements OnInit, OnDestroy {
   patientId: string;
   title: string;
   form: FormGroup;
+  count: number;
+
+  private recordsSub: Subscription;
 
   constructor(
     @Optional() @Inject(MAT_DIALOG_DATA) public data: ComplaintService,
@@ -42,16 +46,33 @@ export class ChiefComplaintLatestComponent implements OnInit, OnDestroy {
       });
 
     this.complaintService.getLatest().subscribe(recordData => {
-      this.complaintId = null;
-      this.createdDate = null;
-      this.complaints = null;
-      if (Object.keys(recordData).length) {
-        this.complaintId = recordData[0]._id;
-        this.createdDate = recordData[0].created;
-        this.complaints = recordData[0].complaints;
-      }
-    });
-  }
+        this.complaintId = null;
+        this.createdDate = null;
+        this.complaints = null;
+        if (Object.keys(recordData).length) {
+          this.complaintId = recordData[0]._id;
+          this.createdDate = recordData[0].created;
+          this.complaints = recordData[0].complaints;
+        }
+      });
+
+    this.recordsSub = this.complaintService
+      .getUpdateListener()
+      .subscribe((complaintData: {complaints: ComplaintData[], count: number}) => {
+        this.isLoading = false;
+        this.complaintService.getLatest().subscribe(recordData => {
+          this.complaintId = null;
+          this.createdDate = null;
+          this.complaints = null;
+          if (Object.keys(recordData).length) {
+            this.complaintId = recordData[0]._id;
+            this.createdDate = recordData[0].created;
+            this.complaints = recordData[0].complaints;
+          }
+          this.count = complaintData.count;
+        });
+      });
+    }
 
   ngOnDestroy() {
     this.authListenerSubs.unsubscribe();

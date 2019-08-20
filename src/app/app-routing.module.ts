@@ -50,6 +50,7 @@ import { RespiratoryRateEditComponent } from './patients/patient-record/physical
 // tslint:disable-next-line:max-line-length
 import { RespiratoryRateListComponent } from './patients/patient-record/physical-exams/respiratory-rate/respiratory-rate-list/respiratory-rate-list.component';
 import { ChiefComplaintLatestComponent } from './patients/patient-record/chief-complaint/chief-complaint-latest/chief-complaint-latest.component';
+import { ChiefComplaintDetailComponent } from './patients/patient-record/chief-complaint/chief-complaint-detail/chief-complaint-detail.component';
 
 const appRoutes: Routes = [
     // { path: '', redirectTo: '/patients', pathMatch: 'full' },
@@ -59,7 +60,8 @@ const appRoutes: Routes = [
     ] },
     { path: 'patient-details/:patientId', component: PatientDetailComponent, canActivate: [AuthGuard], children: [
       { path: '', redirectTo: 'physical-exams', pathMatch: 'full' },
-      { path: 'chief-complaint', component: ChiefComplaintListComponent, children: [
+      { path: 'chief-complaint', component: ChiefComplaintComponent, children: [
+        { path: ':complaintId', component: ChiefComplaintDetailComponent },
         { path: 'create', component: ChiefComplaintEditComponent }
       ] },
       { path: 'histories', component: HistoriesListComponent, children: [
@@ -67,6 +69,7 @@ const appRoutes: Routes = [
       ] },
       { path: 'assessments', component: AssessmentsComponent, children: [
         { path: '', component: AssessmentListComponent },
+        { path: ':complaintId', component: AssessmentListComponent },
         { path: 'create', component: AssessmentEditComponent }
       ] },
       { path: 'prescriptions', component: PrescriptionsComponent, children: [

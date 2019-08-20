@@ -25,6 +25,7 @@ import { ProgressNoteEditComponent } from './progress-notes/progress-note-edit/p
 import { ProgressNoteListComponent } from './progress-notes/progress-note-list/progress-note-list.component';
 import { TestResultsComponent } from './test-results/test-results.component';
 import { PhysicalExamsModule } from './physical-exams/physical-exams.module';
+import { ChiefComplaintDetailComponent } from './chief-complaint/chief-complaint-detail/chief-complaint-detail.component';
 
 
 @NgModule({
@@ -34,6 +35,7 @@ import { PhysicalExamsModule } from './physical-exams/physical-exams.module';
     ChiefComplaintEditComponent,
     ChiefComplaintListComponent,
     ChiefComplaintLatestComponent,
+    ChiefComplaintDetailComponent,
     HistoriesComponent,
     HistoriesEditComponent,
     HistoriesListComponent,
