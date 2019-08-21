@@ -19,6 +19,7 @@
         </mat-card>
     </mat-grid-tile>
     <mat-grid-tile [colspan]="5" [rowspan]="1">
+      <div style="width: 100%;">
         <nav mat-tab-nav-bar>
             <a mat-tab-link routerLink="./physical-exams" routerLinkActive #rlaPhysicalExams="routerLinkActive" [active]="rlaPhysicalExams.isActive">Physical exams</a>
             <a mat-tab-link routerLink="./histories" routerLinkActive #rlaHistories="routerLinkActive" [active]="rlaHistories.isActive">Histories</a>
@@ -28,6 +29,7 @@
             <a mat-tab-link routerLink="./progress-notes" routerLinkActive #rlaProgressNotes="routerLinkActive" [active]="rlaProgressNotes.isActive">Progress Notes</a>
             <a mat-tab-link routerLink="./test-results" routerLinkActive #rlaTestResult="routerLinkActive" [active]="rlaTestResult.isActive">Test Results</a>
         </nav>
+      </div>
     </mat-grid-tile>
     <mat-grid-tile [colspan]="5" [rowspan]="4">
         <div style="width: 100%; align-items: flex-start; margin-left: 10px;">

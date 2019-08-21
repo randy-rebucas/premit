@@ -34,6 +34,10 @@ mat-list-item a {
     text-decoration: none;
 }
 
-.mat-grid-tile {
+/* .mat-grid-tile {
   border: 1px solid rgba(0, 0, 0, .12);
+} */
+.mat-grid-tile .mat-figure {
+  justify-content: flex-start !important ;
+  align-items: flex-start !important;
 }
