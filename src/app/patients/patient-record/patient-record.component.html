@@ -1,7 +1,50 @@
-<nav mat-tab-nav-bar>
-    <a mat-tab-link [routerLink]="['/patient/medical-history']" routerLinkActive #rlaAmount="routerLinkActive" [active]="rlaAmount.isActive">Amount</a>
-    <a mat-tab-link [routerLink]="['/patient/recipient']" routerLinkActive #rlaRecipient="routerLinkActive" [active]="rlaRecipient.isActive">Recipient</a>
-    <a mat-tab-link [routerLink]="['/patient/sender']" routerLinkActive #rlaSender="routerLinkActive" [active]="rlaSender.isActive">Sender</a>
-    <a mat-tab-link [routerLink]="['/patient/summary']" routerLinkActive #rlaSummary="routerLinkActive" [active]="rlaSummary.isActive">Summary</a>
-    <a mat-tab-link [routerLink]="['/patient/checkout']" routerLinkActive #rlaCheckout="routerLinkActive" [active]="rlaCheckout.isActive">Checkout</a>
-</nav>
+<div class="component-page-header">
+    <h1 class="mat-headline"> Patient Details</h1>
+</div>
+<div class="detail-wrapper">
+    <div class="detail-left">
+        <mat-card>
+            <mat-card-header>
+                <mat-card-title>{{fullname}}</mat-card-title>
+                <mat-card-subtitle>{{id}}</mat-card-subtitle>
+            </mat-card-header>
+            <img mat-card-image src="{{image}}" alt="{{fullname}}">
+            <mat-card-content>
+                <address>
+                      Contact: {{contact}} <br/>
+                      Gender: {{gender}} <br/>
+                      Birthdate: {{ birthdate | date }}
+                    </address>
+            </mat-card-content>
+
+            <mat-card-actions>
+                <button mat-raised-button color="accent">Que</button>
+                <button mat-button>Message</button>
+            </mat-card-actions>
+        </mat-card>
+        <mat-card>
+            <mat-card-header>
+                <mat-card-title>Actions</mat-card-title>
+            </mat-card-header>
+            <mat-card-content>
+                <mat-list>
+                    <mat-list-item> <a href="/">Print Chart</a> </mat-list-item>
+                    <mat-list-item> <a href="/">Generate QR Code</a> </mat-list-item>
+                </mat-list>
+            </mat-card-content>
+        </mat-card>
+
+    </div>
+    <div class="detail-right">
+        <nav mat-tab-nav-bar>
+            <a mat-tab-link routerLink="./physical-exams" routerLinkActive #rlaPhysicalExams="routerLinkActive" [active]="rlaPhysicalExams.isActive">Physical exams</a>
+            <a mat-tab-link routerLink="./histories" routerLinkActive #rlaHistories="routerLinkActive" [active]="rlaHistories.isActive">Histories</a>
+            <a mat-tab-link routerLink="./chief-complaints" routerLinkActive #rlaChiefComplaint="routerLinkActive" [active]="rlaChiefComplaint.isActive">Chief complaints</a>
+            <a mat-tab-link routerLink="./assessments" routerLinkActive #rlaAssessments="routerLinkActive" [active]="rlaAssessments.isActive">Assessments</a>
+            <a mat-tab-link routerLink="./prescriptions" routerLinkActive #rlaPrescriptions="routerLinkActive" [active]="rlaPrescriptions.isActive">Prescriptions</a>
+            <a mat-tab-link routerLink="./progress-notes" routerLinkActive #rlaProgressNotes="routerLinkActive" [active]="rlaProgressNotes.isActive">Progress Notes</a>
+            <a mat-tab-link routerLink="./test-results" routerLinkActive #rlaTestResult="routerLinkActive" [active]="rlaTestResult.isActive">Test Results</a>
+        </nav>
+        <router-outlet></router-outlet>
+    </div>
+</div>

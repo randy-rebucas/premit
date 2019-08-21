@@ -1,0 +1,35 @@
+.detail-wrapper {
+    display: flex;
+    flex-direction: row;
+    margin-top: 2em;
+}
+
+.detail-wrapper>div:first-child {
+    flex-basis: 300px;
+    margin-right: 1em;
+}
+
+.detail-wrapper>div:last-child {
+    flex-basis: 100%;
+}
+
+.mat-card-header-text {
+    margin: 0;
+}
+
+.component-page-header {
+    padding: 2em 0 0;
+}
+
+mat-card-header ::ng-deep .mat-card-header-text {
+    /* CSS styles go here */
+    margin: 0px;
+}
+
+.detail-left mat-card {
+    margin-bottom: 1em;
+}
+
+mat-list-item a {
+    text-decoration: none;
+}

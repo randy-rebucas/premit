@@ -11,10 +11,10 @@ import { RprService } from '../services/rpr.service';
 
 @Component({
   selector: 'app-encounter',
-  templateUrl: './encounter.component.html',
-  styleUrls: ['./encounter.component.css']
+  templateUrl: './encounters.component.html',
+  styleUrls: ['./encounters.component.css']
 })
-export class EncounterComponent implements OnInit, OnDestroy {
+export class EncountersComponent implements OnInit, OnDestroy {
   userIsAuthenticated = false;
   private authListenerSubs: Subscription;
 

@@ -21,7 +21,9 @@ import { MatInputModule,
   MatChipsModule,
   MatDividerModule,
   MatCheckboxModule,
-  MatBadgeModule
+  MatBadgeModule,
+  MatMenuModule,
+  MatSidenavModule
 } from '@angular/material';
 
 @NgModule({
@@ -48,7 +50,9 @@ import { MatInputModule,
     MatChipsModule,
     MatDividerModule,
     MatCheckboxModule,
-    MatBadgeModule
+    MatBadgeModule,
+    MatMenuModule,
+    MatSidenavModule
   ]
 })
 export class AngularMaterialModule {}

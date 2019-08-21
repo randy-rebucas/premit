@@ -86,6 +86,10 @@ export class PatientListComponent implements OnInit, OnDestroy {
     }
   }
 
+  onFilter(patientId) {
+    this.router.navigate(['./', patientId], {relativeTo: this.route});
+  }
+
   onChangedPage(pageData: PageEvent) {
     this.isLoading = true;
     this.currentPage = pageData.pageIndex + 1;

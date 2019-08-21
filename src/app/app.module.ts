@@ -2,10 +2,11 @@ import { BrowserModule, Title } from '@angular/platform-browser';
 import { NgModule, APP_INITIALIZER } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule, HTTP_INTERCEPTORS, HttpClient } from '@angular/common/http';
+import {NgxMaterialTimepickerModule} from 'ngx-material-timepicker';
 
 import { AppComponent } from './app.component';
 import { AppConfiguration } from './app-configuration.service';
-import { HeaderComponent } from './header/header.component';
+import { MainNavComponent } from './main-nav/main-nav.component';
 import { AppRoutingModule } from './app-routing.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { AngularMaterialModule } from './angular-material.module';
@@ -25,12 +26,23 @@ import { SettingsNotificationComponent } from './settings/setting-notification/s
 import { DatePipe } from '@angular/common';
 import { MatDialogConfirmComponent } from './mat-dialog-confirm/mat-dialog-confirm.component';
 import { PatientRecordsModule } from './patients/patient-record/patient-records.module';
-import {NgxMaterialTimepickerModule} from 'ngx-material-timepicker';
+
+import { PatientEditComponent } from './patients/patient-edit/patient-edit.component';
+import { HeightEditComponent } from './patients/patient-record/physical-exams/height/height-edit/height-edit.component';
+import { WeightEditComponent } from './patients/patient-record/physical-exams/weight/weight-edit/weight-edit.component';
+import { TemperatureEditComponent } from './patients/patient-record/physical-exams/temperature/temperature-edit/temperature-edit.component';
+import { BloodPressureEditComponent } from './patients/patient-record/physical-exams/blood-pressure/blood-pressure-edit/blood-pressure-edit.component';
+import { RespiratoryRateEditComponent } from './patients/patient-record/physical-exams/respiratory-rate/respiratory-rate-edit/respiratory-rate-edit.component';
+import { ChiefComplaintEditComponent } from './patients/patient-record/chief-complaint/chief-complaint-edit/chief-complaint-edit.component';
+import { HistoriesEditComponent } from './patients/patient-record/histories/histories-edit/histories-edit.component';
+import { AssessmentEditComponent } from './patients/patient-record/assessments/assessment-edit/assetment-edit.component';
+import { PrescriptionEditComponent } from './patients/patient-record/prescriptions/prescription-edit/prescription-edit.component';
+import { ProgressNoteEditComponent } from './patients/patient-record/progress-notes/progress-note-edit/progress-note-edit.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    HeaderComponent,
+    MainNavComponent,
     ErrorComponent,
     PageNotFoundComponent,
     HomeComponent,
@@ -65,7 +77,21 @@ import {NgxMaterialTimepickerModule} from 'ngx-material-timepicker';
     Title
   ],
   bootstrap: [AppComponent],
-  entryComponents: [ErrorComponent, MatDialogConfirmComponent]
+  entryComponents: [
+    ErrorComponent,
+    MatDialogConfirmComponent,
+    PatientEditComponent,
+    HeightEditComponent,
+    WeightEditComponent,
+    TemperatureEditComponent,
+    BloodPressureEditComponent,
+    RespiratoryRateEditComponent,
+    ChiefComplaintEditComponent,
+    HistoriesEditComponent,
+    AssessmentEditComponent,
+    PrescriptionEditComponent,
+    ProgressNoteEditComponent
+  ]
 })
 export class AppModule { }
 

@@ -1,14 +1,19 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Router, Params, ParamMap } from '@angular/router';
 import { PatientsService } from '../patients.service';
 import { PatientData } from '../patient-data.model';
+import { Subscription } from 'rxjs';
+import { AuthService } from 'src/app/auth/auth.service';
 
 @Component({
   selector: 'app-patient-detail',
   templateUrl: './patient-detail.component.html',
   styleUrls: ['./patient-detail.component.css']
 })
-export class PatientDetailComponent implements OnInit {
+export class PatientDetailComponent implements OnInit, OnDestroy {
+  userIsAuthenticated = false;
+  private authListenerSubs: Subscription;
+  
   id: string;
   firstname: string;
   midlename: string;
@@ -23,12 +28,20 @@ export class PatientDetailComponent implements OnInit {
   private patientId: string;
 
   constructor(
+    private authService: AuthService,
     public patientsService: PatientsService,
     private route: ActivatedRoute,
     private router: Router
     ) { }
 
     ngOnInit() {
+      this.userIsAuthenticated = this.authService.getIsAuth();
+      this.authListenerSubs = this.authService
+      .getAuthStatusListener()
+      .subscribe(isAuthenticated => {
+        this.userIsAuthenticated = isAuthenticated;
+      });
+      
       this.route.paramMap.subscribe((paramMap: ParamMap) => {
         this.patientId = paramMap.get('patientId');
         this.patientsService.getPatient(this.patientId).subscribe(patientData => {
@@ -57,4 +70,7 @@ export class PatientDetailComponent implements OnInit {
       });
     }
 
+    ngOnDestroy() {
+      this.authListenerSubs.unsubscribe();
+    }
 }

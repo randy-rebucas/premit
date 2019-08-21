@@ -4,7 +4,7 @@ import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 
 import { AngularMaterialModule } from '../../angular-material.module';
-import { EncounterComponent } from './encounter/encounter.component';
+import { EncountersComponent } from './encounters/encounters.component';
 import { ChiefComplaintComponent } from './chief-complaint/chief-complaint.component';
 import { ChiefComplaintEditComponent } from './chief-complaint/chief-complaint-edit/chief-complaint-edit.component';
 import { ChiefComplaintListComponent } from './chief-complaint/chief-complaint-list/chief-complaint-list.component';
@@ -26,11 +26,13 @@ import { ProgressNoteListComponent } from './progress-notes/progress-note-list/p
 import { TestResultsComponent } from './test-results/test-results.component';
 import { PhysicalExamsModule } from './physical-exams/physical-exams.module';
 import { ChiefComplaintDetailComponent } from './chief-complaint/chief-complaint-detail/chief-complaint-detail.component';
+import { EncounterListComponent } from './encounters/encounter-list/encounter-list.component';
 
 
 @NgModule({
   declarations: [
-    EncounterComponent,
+    EncountersComponent,
+    EncounterListComponent,
     ChiefComplaintComponent,
     ChiefComplaintEditComponent,
     ChiefComplaintListComponent,
