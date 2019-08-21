@@ -25,10 +25,16 @@ mat-card-header ::ng-deep .mat-card-header-text {
   /* CSS styles go here */
   margin: 0px;
 }
-
+.mat-grid-tile {
+  border: 1px solid rgba(0, 0, 0, .12);
+}
 .detail-left mat-card {
   margin-bottom: 1em;
 }
 mat-list-item a {
   text-decoration: none;
+}
+.mat-grid-tile-footer {
+  background: #efefef !important;
+  color: #555 !important;
 }

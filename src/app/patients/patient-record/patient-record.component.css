@@ -33,3 +33,7 @@ mat-card-header ::ng-deep .mat-card-header-text {
 mat-list-item a {
     text-decoration: none;
 }
+
+.mat-grid-tile {
+  border: 1px solid rgba(0, 0, 0, .12);
+}

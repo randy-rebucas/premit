@@ -1,8 +1,8 @@
 <div class="component-page-header">
     <h1 class="mat-headline"> Patient Details</h1>
 </div>
-<div class="detail-wrapper">
-    <div class="detail-left">
+<mat-grid-list cols="6" rowHeight="100px" [gutterSize]="'10px'">
+    <mat-grid-tile [colspan]="1" [rowspan]="3">
         <mat-card>
             <mat-card-header>
                 <mat-card-title>{{fullname}}</mat-card-title>
@@ -11,53 +11,125 @@
             <img mat-card-image src="{{image}}" alt="{{fullname}}">
             <mat-card-content>
                 <address>
-                  Contact: {{contact}} <br/>
-                  Gender: {{gender}} <br/>
-                  Birthdate: {{ birthdate | date }}
-                </address>
-            </mat-card-content>
-
-            <mat-card-actions>
-                <button mat-raised-button color="accent">Que</button>
-                <button mat-button>Message</button>
-            </mat-card-actions>
-        </mat-card>
-        <mat-card>
-            <mat-card-header>
-                <mat-card-title>Actions</mat-card-title>
-            </mat-card-header>
-            <mat-card-content>
-                <mat-list>
-                    <mat-list-item> <a href="/">View Account</a> </mat-list-item>
-                    <mat-list-item> <a href="/">View Chart</a> </mat-list-item>
-                    <mat-list-item> <a href="/">Print Chart</a> </mat-list-item>
-                    <mat-list-item> <a href="/">Generate QR Code</a> </mat-list-item>
-                </mat-list>
+            Contact: {{contact}} <br/>
+            Gender: {{gender}} <br/>
+            Birthdate: {{ birthdate | date }}
+          </address>
             </mat-card-content>
         </mat-card>
-
-        <mat-card>
-            <mat-card-header>
-                <mat-card-title>Quick links</mat-card-title>
-            </mat-card-header>
-            <mat-card-content>
-                <mat-list>
-                    <mat-list-item> <a href="/profile/">Change password</a> </mat-list-item>
-                </mat-list>
-
-            </mat-card-content>
-        </mat-card>
-    </div>
-    <div class="detail-right">
-        <nav mat-tab-nav-bar>
-            <a mat-tab-link routerLink="./physical-exams" routerLinkActive #rlaPhysicalExams="routerLinkActive" [active]="rlaPhysicalExams.isActive">Physical exam</a>
-            <a mat-tab-link routerLink="./histories" routerLinkActive #rlaHistories="routerLinkActive" [active]="rlaHistories.isActive">History</a>
-            <a mat-tab-link routerLink="./chief-complaint" routerLinkActive #rlaChiefComplaint="routerLinkActive" [active]="rlaChiefComplaint.isActive">Chief complaint</a>
-            <a mat-tab-link routerLink="./assessments" routerLinkActive #rlaAssessments="routerLinkActive" [active]="rlaAssessments.isActive">Assessment</a>
-            <a mat-tab-link routerLink="./prescriptions" routerLinkActive #rlaPrescriptions="routerLinkActive" [active]="rlaPrescriptions.isActive">Prescriptions</a>
-            <a mat-tab-link routerLink="./progress-notes" routerLinkActive #rlaProgressNotes="routerLinkActive" [active]="rlaProgressNotes.isActive">Progress Notes</a>
-            <a mat-tab-link routerLink="./test-results" routerLinkActive #rlaTestResult="routerLinkActive" [active]="rlaTestResult.isActive">Test Results</a>
-        </nav>
-        <router-outlet></router-outlet>
-    </div>
-</div>
+    </mat-grid-tile>
+    <mat-grid-tile [colspan]="1" [rowspan]="2">
+        <mat-grid-tile-header>
+            <h3>Height</h3>
+        </mat-grid-tile-header>
+        45cm
+        <mat-grid-tile-footer>
+            <a>View All</a>
+        </mat-grid-tile-footer>
+    </mat-grid-tile>
+    <mat-grid-tile [colspan]="1" [rowspan]="2">
+        <mat-grid-tile-header>
+            <h3>Weight</h3>
+        </mat-grid-tile-header>
+        81kg
+        <mat-grid-tile-footer>
+            <a>View All</a>
+        </mat-grid-tile-footer>
+    </mat-grid-tile>
+    <mat-grid-tile [colspan]="1" [rowspan]="2">
+        <mat-grid-tile-header>
+            <h3>Temperature</h3>
+        </mat-grid-tile-header>
+        36c
+        <mat-grid-tile-footer>
+            <a>View All</a>
+        </mat-grid-tile-footer>
+    </mat-grid-tile>
+    <mat-grid-tile [colspan]="1" [rowspan]="2">
+        <mat-grid-tile-header>
+            <h3>Blood Pressure</h3>
+        </mat-grid-tile-header>
+        120/80 mmHg
+        <mat-grid-tile-footer>
+            <a>View All</a>
+        </mat-grid-tile-footer>
+    </mat-grid-tile>
+    <mat-grid-tile [colspan]="1" [rowspan]="2">
+        <mat-grid-tile-header>
+            <h3>Respiratory rate</h3>
+        </mat-grid-tile-header>
+        6 bpm
+        <mat-grid-tile-footer>
+            <a>View All</a>
+        </mat-grid-tile-footer>
+    </mat-grid-tile>
+    <mat-grid-tile [colspan]="1" [rowspan]="2">
+        <mat-grid-tile-header>
+            <h3>Histories</h3>
+        </mat-grid-tile-header>
+        Allergy: Test
+        <mat-grid-tile-footer>
+            <a>View All</a>
+        </mat-grid-tile-footer>
+    </mat-grid-tile>
+    <mat-grid-tile [colspan]="2" [rowspan]="2">
+        <mat-grid-tile-header>
+            <h3>Complaints</h3>
+        </mat-grid-tile-header>
+        Allergy: Test
+        <mat-grid-tile-footer>
+            <a>View All</a>
+        </mat-grid-tile-footer>
+    </mat-grid-tile>
+    <mat-grid-tile [colspan]="2" [rowspan]="2">
+        <mat-grid-tile-header>
+            <h3>Assessments</h3>
+        </mat-grid-tile-header>
+        Allergy: Test
+        <mat-grid-tile-footer>
+            <a>View All</a>
+        </mat-grid-tile-footer>
+    </mat-grid-tile>
+    <mat-grid-tile [colspan]="1" [rowspan]="1">
+        <button mat-raised-button color="accent">Que</button>
+        <button mat-button>Message</button>
+    </mat-grid-tile>
+    <mat-grid-tile [colspan]="1" [rowspan]="3">
+        <mat-list>
+            <!-- <mat-list-item> <a href="/">View Account</a> </mat-list-item>
+                      <mat-list-item> <a href="/">View Chart</a> </mat-list-item> -->
+            <mat-list-item> <a href="/">Print Chart</a> </mat-list-item>
+            <mat-list-item> <a href="/">Generate QR Code</a> </mat-list-item>
+        </mat-list>
+    </mat-grid-tile>
+    <mat-grid-tile [colspan]="3" [rowspan]="2">
+        <mat-grid-tile-header>
+            <h3>Prescriptions</h3>
+        </mat-grid-tile-header>
+        Try
+        <mat-grid-tile-footer>
+            <a>View All</a>
+        </mat-grid-tile-footer>
+    </mat-grid-tile>
+    <mat-grid-tile [colspan]="2" [rowspan]="2">
+        <mat-grid-tile-header>
+            <h3>Progress notes</h3>
+        </mat-grid-tile-header>
+        Sample
+        <mat-grid-tile-footer>
+            <a>View All</a>
+        </mat-grid-tile-footer>
+    </mat-grid-tile>
+    <mat-grid-tile [colspan]="5" [rowspan]="2">
+        <mat-grid-tile-header>
+            <h3>Test Results</h3>
+        </mat-grid-tile-header>
+        Allergy: Test
+        <mat-grid-tile-footer>
+            <a>View All</a>
+        </mat-grid-tile-footer>
+    </mat-grid-tile>
+    <mat-grid-tile [colspan]="1" [rowspan]="1">
+        Updates
+    </mat-grid-tile>
+</mat-grid-list>

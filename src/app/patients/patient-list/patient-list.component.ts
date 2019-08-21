@@ -97,6 +97,18 @@ export class PatientListComponent implements OnInit, OnDestroy {
     this.patientsService.getPatients(this.userId, this.patientsPerPage, this.currentPage);
   }
 
+  onQue(patientId) {
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.disableClose = true;
+    dialogConfig.autoFocus = true;
+    dialogConfig.width = '50%';
+    dialogConfig.data = {
+        id: patientId,
+        title: 'On Que'
+    };
+    this.dialog.open(PatientEditComponent, dialogConfig);
+  }
+
   onCreate() {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.disableClose = true;

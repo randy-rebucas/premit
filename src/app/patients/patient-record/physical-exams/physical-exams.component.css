@@ -3,10 +3,10 @@
     color: #555;
 }
 
-.list-left> ::ng-deep figure {
+/* .mat-grid-list> ::ng-deep figure {
     justify-content: flex-start !important;
     align-items: flex-start !important;
-}
+} */
 
 mat-grid-list {
     margin-top: 2em;
@@ -16,6 +16,9 @@ mat-grid-list {
     margin-top: 2em;
     display: flex;
     max-height: 100%;
+}
+.mat-grid-tile {
+  border: 1px solid rgba(0, 0, 0, .12);
 }
 
 

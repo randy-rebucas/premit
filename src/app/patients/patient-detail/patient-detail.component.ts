@@ -13,7 +13,7 @@ import { AuthService } from 'src/app/auth/auth.service';
 export class PatientDetailComponent implements OnInit, OnDestroy {
   userIsAuthenticated = false;
   private authListenerSubs: Subscription;
-  
+
   id: string;
   firstname: string;
   midlename: string;
@@ -41,7 +41,6 @@ export class PatientDetailComponent implements OnInit, OnDestroy {
       .subscribe(isAuthenticated => {
         this.userIsAuthenticated = isAuthenticated;
       });
-      
       this.route.paramMap.subscribe((paramMap: ParamMap) => {
         this.patientId = paramMap.get('patientId');
         this.patientsService.getPatient(this.patientId).subscribe(patientData => {
