@@ -91,18 +91,19 @@ exports.get = (req, res, next) => {
 
 exports.getCurrent = (req, res, next) => {
     const today = moment().startOf('day');
-
+    // 'patient': req.params.patientId
     Temperature.find({
+      patient: req.params.patientId,
             created: {
                 $gte: today.toDate(),
                 $lte: moment(today).endOf('day').toDate()
             }
         })
-        .then(weight => {
-            if (weight) {
-                res.status(200).json(weight);
+        .then(temperature => {
+            if (temperature) {
+                res.status(200).json(temperature);
             } else {
-                res.status(404).json({ message: 'weight not found' });
+                res.status(404).json({ message: 'temperature not found' });
             }
         })
         .catch(error => {
@@ -110,6 +111,24 @@ exports.getCurrent = (req, res, next) => {
                 message: error.message
             });
         });
+};
+
+exports.getLast = (req, res, next) => {
+  Temperature.find({ 'patient': req.params.patientId })
+      .limit(1)
+      .sort({ 'created': 'desc' })
+      .then(temperature => {
+          if (temperature) {
+              res.status(200).json(temperature);
+          } else {
+              res.status(404).json({ message: 'temperature not found' });
+          }
+      })
+      .catch(error => {
+          res.status(500).json({
+              message: error.message
+          });
+      });
 };
 
 exports.delete = (req, res, next) => {

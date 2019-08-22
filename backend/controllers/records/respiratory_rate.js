@@ -93,6 +93,7 @@ exports.getCurrent = (req, res, next) => {
     const today = moment().startOf('day');
 
     RespiratoryRate.find({
+      patient: req.params.patientId,
             created: {
                 $gte: today.toDate(),
                 $lte: moment(today).endOf('day').toDate()
@@ -110,6 +111,24 @@ exports.getCurrent = (req, res, next) => {
                 message: error.message
             });
         });
+};
+
+exports.getLast = (req, res, next) => {
+  RespiratoryRate.find({ 'patient': req.params.patientId })
+      .limit(1)
+      .sort({ 'created': 'desc' })
+      .then(respiratoryrate => {
+          if (respiratoryrate) {
+              res.status(200).json(respiratoryrate);
+          } else {
+              res.status(404).json({ message: 'respiratory rate not found' });
+          }
+      })
+      .catch(error => {
+          res.status(500).json({
+              message: error.message
+          });
+      });
 };
 
 exports.delete = (req, res, next) => {

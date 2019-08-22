@@ -53,52 +53,52 @@ export class EncountersComponent implements OnInit, OnDestroy {
         this.userIsAuthenticated = isAuthenticated;
       });
 
-    this.heightService.getLatest().subscribe(recordData => {
-      this.height = null;
-      this.heightCreatedAt = null;
-      if (Object.keys(recordData).length) {
-        this.height = recordData[0].height;
-        this.heightCreatedAt = recordData[0].created;
-      }
-    });
+    // this.heightService.getLatest().subscribe(recordData => {
+    //   this.height = null;
+    //   this.heightCreatedAt = null;
+    //   if (Object.keys(recordData).length) {
+    //     this.height = recordData[0].height;
+    //     this.heightCreatedAt = recordData[0].created;
+    //   }
+    // });
 
-    this.weightService.getLatest().subscribe(recordData => {
-      this.weight = null;
-      this.weightCreatedAt = null;
-      if (Object.keys(recordData).length) {
-        this.weight = recordData[0].weight;
-        this.weightCreatedAt = recordData[0].created;
-      }
-    });
+    // this.weightService.getLatest().subscribe(recordData => {
+    //   this.weight = null;
+    //   this.weightCreatedAt = null;
+    //   if (Object.keys(recordData).length) {
+    //     this.weight = recordData[0].weight;
+    //     this.weightCreatedAt = recordData[0].created;
+    //   }
+    // });
 
-    this.temperatureService.getLatest().subscribe(recordData => {
-      this.temperature = null;
-      this.temperatureCreatedAt = null;
-      if (Object.keys(recordData).length) {
-        this.temperature = recordData[0].temperature;
-        this.temperatureCreatedAt = recordData[0].created;
-      }
-    });
+    // this.temperatureService.getLatest().subscribe(recordData => {
+    //   this.temperature = null;
+    //   this.temperatureCreatedAt = null;
+    //   if (Object.keys(recordData).length) {
+    //     this.temperature = recordData[0].temperature;
+    //     this.temperatureCreatedAt = recordData[0].created;
+    //   }
+    // });
 
-    this.bpService.getLatest().subscribe(recordData => {
-      this.systolic = null;
-      this.diastolic = null;
-      this.bpCreatedAt = null;
-      if (Object.keys(recordData).length) {
-        this.systolic = recordData[0].systolic;
-        this.diastolic = recordData[0].diastolic;
-        this.bpCreatedAt = recordData[0].created;
-      }
-    });
+    // this.bpService.getLatest().subscribe(recordData => {
+    //   this.systolic = null;
+    //   this.diastolic = null;
+    //   this.bpCreatedAt = null;
+    //   if (Object.keys(recordData).length) {
+    //     this.systolic = recordData[0].systolic;
+    //     this.diastolic = recordData[0].diastolic;
+    //     this.bpCreatedAt = recordData[0].created;
+    //   }
+    // });
 
-    this.rprService.getLatest().subscribe(recordData => {
-      this.respiratoryRate = null;
-      this.respiratoryRateCreatedAt = null;
-      if (Object.keys(recordData).length) {
-        this.respiratoryRate = recordData[0].respiratoryrate;
-        this.respiratoryRateCreatedAt = recordData[0].created;
-      }
-    });
+    // this.rprService.getLatest().subscribe(recordData => {
+    //   this.respiratoryRate = null;
+    //   this.respiratoryRateCreatedAt = null;
+    //   if (Object.keys(recordData).length) {
+    //     this.respiratoryRate = recordData[0].respiratoryrate;
+    //     this.respiratoryRateCreatedAt = recordData[0].created;
+    //   }
+    // });
     this.breakpoint = (window.innerWidth <= 400) ? 1 : 4;
   }
 

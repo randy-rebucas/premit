@@ -12,7 +12,9 @@ router.put('/:id', checkAuth, Controller.update);
 
 router.get('', Controller.getAll);
 
-router.get('/latest', Controller.getCurrent);
+router.get('/last/:patientId', Controller.getLast);
+
+router.get('/latest/:patientId', Controller.getCurrent);
 
 router.get('/:id', Controller.get);
 

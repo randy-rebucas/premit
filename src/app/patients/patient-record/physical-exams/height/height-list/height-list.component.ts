@@ -56,7 +56,7 @@ export class HeightListComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.isLoading = true;
 
-    this.heightService.getAll(this.perPage, this.currentPage, this.patientId, null, 'desc');
+    this.heightService.getAll(this.perPage, this.currentPage, this.patientId);
 
     this.recordsSub = this.heightService
       .getUpdateListener()
@@ -87,7 +87,7 @@ export class HeightListComponent implements OnInit, OnDestroy {
     this.isLoading = true;
     this.currentPage = pageData.pageIndex + 1;
     this.perPage = pageData.pageSize;
-    this.heightService.getAll(this.perPage, this.currentPage, this.patientId, null, 'desc');
+    this.heightService.getAll(this.perPage, this.currentPage, this.patientId);
   }
 
   onCreate() {
@@ -119,7 +119,7 @@ export class HeightListComponent implements OnInit, OnDestroy {
     .afterClosed().subscribe(res => {
       if (res) {
         this.heightService.delete(recordId).subscribe(() => {
-          this.heightService.getAll(this.perPage, this.currentPage, this.patientId, null, 'desc');
+          this.heightService.getAll(this.perPage, this.currentPage, this.patientId);
           this.notificationService.warn('! Deleted successfully');
         });
       }

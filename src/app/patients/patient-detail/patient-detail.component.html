@@ -4,15 +4,22 @@
 <mat-grid-list cols="6" rowHeight="100px" [gutterSize]="'10px'">
     <mat-grid-tile [colspan]="1" [rowspan]="2" class="grid-content">
         <div style="padding: 1em;">
-            <img src="{{image}}" alt="{{info.firstname + ' ' + info.midlename + ' ' + info.lastname}}" style="width: 100%;">
+            <img src="{{image}}" alt="{{firstname + ' ' + midlename + ' ' + lastname}}" style="width: 100%;">
         </div>
     </mat-grid-tile>
     <mat-grid-tile [colspan]="1" [rowspan]="2">
         <mat-grid-tile-header>
             <h3>Height</h3>
         </mat-grid-tile-header>
-        <div class="grid-inner-content grid-inner-content-center">
-
+        <div class="grid-inner-content grid-inner-content-center" style="font-size: 30px;
+        line-height: 0.8;">
+            <mat-icon style="transform: rotate(90deg);
+            position: absolute;
+            left: 20%;
+            font-size: 60px;
+            top: 35%;">straighten</mat-icon>
+          {{height}}<span *ngIf="height == null">--</span> cm <br/>
+          <span style="font-size: 16px;">{{heightCreated | date}}</span>
         </div>
         <mat-grid-tile-footer>
             <a style="cursor: pointer;" (click)="onViewAll('height')">View All</a>
@@ -22,7 +29,16 @@
         <mat-grid-tile-header>
             <h3>Weight</h3>
         </mat-grid-tile-header>
-        <div class="grid-inner-content grid-inner-content-center">81kg</div>
+        <div class="grid-inner-content grid-inner-content-center" style="font-size: 30px;
+        line-height: 0.8;">
+        <mat-icon style="transform: rotate(90deg);
+        position: absolute;
+        left: 20%;
+        font-size: 60px;
+        top: 35%;">settings_input_svideo</mat-icon>
+        {{weight}}<span *ngIf="weight == null">--</span> kg <br/>
+        <span style="font-size: 16px;">{{weightCreated | date}}</span>
+        </div>
         <mat-grid-tile-footer>
             <a style="cursor: pointer;" (click)="onViewAll('weight')">View All</a>
         </mat-grid-tile-footer>
@@ -31,7 +47,15 @@
         <mat-grid-tile-header>
             <h3>Temperature</h3>
         </mat-grid-tile-header>
-        <div class="grid-inner-content grid-inner-content-center">36c</div>
+        <div class="grid-inner-content grid-inner-content-center" style="font-size: 30px;
+        line-height: 0.8;">
+            <mat-icon style="position: absolute;
+            left: 5%;
+            font-size: 60px;
+            top: 35%;">whatshot</mat-icon>
+            {{temperature}}<span *ngIf="temperature == null">--</span> &#8451; <br/>
+            <span style="font-size: 16px;">{{temperatureCreated | date}}</span>
+          </div>
         <mat-grid-tile-footer>
             <a style="cursor: pointer;" (click)="onViewAll('temperature')">View All</a>
         </mat-grid-tile-footer>
@@ -40,7 +64,15 @@
         <mat-grid-tile-header>
             <h3>Blood Pressure</h3>
         </mat-grid-tile-header>
-        <div class="grid-inner-content grid-inner-content-center">120/80 mmHg</div>
+        <div class="grid-inner-content grid-inner-content-center" style="font-size: 30px;
+        line-height: 0.8;">
+            <mat-icon style="position: absolute;
+            left: 5%;
+            font-size: 60px;
+            top: 35%;">alarm</mat-icon>
+            {{systolic}}/{{diastolic}} <span *ngIf="systolic == null && diastolic == null">--</span> <br/>
+            <span style="font-size: 16px;"> {{bpCreated | date}}</span>
+          </div>
         <mat-grid-tile-footer>
             <a style="cursor: pointer;" (click)="onViewAll('blood-pressure')">View All</a>
         </mat-grid-tile-footer>
@@ -49,19 +81,27 @@
         <mat-grid-tile-header>
             <h3>Respiratory rate</h3>
         </mat-grid-tile-header>
-        <div class="grid-inner-content grid-inner-content-center">6 bpm</div>
+        <div class="grid-inner-content grid-inner-content-center" style="font-size: 30px;
+        line-height: 0.8;">
+            <mat-icon style="position: absolute;
+            left: 5%;
+            font-size: 60px;
+            top: 35%;">vibration</mat-icon>
+            {{rpr}}<span *ngIf="rpr == null">--</span> bpm <br/>
+            <span style="font-size: 16px;"> {{rprCreated | date}}</span>
+          </div>
         <mat-grid-tile-footer>
             <a style="cursor: pointer;" (click)="onViewAll('respiratory-rate')">View All</a>
         </mat-grid-tile-footer>
     </mat-grid-tile>
     <mat-grid-tile [colspan]="1" [rowspan]="2" class="grid-content">
         <div style="padding: 1em;">
-            <h3>{{info.firstname + ' ' + info.midlename + ' ' + info.lastname}} <br/>
-                <span style="font-size: 14px; font-weight: 100;">{{info._id}}</span></h3>
+            <h3>{{firstname + ' ' + midlename + ' ' + lastname}} <br/>
+                <span style="font-size: 14px; font-weight: 100;">{{id}}</span></h3>
             <address>
-                Contact: {{info.contact}} <br/>
-                Gender: {{info.gender}} <br/>
-                Birthdate: {{ info.birthdate | date }}
+                Contact: {{contact}} <br/>
+                Gender: {{gender}} <br/>
+                Birthdate: {{ birthdate | date }}
             </address>
         </div>
     </mat-grid-tile>

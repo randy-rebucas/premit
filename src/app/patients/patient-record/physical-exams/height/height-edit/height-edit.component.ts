@@ -96,7 +96,7 @@ export class HeightEditComponent implements OnInit, OnDestroy {
         this.form.value.record_date,
         this.patientId
       ).subscribe(() => {
-        this.heightService.getAll(this.perPage, this.currentPage, this.patientId, null, 'desc');
+        this.heightService.getAll(this.perPage, this.currentPage, this.patientId);
       });
 
       this.form.reset();
@@ -109,7 +109,7 @@ export class HeightEditComponent implements OnInit, OnDestroy {
         this.form.value.record_date,
         this.patientId
       ).subscribe(() => {
-        this.heightService.getAll(this.perPage, this.currentPage, this.patientId, null, 'desc');
+        this.heightService.getAll(this.perPage, this.currentPage, this.patientId);
       });
 
       this.form.reset();

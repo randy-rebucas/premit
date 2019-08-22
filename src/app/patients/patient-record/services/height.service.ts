@@ -22,8 +22,8 @@ export class HeightService {
     private datePipe: DatePipe
     ) {}
 
-  getAll(perPage: number, currentPage: number, patientId: string, recordLimit: number, recordSort: string) {
-    const queryParams = `?patient=${patientId}&pagesize=${perPage}&page=${currentPage}&limit=${recordLimit}&sort=${recordSort}`;
+  getAll(perPage: number, currentPage: number, patientId: string) {
+    const queryParams = `?patient=${patientId}&pagesize=${perPage}&page=${currentPage}`;
     this.http.get<{message: string, heights: any, max: number }>(
       BACKEND_URL + queryParams
     )
@@ -57,13 +57,14 @@ export class HeightService {
       );
   }
 
-  getLatest() {
+  getLatest(patientId) {
     return this.http.get<{ _id: string; height: string, created: string, patient: string }>(
-      BACKEND_URL + '/latest'
+      BACKEND_URL + '/latest/' + patientId
       );
   }
 
   getLast(patientId) {
+    console.log(patientId);
     return this.http.get<{ _id: string; height: string, created: string, patient: string }>(
       BACKEND_URL + '/last/' + patientId
       );

@@ -57,9 +57,15 @@ export class TemperatureService {
       );
   }
 
-  getLatest() {
+  getLatest(patientId) {
     return this.http.get<{ _id: string; temperature: string, created: string, patient: string }>(
-      BACKEND_URL + '/latest'
+      BACKEND_URL + '/latest/' + patientId
+      );
+  }
+
+  getLast(patientId) {
+    return this.http.get<{ _id: string; temperature: string, created: string, patient: string }>(
+      BACKEND_URL + '/last/' + patientId
       );
   }
 

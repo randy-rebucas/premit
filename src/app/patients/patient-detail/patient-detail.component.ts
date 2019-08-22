@@ -10,7 +10,7 @@ import { TemperatureService } from '../patient-record/services/temperature.servi
 import { BpService } from '../patient-record/services/bp.service';
 import { RprService } from '../patient-record/services/rpr.service';
 
-import { HeightData } from '../patient-record/models/height-data.model';
+// import { HeightData } from '../patient-record/models/height-data.model';
 @Component({
   selector: 'app-patient-detail',
   templateUrl: './patient-detail.component.html',
@@ -21,12 +21,32 @@ export class PatientDetailComponent implements OnInit, OnDestroy {
   private authListenerSubs: Subscription;
   perPage = 10;
   currentPage = 1;
+
+  id: string;
   image: string;
-  
-  height: string;
-  heights: any;
-  info: any;
-  patient: PatientData;
+  firstname: string;
+  midlename: string;
+  lastname: string;
+  contact: string;
+  gender: string;
+  birthdate: string;
+
+  height: number;
+  heightCreated = new Date();
+
+  weight: number;
+  weightCreated = new Date();
+
+  temperature: number;
+  temperatureCreated = new Date();
+
+  systolic: number;
+  diastolic: number;
+  bpCreated = new Date();
+
+  rpr: number;
+  rprCreated = new Date();
+
   private patientId: string;
   private recordsSub: Subscription;
   constructor(
@@ -53,13 +73,40 @@ export class PatientDetailComponent implements OnInit, OnDestroy {
       });
 
       this.patientsService.getPatient(this.patientId).subscribe(patientData => {
-        this.info = patientData;
+        this.id = patientData._id;
+        this.firstname = patientData.firstname;
+        this.midlename = patientData.midlename;
+        this.lastname = patientData.lastname;
+        this.contact = patientData.contact;
+        this.gender = patientData.gender;
+        this.birthdate = patientData.birthdate;
         this.image = patientData.imagePath;
-        console.log(patientData.imagePath);
       });
 
       this.heightService.getLast(this.patientId).subscribe(recordData => {
-        console.log(recordData);
+        this.height = recordData[0].height;
+        this.heightCreated = recordData[0].created;
+      });
+
+      this.weightService.getLast(this.patientId).subscribe(recordData => {
+        this.weight = recordData[0].weight;
+        this.weightCreated = recordData[0].created;
+      });
+
+      this.temperatureService.getLast(this.patientId).subscribe(recordData => {
+        this.temperature = recordData[0].temperature;
+        this.temperatureCreated = recordData[0].created;
+      });
+
+      this.bpService.getLast(this.patientId).subscribe(recordData => {
+        this.systolic = recordData[0].systolic;
+        this.diastolic = recordData[0].diastolic;
+        this.bpCreated = recordData[0].created;
+      });
+
+      this.rprService.getLast(this.patientId).subscribe(recordData => {
+        this.rpr = recordData[0].respiratoryrate;
+        this.rprCreated = recordData[0].created;
       });
     }
 

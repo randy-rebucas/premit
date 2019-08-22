@@ -49,20 +49,12 @@ exports.update = (req, res, next) => {
 exports.getAll = (req, res, next) => {
     const currentPage = +req.query.page;
     const pageSize = +req.query.pagesize;
-    const pageLimit = +req.query.limit;
-    const pageSort = req.query.page ? req.query.page : 'desc';
-    const heightQuery = Height.find({ 'patient': req.query.patient });
+    const heightQuery = Height.find({ 'patient': req.query.patient }).sort({ 'created': 'desc' });
 
     let fetchedRecord;
 
     if (pageSize && currentPage) {
         heightQuery.skip(pageSize * (currentPage - 1)).limit(pageSize);
-    }
-    if (pageLimit) {
-        heightQuery.limit(pageLimit);
-    }
-    if (pageSort) {
-        heightQuery.sort({ 'created': pageSort });
     }
     heightQuery
         .then(documents => {
@@ -102,6 +94,7 @@ exports.getCurrent = (req, res, next) => {
     const today = moment().startOf('day');
     //addpatient id
     Height.find({
+      patient: req.params.patientId,
             created: {
                 $gte: today.toDate(),
                 $lte: moment(today).endOf('day').toDate()
@@ -122,7 +115,7 @@ exports.getCurrent = (req, res, next) => {
 };
 
 exports.getLast = (req, res, next) => {
-    Height.find({ 'patient': req.query.patientId })
+    Height.find({ 'patient': req.params.patientId })
         .limit(1)
         .sort({ 'created': 'desc' })
         .then(height => {
