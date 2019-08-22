@@ -47,13 +47,22 @@ exports.update = (req, res, next) => {
 };
 
 exports.getAll = (req, res, next) => {
-    const pageSize = +req.query.pagesize;
     const currentPage = +req.query.page;
-    const heightQuery = Height.find({ 'patient': req.query.patient }).sort({ 'created': 'desc' });
+    const pageSize = +req.query.pagesize;
+    const pageLimit = +req.query.limit;
+    const pageSort = req.query.page ? req.query.page : 'desc';
+    const heightQuery = Height.find({ 'patient': req.query.patient });
 
     let fetchedRecord;
+
     if (pageSize && currentPage) {
         heightQuery.skip(pageSize * (currentPage - 1)).limit(pageSize);
+    }
+    if (pageLimit) {
+        heightQuery.limit(pageLimit);
+    }
+    if (pageSort) {
+        heightQuery.sort({ 'created': pageSort });
     }
     heightQuery
         .then(documents => {
@@ -91,13 +100,31 @@ exports.get = (req, res, next) => {
 
 exports.getCurrent = (req, res, next) => {
     const today = moment().startOf('day');
-
+    //addpatient id
     Height.find({
             created: {
                 $gte: today.toDate(),
                 $lte: moment(today).endOf('day').toDate()
             }
         })
+        .then(height => {
+            if (height) {
+                res.status(200).json(height);
+            } else {
+                res.status(404).json({ message: 'height not found' });
+            }
+        })
+        .catch(error => {
+            res.status(500).json({
+                message: error.message
+            });
+        });
+};
+
+exports.getLast = (req, res, next) => {
+    Height.find({ 'patient': req.query.patientId })
+        .limit(1)
+        .sort({ 'created': 'desc' })
         .then(height => {
             if (height) {
                 res.status(200).json(height);

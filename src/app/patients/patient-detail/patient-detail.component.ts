@@ -10,6 +10,7 @@ import { TemperatureService } from '../patient-record/services/temperature.servi
 import { BpService } from '../patient-record/services/bp.service';
 import { RprService } from '../patient-record/services/rpr.service';
 
+import { HeightData } from '../patient-record/models/height-data.model';
 @Component({
   selector: 'app-patient-detail',
   templateUrl: './patient-detail.component.html',
@@ -18,11 +19,16 @@ import { RprService } from '../patient-record/services/rpr.service';
 export class PatientDetailComponent implements OnInit, OnDestroy {
   userIsAuthenticated = false;
   private authListenerSubs: Subscription;
+  perPage = 10;
+  currentPage = 1;
+  image: string;
+  
   height: string;
+  heights: any;
   info: any;
   patient: PatientData;
   private patientId: string;
-
+  private recordsSub: Subscription;
   constructor(
     private authService: AuthService,
     public patientsService: PatientsService,
@@ -48,10 +54,12 @@ export class PatientDetailComponent implements OnInit, OnDestroy {
 
       this.patientsService.getPatient(this.patientId).subscribe(patientData => {
         this.info = patientData;
+        this.image = patientData.imagePath;
+        console.log(patientData.imagePath);
       });
 
-      this.heightService.getLatest().subscribe(heightData => {
-        this.height = heightData[0].height;
+      this.heightService.getLast(this.patientId).subscribe(recordData => {
+        console.log(recordData);
       });
     }
 
