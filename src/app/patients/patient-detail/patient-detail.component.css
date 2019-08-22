@@ -1,40 +1,31 @@
-.detail-wrapper {
-    display: flex;
-    flex-direction: row;
-    margin-top: 2em;
-}
-
-.detail-wrapper>div:first-child {
-    flex-basis: 300px;
-    margin-right: 1em;
-}
-
-.detail-wrapper>div:last-child {
-  flex-basis: 100%;
-}
-
-.mat-card-header-text {
-    margin: 0;
-}
-
 .component-page-header {
-  padding: 2em 0 0;
+    padding: 2em 0 0;
 }
 
-mat-card-header ::ng-deep .mat-card-header-text {
-  /* CSS styles go here */
-  margin: 0px;
+mat-grid-list {
+    margin-bottom: 2em;
 }
+
 .mat-grid-tile {
-  border: 1px solid rgba(0, 0, 0, .12);
+    border: 1px solid rgba(0, 0, 0, .12);
 }
-.detail-left mat-card {
-  margin-bottom: 1em;
-}
-mat-list-item a {
-  text-decoration: none;
-}
+
 .mat-grid-tile-footer {
-  background: #efefef !important;
-  color: #555 !important;
+    background: #efefef !important;
+    color: #555 !important;
+}
+
+mat-grid-tile.grid-content>::ng-deep .mat-figure {
+    align-items: flex-start;
+    justify-content: flex-start;
+}
+
+.grid-inner-content-list {
+    margin-top: 3em;
+    padding: 1em;
+    width: 100%;
+}
+
+mat-list-item {
+    cursor: pointer;
 }

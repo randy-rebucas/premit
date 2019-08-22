@@ -2,134 +2,147 @@
     <h1 class="mat-headline"> Patient Details</h1>
 </div>
 <mat-grid-list cols="6" rowHeight="100px" [gutterSize]="'10px'">
-    <mat-grid-tile [colspan]="1" [rowspan]="3">
-        <mat-card>
-            <mat-card-header>
-                <mat-card-title>{{fullname}}</mat-card-title>
-                <mat-card-subtitle>{{id}}</mat-card-subtitle>
-            </mat-card-header>
-            <img mat-card-image src="{{image}}" alt="{{fullname}}">
-            <mat-card-content>
-                <address>
-            Contact: {{contact}} <br/>
-            Gender: {{gender}} <br/>
-            Birthdate: {{ birthdate | date }}
-          </address>
-            </mat-card-content>
-        </mat-card>
+    <mat-grid-tile [colspan]="1" [rowspan]="2" class="grid-content">
+        <div style="padding: 1em;">
+            <img src="{{info.imagePath}}" alt="{{info.firstname + ' ' + info.midlename + ' ' + info.lastname}}" style="width: 100%;">
+        </div>
     </mat-grid-tile>
     <mat-grid-tile [colspan]="1" [rowspan]="2">
         <mat-grid-tile-header>
             <h3>Height</h3>
         </mat-grid-tile-header>
-        45cm
+        <div class="grid-inner-content grid-inner-content-center">
+            45cm
+        </div>
         <mat-grid-tile-footer>
-            <a>View All</a>
+            <a style="cursor: pointer;" (click)="onViewAll('height')">View All</a>
         </mat-grid-tile-footer>
     </mat-grid-tile>
     <mat-grid-tile [colspan]="1" [rowspan]="2">
         <mat-grid-tile-header>
             <h3>Weight</h3>
         </mat-grid-tile-header>
-        81kg
+        <div class="grid-inner-content grid-inner-content-center">81kg</div>
         <mat-grid-tile-footer>
-            <a>View All</a>
+            <a style="cursor: pointer;" (click)="onViewAll('weight')">View All</a>
         </mat-grid-tile-footer>
     </mat-grid-tile>
     <mat-grid-tile [colspan]="1" [rowspan]="2">
         <mat-grid-tile-header>
             <h3>Temperature</h3>
         </mat-grid-tile-header>
-        36c
+        <div class="grid-inner-content grid-inner-content-center">36c</div>
         <mat-grid-tile-footer>
-            <a>View All</a>
+            <a style="cursor: pointer;" (click)="onViewAll('temperature')">View All</a>
         </mat-grid-tile-footer>
     </mat-grid-tile>
     <mat-grid-tile [colspan]="1" [rowspan]="2">
         <mat-grid-tile-header>
             <h3>Blood Pressure</h3>
         </mat-grid-tile-header>
-        120/80 mmHg
+        <div class="grid-inner-content grid-inner-content-center">120/80 mmHg</div>
         <mat-grid-tile-footer>
-            <a>View All</a>
+            <a style="cursor: pointer;" (click)="onViewAll('blood-pressure')">View All</a>
         </mat-grid-tile-footer>
     </mat-grid-tile>
     <mat-grid-tile [colspan]="1" [rowspan]="2">
         <mat-grid-tile-header>
             <h3>Respiratory rate</h3>
         </mat-grid-tile-header>
-        6 bpm
+        <div class="grid-inner-content grid-inner-content-center">6 bpm</div>
         <mat-grid-tile-footer>
-            <a>View All</a>
+            <a style="cursor: pointer;" (click)="onViewAll('respiratory-rate')">View All</a>
         </mat-grid-tile-footer>
     </mat-grid-tile>
-    <mat-grid-tile [colspan]="1" [rowspan]="2">
+    <mat-grid-tile [colspan]="1" [rowspan]="2" class="grid-content">
+        <div style="padding: 1em;">
+            <h3>{{info.firstname + ' ' + info.midlename + ' ' + info.lastname}} <br/>
+                <span style="font-size: 14px; font-weight: 100;">{{info._id}}</span></h3>
+            <address>
+                Contact: {{info.contact}} <br/>
+                Gender: {{info.gender}} <br/>
+                Birthdate: {{ info.birthdate | date }}
+            </address>
+        </div>
+    </mat-grid-tile>
+    <mat-grid-tile [colspan]="1" [rowspan]="2" class="grid-content">
         <mat-grid-tile-header>
             <h3>Histories</h3>
         </mat-grid-tile-header>
-        Allergy: Test
+        <div class="grid-inner-content grid-inner-content-list">Allergy: Test</div>
         <mat-grid-tile-footer>
-            <a>View All</a>
+            <a style="cursor: pointer;" (click)="onViewAll('histories')">View All</a>
         </mat-grid-tile-footer>
     </mat-grid-tile>
-    <mat-grid-tile [colspan]="2" [rowspan]="2">
+    <mat-grid-tile [colspan]="2" [rowspan]="2" class="grid-content">
         <mat-grid-tile-header>
             <h3>Complaints</h3>
         </mat-grid-tile-header>
-        Allergy: Test
+        <div class="grid-inner-content grid-inner-content-list">Allergy: Test</div>
         <mat-grid-tile-footer>
-            <a>View All</a>
+            <a style="cursor: pointer;" (click)="onViewAll('chief-complaints')">View All</a>
         </mat-grid-tile-footer>
     </mat-grid-tile>
-    <mat-grid-tile [colspan]="2" [rowspan]="2">
+    <mat-grid-tile [colspan]="2" [rowspan]="2" class="grid-content">
         <mat-grid-tile-header>
             <h3>Assessments</h3>
         </mat-grid-tile-header>
-        Allergy: Test
+        <div class="grid-inner-content grid-inner-content-list">Allergy: Test</div>
         <mat-grid-tile-footer>
-            <a>View All</a>
+            <a style="cursor: pointer;" (click)="onViewAll('assessments')">View All</a>
         </mat-grid-tile-footer>
     </mat-grid-tile>
-    <mat-grid-tile [colspan]="1" [rowspan]="1">
-        <button mat-raised-button color="accent">Que</button>
-        <button mat-button>Message</button>
+
+    <mat-grid-tile [colspan]="1" [rowspan]="3" class="grid-content">
+        <div>
+            <mat-list>
+                <mat-list-item><i class="material-icons">
+                        message
+                        </i> &nbsp; Message </mat-list-item>
+                <mat-list-item><i class="material-icons">
+                        local_printshop
+                        </i> &nbsp; Print Chart </mat-list-item>
+                <mat-list-item><i class="material-icons">
+                        fingerprint
+                        </i> &nbsp; Generate QR Code </mat-list-item>
+            </mat-list>
+        </div>
     </mat-grid-tile>
-    <mat-grid-tile [colspan]="1" [rowspan]="3">
-        <mat-list>
-            <!-- <mat-list-item> <a href="/">View Account</a> </mat-list-item>
-                      <mat-list-item> <a href="/">View Chart</a> </mat-list-item> -->
-            <mat-list-item> <a href="/">Print Chart</a> </mat-list-item>
-            <mat-list-item> <a href="/">Generate QR Code</a> </mat-list-item>
-        </mat-list>
-    </mat-grid-tile>
-    <mat-grid-tile [colspan]="3" [rowspan]="2">
+    <mat-grid-tile [colspan]="3" [rowspan]="2" class="grid-content">
         <mat-grid-tile-header>
             <h3>Prescriptions</h3>
         </mat-grid-tile-header>
-        Try
+        <div class="grid-inner-content grid-inner-content-list">Try</div>
         <mat-grid-tile-footer>
-            <a>View All</a>
+            <a style="cursor: pointer;" (click)="onViewAll('prescriptions')">View All</a>
         </mat-grid-tile-footer>
     </mat-grid-tile>
-    <mat-grid-tile [colspan]="2" [rowspan]="2">
+    <mat-grid-tile [colspan]="2" [rowspan]="2" class="grid-content">
         <mat-grid-tile-header>
             <h3>Progress notes</h3>
         </mat-grid-tile-header>
-        Sample
+        <div class="grid-inner-content grid-inner-content-list">Sample</div>
         <mat-grid-tile-footer>
-            <a>View All</a>
+            <a style="cursor: pointer;" (click)="onViewAll('progress-notes')">View All</a>
         </mat-grid-tile-footer>
     </mat-grid-tile>
-    <mat-grid-tile [colspan]="5" [rowspan]="2">
+    <mat-grid-tile [colspan]="5" [rowspan]="2" class="grid-content">
         <mat-grid-tile-header>
             <h3>Test Results</h3>
         </mat-grid-tile-header>
-        Allergy: Test
+        <div class="grid-inner-content grid-inner-content-list">Sample</div>
         <mat-grid-tile-footer>
-            <a>View All</a>
+            <a style="cursor: pointer;" (click)="onViewAll('test-results')">View All</a>
         </mat-grid-tile-footer>
     </mat-grid-tile>
-    <mat-grid-tile [colspan]="1" [rowspan]="1">
-        Updates
+    <mat-grid-tile [colspan]="1" [rowspan]="1" class="grid-content">
+        <div style="padding: 1em;">
+            Support <a>09179157515</a>
+            <mat-list>
+                <mat-list-item><i class="material-icons">
+                        email
+                        </i> &nbsp; Support </mat-list-item>
+            </mat-list>
+        </div>
     </mat-grid-tile>
 </mat-grid-list>
