@@ -66,6 +66,12 @@ export class AssessmentService {
       );
   }
 
+  getByComplaintId(complaintId) {
+    return this.http.get<{ _id: string; complaintId: string, diagnosis: [], treatments: [] }>(
+      BACKEND_URL + '/complaint/' + complaintId
+      );
+  }
+
   getLast(patientId) {
     return this.http.get<{ _id: string, complaints: [], created: string, patient: string }>(
       BACKEND_URL + '/last/' + patientId

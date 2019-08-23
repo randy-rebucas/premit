@@ -1,8 +1,10 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, Input } from '@angular/core';
 import { Subscription } from 'rxjs';
 
 import { AuthService } from '../../../../auth/auth.service';
 import { AssessmentService } from '../../services/assessment.service';
+import { ProgressNoteEditComponent } from '../progress-note-edit/progress-note-edit.component';
+import { MatDialogConfig, MatDialog } from '@angular/material';
 
 @Component({
   selector: 'app-progress-note-latest',
@@ -10,17 +12,17 @@ import { AssessmentService } from '../../services/assessment.service';
   styleUrls: ['./progress-note-latest.component.css']
 })
 export class ProgressNoteLatestComponent implements OnInit, OnDestroy {
-  createdDate: Date;
-  assessmentId: string;
-  diagnosis: [];
-  treatments: [];
+  @Input() complaintId: string;
+
   isLoading = false;
   userIsAuthenticated = false;
   private authListenerSubs: Subscription;
 
   constructor(
     private authService: AuthService,
-    public assessmentService: AssessmentService,) {}
+    public assessmentService: AssessmentService,
+    private dialog: MatDialog
+    ) {}
 
   ngOnInit() {
     this.userIsAuthenticated = this.authService.getIsAuth();
@@ -29,20 +31,18 @@ export class ProgressNoteLatestComponent implements OnInit, OnDestroy {
       .subscribe(isAuthenticated => {
         this.userIsAuthenticated = isAuthenticated;
       });
+  }
 
-    this.assessmentService.getLatest().subscribe(
-      recordData => {
-        this.assessmentId = null;
-        this.diagnosis = null;
-        this.treatments = null;
-        if (Object.keys(recordData).length) {
-          this.assessmentId = recordData[0]._id;
-          this.createdDate = recordData[0].created;
-          this.diagnosis = recordData[0].diagnosis;
-          this.treatments = recordData[0].treatments;
-        }
-      }
-    );
+  onCreate(complaintId) {
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.disableClose = true;
+    dialogConfig.autoFocus = true;
+    dialogConfig.data = {
+      id: null,
+      title: 'New record',
+      complaintIds: complaintId
+    };
+    this.dialog.open(ProgressNoteEditComponent, dialogConfig);
   }
 
   ngOnDestroy() {

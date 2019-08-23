@@ -1,23 +1,92 @@
-<!-- <p>{{id}}</p> -->
-<mat-grid-list cols="4" rowHeight="300px" gutterSize="10px">
-  <mat-grid-tile [colspan]="1" [rowspan]="1">
-    <mat-grid-tile-header>
-      <h3>Chief Complaint</h3>
-    </mat-grid-tile-header>
-    <mat-list role="list">
-      <mat-list-item role="listitem" *ngFor="let complaint of complaints; let d = index;">{{complaint.complaint}}</mat-list-item>
-    </mat-list>
+<mat-grid-list cols="6" rowHeight="100px" [gutterSize]="'10px'">
+  <mat-grid-tile [colspan]="6" [rowspan]="1" class="grid-content">
+      <mat-grid-tile-header>
+          <h3>Chief Complaints</h3>
+      </mat-grid-tile-header>
+      <div style="padding: 1em; margin-top: 2.6em;">
+        <mat-chip-list>
+            <mat-chip *ngFor="let complaint of complaints" color="primary" selected>{{ complaint.complaint }}</mat-chip>
+        </mat-chip-list>
+      </div>
   </mat-grid-tile>
-  <mat-grid-tile [colspan]="3" [rowspan]="1">
-    2
+  <mat-grid-tile [colspan]="3" [rowspan]="2" class="grid-content">
+      <mat-grid-tile-header>
+          <h3>Assessment</h3>
+      </mat-grid-tile-header>
+      <div class="grid-inner-content grid-inner-content-list">
+          <table class="table">
+              <tr>
+                <td>Diagnosis</td>
+                <td>Treatments</td>
+              </tr>
+              <tr>
+                <td>
+                    <ul style="list-style: none;
+                    padding: 0;
+                    line-height: 2;
+                    margin: 0;">
+                      <li *ngFor="let diagnose of diagnosis">{{diagnose.diagnose}}</li>
+                    </ul>
+                    <span *ngIf="diagnosis == null">--</span>
+                </td>
+                <td>
+                    <ul style="list-style: none;
+                    padding: 0;
+                    line-height: 2;
+                    margin: 0;">
+                      <li *ngFor="let treatment of treatments">{{treatment.treatment}}</li>
+                    </ul>
+                    <span *ngIf="treatments == null">--</span>
+                </td>
+              </tr>
+            </table>
+      </div>
   </mat-grid-tile>
-  <mat-grid-tile [colspan]="1" [rowspan]="1">
-    3
+  <mat-grid-tile [colspan]="3" [rowspan]="2" class="grid-content">
+      <mat-grid-tile-header>
+          <h3>Prescription</h3>
+      </mat-grid-tile-header>
+      <div class="grid-inner-content grid-inner-content-list">
+          <table class="table">
+            <tr>
+              <td>Medicine</td>
+              <td>Preparation</td>
+              <td>Sig</td>
+              <td>Qty</td>
+            </tr>
+            <tr *ngFor="let prescription of prescriptions">
+              <td>
+                  {{prescription.medicine}}
+              </td>
+              <td>
+                  {{prescription.preparation}}
+              </td>
+              <td>
+                  {{prescription.sig}}
+              </td>
+              <td>
+                  {{prescription.quantity}}
+              </td>
+            </tr>
+          </table>
+          <span *ngIf="prescriptions == null">--</span>
+      </div>
   </mat-grid-tile>
-  <mat-grid-tile [colspan]="3" [rowspan]="2">
-      4
+  <mat-grid-tile [colspan]="6" [rowspan]="1" class="grid-content">
+      <mat-grid-tile-header>
+          <h3>Progress notes</h3>
+      </mat-grid-tile-header>
+      <div class="grid-inner-content grid-inner-content-list">
+          {{note}}
+          <span *ngIf="note == null">--</span>
+      </div>
   </mat-grid-tile>
-  <mat-grid-tile [colspan]="1" [rowspan]="1">
-      5
+  <mat-grid-tile [colspan]="6" [rowspan]="2" class="grid-content">
+      <mat-grid-tile-header>
+          <h3>Test Result</h3>
+      </mat-grid-tile-header>
+      <div class="grid-inner-content grid-inner-content-list">
+        on progress...
+      </div>
   </mat-grid-tile>
 </mat-grid-list>

@@ -91,8 +91,6 @@ export class ProgressNoteEditComponent implements OnInit, OnDestroy {
     if (this.form.invalid) {
       return;
     }
-    console.log(this.complaintId);
-    console.log(this.form.value);
     if (this.mode === 'create') {
       this.notesService.insert(
         this.form.value.record_date,
@@ -119,7 +117,7 @@ export class ProgressNoteEditComponent implements OnInit, OnDestroy {
         this.form.value.note
       ).subscribe(() => {
         this.onClose();
-        this.notificationService.success(':: Added successfully');
+        this.notificationService.success(':: Updated successfully');
         this.notesService.getLatest().subscribe(
           recordData => {
             this.complaintId = null;

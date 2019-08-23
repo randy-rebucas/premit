@@ -64,6 +64,12 @@ export class NotesService {
       );
   }
 
+  getByComplaintId(complaintId) {
+    return this.http.get<{ _id: string; created: string, complaintId: string, note: string }>(
+      BACKEND_URL + '/complaint/' + complaintId
+      );
+  }
+
   getLast(patientId) {
     return this.http.get<{ _id: string; created: string, complaintId: string, note: string }>(
       BACKEND_URL + '/last/' + patientId

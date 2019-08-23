@@ -4,32 +4,100 @@
   <mat-dialog-content class="mat-typography">
     <mat-grid-list cols="6" rowHeight="100px" [gutterSize]="'10px'">
         <mat-grid-tile [colspan]="6" [rowspan]="1" class="grid-content">
-            <div style="padding: 1em;">
-                complaint detail
+            <mat-grid-tile-header>
+                <h3>Chief Complaints</h3>
+            </mat-grid-tile-header>
+            <div style="padding: 1em; margin-top: 3.2em;">
+              <mat-chip-list>
+                  <mat-chip *ngFor="let complaint of complaints" color="primary" selected>{{ complaint.complaint }}</mat-chip>
+              </mat-chip-list>
             </div>
         </mat-grid-tile>
-        <mat-grid-tile [colspan]="3" [rowspan]="2">
+        <mat-grid-tile [colspan]="3" [rowspan]="2" class="grid-content">
             <mat-grid-tile-header>
-                <h3>Assessment</h3>
+                <h3 style="width: 100%;">Assessment
+                    <app-assessment-latest [complaintId]="id"></app-assessment-latest>
+                </h3>
             </mat-grid-tile-header>
-            <app-assessment-latest></app-assessment-latest>
+            <div class="grid-inner-content grid-inner-content-list">
+                <table class="table">
+                    <tr>
+                      <td>Diagnosis</td>
+                      <td>Treatments</td>
+                    </tr>
+                    <tr>
+                      <td>
+                          <ul style="list-style: none;
+                          padding: 0;
+                          line-height: 2;
+                          margin: 0;">
+                            <li *ngFor="let diagnose of diagnosis">{{diagnose.diagnose}}</li>
+                          </ul>
+                          <span *ngIf="diagnosis == null">--</span>
+                      </td>
+                      <td>
+                          <ul style="list-style: none;
+                          padding: 0;
+                          line-height: 2;
+                          margin: 0;">
+                            <li *ngFor="let treatment of treatments">{{treatment.treatment}}</li>
+                          </ul>
+                          <span *ngIf="treatments == null">--</span>
+                      </td>
+                    </tr>
+                  </table>
+            </div>
         </mat-grid-tile>
-        <mat-grid-tile [colspan]="3" [rowspan]="2">
+        <mat-grid-tile [colspan]="3" [rowspan]="2" class="grid-content">
             <mat-grid-tile-header>
-                <h3>Prescription</h3>
+                <h3 style="width: 100%;">Prescription
+                  <app-prescription-latest [complaintId]="id"></app-prescription-latest>
+                </h3>
             </mat-grid-tile-header>
-            <app-prescription-latest></app-prescription-latest>
+            <div class="grid-inner-content grid-inner-content-list">
+                <table class="table">
+                  <tr>
+                    <td>Medicine</td>
+                    <td>Preparation</td>
+                    <td>Sig</td>
+                    <td>Qty</td>
+                  </tr>
+                  <tr *ngFor="let prescription of prescriptions">
+                    <td>
+                        {{prescription.medicine}}
+                    </td>
+                    <td>
+                        {{prescription.preparation}}
+                    </td>
+                    <td>
+                        {{prescription.sig}}
+                    </td>
+                    <td>
+                        {{prescription.quantity}}
+                    </td>
+                  </tr>
+                </table>
+                <span *ngIf="prescriptions == null">--</span>
+            </div>
         </mat-grid-tile>
-        <mat-grid-tile [colspan]="6" [rowspan]="1">
+        <mat-grid-tile [colspan]="6" [rowspan]="1" class="grid-content">
             <mat-grid-tile-header>
-                <h3>Progress notes</h3>
+                <h3 style="width: 100%;">Progress notes
+                  <app-progress-note-latest [complaintId]="id"></app-progress-note-latest>
+                </h3>
             </mat-grid-tile-header>
-            <app-progress-note-latest></app-progress-note-latest>
+            <div class="grid-inner-content grid-inner-content-list">
+                {{note}}
+                <span *ngIf="note == null">--</span>
+            </div>
         </mat-grid-tile>
-        <mat-grid-tile [colspan]="6" [rowspan]="2">
+        <mat-grid-tile [colspan]="6" [rowspan]="2" class="grid-content">
             <mat-grid-tile-header>
                 <h3>Test Result</h3>
             </mat-grid-tile-header>
+            <div class="grid-inner-content grid-inner-content-list">
+              <p>on progress...</p>
+            </div>
         </mat-grid-tile>
     </mat-grid-list>
   </mat-dialog-content>

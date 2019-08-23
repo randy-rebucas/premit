@@ -14,6 +14,8 @@ router.get('', Controller.getAll);
 
 router.get('/latest', Controller.getCurrent);
 
+router.get('/complaint/:complaintId', Controller.getByComplaint);
+
 router.get('/last/:patientId', Controller.getLast);
 
 router.get('/:id', Controller.get);

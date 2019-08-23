@@ -7,3 +7,35 @@
   border-bottom: 1px solid rgb(169, 169, 169);
   padding: 0 0 1em 0;
 }
+
+mat-grid-list {
+  margin-bottom: 2em;
+}
+
+.mat-grid-tile {
+  border: 1px solid rgba(0, 0, 0, .12);
+}
+
+.mat-grid-tile-footer {
+  background: #efefef !important;
+  color: #555 !important;
+}
+
+mat-grid-tile.grid-content>::ng-deep .mat-figure {
+  align-items: flex-start;
+  justify-content: flex-start;
+}
+
+.grid-inner-content-list {
+  margin-top: 3em;
+  padding: 1em;
+  width: 100%;
+}
+
+mat-list-item {
+  cursor: pointer;
+}
+
+table {
+width: 100%;
+}

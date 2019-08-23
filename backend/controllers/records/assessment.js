@@ -146,6 +146,30 @@ exports.getLast = (req, res, next) => {
       });
 };
 
+exports.getByComplaint = (req, res, next) => {
+  const today = moment().startOf('day');
+    Assessment.find({
+          complaintId: req.params.complaintId,
+          created: {
+              $gte: today.toDate(),
+              $lte: moment(today).endOf('day').toDate()
+          }
+        })
+        .limit(1)
+        .then(assessment => {
+            if (assessment) {
+                res.status(200).json(assessment);
+            } else {
+                res.status(404).json({ message: 'assessment not found' });
+            }
+        })
+        .catch(error => {
+            res.status(500).json({
+                message: error.message
+            });
+        });
+};
+
 exports.delete = (req, res, next) => {
     Assessment.deleteOne({ _id: req.params.id }) //pass doctors role for restriction
         .then(result => {

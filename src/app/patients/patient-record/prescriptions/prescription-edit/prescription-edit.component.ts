@@ -120,7 +120,6 @@ export class PrescriptionEditComponent implements OnInit, OnDestroy {
   }
 
   onSave() {
-    console.log(this.form.value);
     if (this.form.invalid) {
       return;
     }

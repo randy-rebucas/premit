@@ -114,20 +114,44 @@ exports.getCurrent = (req, res, next) => {
 
 exports.getLast = (req, res, next) => {
   Note.find({ 'patient': req.params.patientId })
-      .limit(1)
-      .sort({ 'created': 'desc' })
-      .then(note => {
-          if (note) {
-              res.status(200).json(note);
-          } else {
-              res.status(404).json({ message: 'note not found' });
-          }
-      })
-      .catch(error => {
-          res.status(500).json({
-              message: error.message
-          });
+    .limit(1)
+    .sort({ 'created': 'desc' })
+    .then(note => {
+        if (note) {
+            res.status(200).json(note);
+        } else {
+            res.status(404).json({ message: 'note not found' });
+        }
+    })
+    .catch(error => {
+        res.status(500).json({
+            message: error.message
+        });
+    });
+};
+
+exports.getByComplaint = (req, res, next) => {
+  const today = moment().startOf('day');
+  Note.find({
+    complaintId: req.params.complaintId,
+    created: {
+        $gte: today.toDate(),
+        $lte: moment(today).endOf('day').toDate()
+    }
+  })
+  .limit(1)
+  .then(note => {
+      if (note) {
+          res.status(200).json(note);
+      } else {
+          res.status(404).json({ message: 'note not found' });
+      }
+  })
+  .catch(error => {
+      res.status(500).json({
+          message: error.message
       });
+  });
 };
 
 exports.delete = (req, res, next) => {

@@ -1,6 +1,6 @@
-import { Component, OnInit, OnDestroy, Inject } from '@angular/core';
+import { Component, OnInit, OnDestroy, Inject, ViewChild } from '@angular/core';
 import { FormGroup } from '@angular/forms';
-import { MAT_DIALOG_DATA, MatDialogRef, MatDialogConfig, MatDialog } from '@angular/material';
+import { MAT_DIALOG_DATA, MatDialogRef, MatDialogConfig, MatDialog, MatTableDataSource, MatPaginator, MatSort } from '@angular/material';
 import { Subscription } from 'rxjs';
 import { DatePipe } from '@angular/common';
 
@@ -8,6 +8,10 @@ import { AuthService } from '../../../../auth/auth.service';
 import { NotificationService } from 'src/app/shared/notification.service';
 import { ComplaintService } from '../../services/complaint.service';
 import { ComplaintData } from '../../models/complaint-data.model';
+import { NotesService } from '../../services/notes.service';
+import { PrescriptionService } from '../../services/prescription.service';
+import { AssessmentService } from '../../services/assessment.service';
+import { AssessmentData } from '../../models/assessment-data.model';
 
 @Component({
   selector: 'app-encounter-edit',
@@ -15,6 +19,10 @@ import { ComplaintData } from '../../models/complaint-data.model';
   styleUrls: ['./encounter-edit.component.css']
 })
 export class EncounterEditComponent implements OnInit, OnDestroy {
+  perPage = 10;
+  currentPage = 1;
+  pageSizeOptions = [5, 10, 25, 100];
+
   userIsAuthenticated = false;
   private authListenerSubs: Subscription;
 
@@ -23,14 +31,33 @@ export class EncounterEditComponent implements OnInit, OnDestroy {
   complaint: string;
   title: string;
 
+  id: string;
+  complaints: any;
+  created: string;
+
+  assessmentId: string;
+  diagnosis: any;
+  treatments: any;
+
+  prescriptionId: string;
+  prescriptions: any;
+
+  noteId: string;
+  note: string;
+
   form: FormGroup;
+  private recordsSub: Subscription;
+
   constructor(
     private dialog: MatDialog,
-    public complaintService: ComplaintService,
     private authService: AuthService,
     private datePipe: DatePipe,
-
     private notificationService: NotificationService,
+
+    public complaintService: ComplaintService,
+    public assessmentService: AssessmentService,
+    public prescriptionService: PrescriptionService,
+    public notesService: NotesService,
     public dialogRef: MatDialogRef < EncounterEditComponent >,
     @Inject(MAT_DIALOG_DATA) data
     ) {
@@ -48,8 +75,87 @@ export class EncounterEditComponent implements OnInit, OnDestroy {
 
     this.isLoading = true;
     this.complaintService.get(this.complaint).subscribe(recordData => {
-      console.log(recordData);
+      this.id = recordData._id;
+      this.complaints = recordData.complaints;
+      this.created = recordData.created;
     });
+
+    /**
+     * get assessment
+     */
+    this.getAssessement(this.complaint);
+
+    this.recordsSub = this.assessmentService
+    .getUpdateListener()
+    .subscribe(() => {
+      this.isLoading = false;
+      this.getAssessement(this.complaint);
+    });
+
+    /**
+     * get prescription
+     */
+    this.getPrescription(this.complaint);
+
+    this.recordsSub = this.prescriptionService
+    .getUpdateListener()
+    .subscribe(() => {
+      this.isLoading = false;
+      this.getPrescription(this.complaint);
+    });
+
+    /**
+     * get progress notes
+     */
+    this.getProgressNotes(this.complaint);
+
+    this.recordsSub = this.notesService
+    .getUpdateListener()
+    .subscribe(() => {
+      this.isLoading = false;
+      this.getProgressNotes(this.complaint);
+    });
+  }
+
+  getAssessement(complaintId) {
+    this.assessmentService.getByComplaintId(complaintId).subscribe(
+      recordData => {
+        this.assessmentId = null;
+        this.diagnosis = null;
+        this.treatments = null;
+        if (Object.keys(recordData).length) {
+          this.assessmentId = recordData[0]._id;
+          this.diagnosis = recordData[0].diagnosis;
+          this.treatments = recordData[0].treatments;
+        }
+      }
+    );
+  }
+
+  getPrescription(complaintId) {
+    this.prescriptionService.getByComplaintId(complaintId).subscribe(
+      recordData => {
+        this.prescriptionId = null;
+        this.prescriptions = null;
+        if (Object.keys(recordData).length) {
+          this.prescriptionId = recordData[0]._id;
+          this.prescriptions = recordData[0].prescriptions;
+        }
+      }
+    );
+  }
+
+  getProgressNotes(complaintId) {
+    this.notesService.getByComplaintId(complaintId).subscribe(
+      recordData => {
+        this.noteId = null;
+        this.note = null;
+        if (Object.keys(recordData).length) {
+          this.noteId = recordData[0]._id;
+          this.note = recordData[0].note;
+        }
+      }
+    );
   }
 
   print(opt) {
@@ -58,6 +164,10 @@ export class EncounterEditComponent implements OnInit, OnDestroy {
     } else {
       console.log(opt);
     }
+  }
+
+  onClose() {
+    this.dialogRef.close();
   }
 
   ngOnDestroy() {

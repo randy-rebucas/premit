@@ -1,12 +1,13 @@
 import { Component, OnInit, OnDestroy, Inject, Optional } from '@angular/core';
-import { FormGroup, FormControl, Validators, NgControl, FormBuilder, FormArray } from '@angular/forms';
 import { Router, ActivatedRoute, Params } from '@angular/router';
 import { Subscription } from 'rxjs';
 
 import { AuthService } from '../../../../auth/auth.service';
 import { ComplaintService } from '../../services/complaint.service';
 import { MAT_DIALOG_DATA, MatDialogConfig, MatDialog } from '@angular/material';
-import { ComplaintData } from '../../models/complaint-data.model';
+import { AssessmentService } from '../../services/assessment.service';
+import { PrescriptionService } from '../../services/prescription.service';
+import { NotesService } from '../../services/notes.service';
 
 @Component({
   selector: 'app-chief-complaint-detail',
@@ -14,22 +15,36 @@ import { ComplaintData } from '../../models/complaint-data.model';
   styleUrls: ['./chief-complaint-detail.component.css']
 })
 export class ChiefComplaintDetailComponent implements OnInit, OnDestroy {
-  complaint: ComplaintData;
-  complaints: [];
-  id: string;
 
   userIsAuthenticated = false;
   private authListenerSubs: Subscription;
   isLoading = false;
+
+  id: string;
+  complaints: any;
+  created: string;
+
+  assessmentId: string;
+  diagnosis: any;
+  treatments: any;
+
+  prescriptionId: string;
+  prescriptions: any;
+
+  noteId: string;
+  note: string;
 
   private recordsSub: Subscription;
 
   constructor(
     @Optional() @Inject(MAT_DIALOG_DATA) public data: ComplaintService,
     private dialog: MatDialog,
-    public route: ActivatedRoute,
     private authService: AuthService,
+    public route: ActivatedRoute,
     public complaintService: ComplaintService,
+    public assessmentService: AssessmentService,
+    public prescriptionService: PrescriptionService,
+    public notesService: NotesService,
     private router: Router,
     ) {}
 
@@ -43,11 +58,90 @@ export class ChiefComplaintDetailComponent implements OnInit, OnDestroy {
 
     this.route.paramMap.subscribe(params => {
       this.id = params.get('complaintId');
-      this.complaintService.get(this.id).subscribe(recordData => {
-        this.isLoading = false;
-        this.complaints = recordData.complaints;
-      });
     });
+
+    this.complaintService.get(this.id).subscribe(recordData => {
+      this.id = recordData._id;
+      this.complaints = recordData.complaints;
+      this.created = recordData.created;
+    });
+
+    /**
+     * get assessment
+     */
+    this.getAssessement(this.id);
+
+    this.recordsSub = this.assessmentService
+    .getUpdateListener()
+    .subscribe(() => {
+      this.isLoading = false;
+      this.getAssessement(this.id);
+    });
+
+    /**
+     * get prescription
+     */
+    this.getPrescription(this.id);
+
+    this.recordsSub = this.prescriptionService
+    .getUpdateListener()
+    .subscribe(() => {
+      this.isLoading = false;
+      this.getPrescription(this.id);
+    });
+
+    /**
+     * get progress notes
+     */
+    this.getProgressNotes(this.id);
+
+    this.recordsSub = this.notesService
+    .getUpdateListener()
+    .subscribe(() => {
+      this.isLoading = false;
+      this.getProgressNotes(this.id);
+    });
+  }
+
+  getAssessement(complaintId) {
+    this.assessmentService.getByComplaintId(complaintId).subscribe(
+      recordData => {
+        this.assessmentId = null;
+        this.diagnosis = null;
+        this.treatments = null;
+        if (Object.keys(recordData).length) {
+          this.assessmentId = recordData[0]._id;
+          this.diagnosis = recordData[0].diagnosis;
+          this.treatments = recordData[0].treatments;
+        }
+      }
+    );
+  }
+
+  getPrescription(complaintId) {
+    this.prescriptionService.getByComplaintId(complaintId).subscribe(
+      recordData => {
+        this.prescriptionId = null;
+        this.prescriptions = null;
+        if (Object.keys(recordData).length) {
+          this.prescriptionId = recordData[0]._id;
+          this.prescriptions = recordData[0].prescriptions;
+        }
+      }
+    );
+  }
+
+  getProgressNotes(complaintId) {
+    this.notesService.getByComplaintId(complaintId).subscribe(
+      recordData => {
+        this.noteId = null;
+        this.note = null;
+        if (Object.keys(recordData).length) {
+          this.noteId = recordData[0]._id;
+          this.note = recordData[0].note;
+        }
+      }
+    );
   }
 
   ngOnDestroy() {
