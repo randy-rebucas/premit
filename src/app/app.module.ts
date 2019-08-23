@@ -38,6 +38,7 @@ import { HistoriesEditComponent } from './patients/patient-record/histories/hist
 import { AssessmentEditComponent } from './patients/patient-record/assessments/assessment-edit/assetment-edit.component';
 import { PrescriptionEditComponent } from './patients/patient-record/prescriptions/prescription-edit/prescription-edit.component';
 import { ProgressNoteEditComponent } from './patients/patient-record/progress-notes/progress-note-edit/progress-note-edit.component';
+import { EncounterEditComponent } from './patients/patient-record/encounters/encounter-edit/encounter-edit.component';
 
 @NgModule({
   declarations: [
@@ -90,7 +91,8 @@ import { ProgressNoteEditComponent } from './patients/patient-record/progress-no
     HistoriesEditComponent,
     AssessmentEditComponent,
     PrescriptionEditComponent,
-    ProgressNoteEditComponent
+    ProgressNoteEditComponent,
+    EncounterEditComponent
   ]
 })
 export class AppModule { }

@@ -130,7 +130,6 @@ export class PrescriptionEditComponent implements OnInit, OnDestroy {
         this.complaintId,
         this.form.value.prescriptions
       ).subscribe(() => {
-        this.form.reset();
         this.onClose();
         this.notificationService.success(':: Added successfully');
         this.complaintService.getLatest().subscribe(
@@ -150,7 +149,6 @@ export class PrescriptionEditComponent implements OnInit, OnDestroy {
         this.complaintId,
         this.form.value.prescriptions
       ).subscribe(() => {
-        this.form.reset();
         this.onClose();
         this.notificationService.success(':: Updated successfully');
         this.complaintService.getLatest().subscribe(

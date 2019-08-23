@@ -152,10 +152,9 @@ export class AssessmentEditComponent implements OnInit, OnDestroy {
             }
           }
         );
+        this.onClose();
+        this.notificationService.success(':: Added successfully');
       });
-      this.form.reset();
-      this.notificationService.success(':: Added successfully');
-      this.onClose();
     } else {
       this.assessmentService.update(
         this.recordId,
@@ -173,11 +172,9 @@ export class AssessmentEditComponent implements OnInit, OnDestroy {
             }
           }
         );
+        this.onClose();
+        this.notificationService.success(':: Updated successfully');
       });
-
-      this.form.reset();
-      this.notificationService.success(':: Updated successfully');
-      this.onClose();
     }
   }
 

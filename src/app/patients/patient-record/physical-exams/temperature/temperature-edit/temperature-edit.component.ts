@@ -97,12 +97,10 @@ export class TemperatureEditComponent implements OnInit, OnDestroy {
         this.form.value.record_date,
         this.patientId
       ).subscribe(() => {
+        this.onClose();
+        this.notificationService.success(':: Added successfully');
         this.temperatureService.getAll(this.perPage, this.currentPage, this.patientId);
       });
-
-      this.form.reset();
-      this.notificationService.success(':: Added successfully');
-      this.onClose();
     } else {
       this.temperatureService.update(
         this.recordId,
@@ -110,12 +108,10 @@ export class TemperatureEditComponent implements OnInit, OnDestroy {
         this.form.value.record_date,
         this.patientId
       ).subscribe(() => {
+        this.onClose();
+        this.notificationService.success(':: Updated successfully');
         this.temperatureService.getAll(this.perPage, this.currentPage, this.patientId);
       });
-
-      this.form.reset();
-      this.notificationService.success(':: Updated successfully');
-      this.onClose();
     }
   }
 

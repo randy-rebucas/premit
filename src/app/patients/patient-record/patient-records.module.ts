@@ -27,12 +27,16 @@ import { TestResultsComponent } from './test-results/test-results.component';
 import { PhysicalExamsModule } from './physical-exams/physical-exams.module';
 import { ChiefComplaintDetailComponent } from './chief-complaint/chief-complaint-detail/chief-complaint-detail.component';
 import { EncounterListComponent } from './encounters/encounter-list/encounter-list.component';
+import { EncounterEditComponent } from './encounters/encounter-edit/encounter-edit.component';
+import { PrescriptionLatestComponent } from './prescriptions/prescription-latest/prescription-latest.component';
+import { ProgressNoteLatestComponent } from './progress-notes/progress-note-latest/progress-note-latest.component';
 
 
 @NgModule({
   declarations: [
     EncountersComponent,
     EncounterListComponent,
+    EncounterEditComponent,
     ChiefComplaintComponent,
     ChiefComplaintEditComponent,
     ChiefComplaintListComponent,
@@ -49,10 +53,12 @@ import { EncounterListComponent } from './encounters/encounter-list/encounter-li
     PrescriptionsComponent,
     PrescriptionEditComponent,
     PrescriptionListComponent,
+    PrescriptionLatestComponent,
     ProgressNotesComponent,
     TestResultsComponent,
     ProgressNoteEditComponent,
-    ProgressNoteListComponent
+    ProgressNoteListComponent,
+    ProgressNoteLatestComponent
   ],
   imports: [
     CommonModule,

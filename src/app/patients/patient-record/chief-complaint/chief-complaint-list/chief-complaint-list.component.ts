@@ -48,8 +48,6 @@ export class ChiefComplaintListComponent implements OnInit, OnDestroy {
       const snapshot: RouterStateSnapshot = this.router.routerState.snapshot;
       const splitUrl = snapshot.url.split('/');
       this.patientId = splitUrl[2];
-
-      console.log(snapshot);
       this.show = false;
     }
 
@@ -79,15 +77,6 @@ export class ChiefComplaintListComponent implements OnInit, OnDestroy {
       .getAuthStatusListener()
       .subscribe(isAuthenticated => {
         this.userIsAuthenticated = isAuthenticated;
-      });
-
-    this.route.paramMap.subscribe(params => {
-        this.id = params.get('complaintId');
-        if (this.id) {
-          this.show = true;
-        } else {
-          this.show = false;
-        }
       });
   }
 

@@ -73,7 +73,6 @@ exports.getAll = (req, res, next) => {
     }
     assessmentQuery
         .then(documents => {
-            console.log(documents);
             fetchedRecord = documents;
             return Assessment.countDocuments();
         })
@@ -127,6 +126,24 @@ exports.getCurrent = (req, res, next) => {
                 message: error.message
             });
         });
+};
+
+exports.getLast = (req, res, next) => {
+  Assessment.find({ 'patient': req.params.patientId })
+      .limit(1)
+      .sort({ 'created': 'desc' })
+      .then(assessment => {
+          if (assessment) {
+              res.status(200).json(assessment);
+          } else {
+              res.status(404).json({ message: 'assessment not found' });
+          }
+      })
+      .catch(error => {
+          res.status(500).json({
+              message: error.message
+          });
+      });
 };
 
 exports.delete = (req, res, next) => {

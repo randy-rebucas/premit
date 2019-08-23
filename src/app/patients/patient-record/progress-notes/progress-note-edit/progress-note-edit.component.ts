@@ -99,7 +99,6 @@ export class ProgressNoteEditComponent implements OnInit, OnDestroy {
         this.complaintId,
         this.form.value.note
       ).subscribe(() => {
-        this.form.reset();
         this.onClose();
         this.notificationService.success(':: Added successfully');
         this.notesService.getLatest().subscribe(
@@ -119,7 +118,6 @@ export class ProgressNoteEditComponent implements OnInit, OnDestroy {
         this.complaintId,
         this.form.value.note
       ).subscribe(() => {
-        this.form.reset();
         this.onClose();
         this.notificationService.success(':: Added successfully');
         this.notesService.getLatest().subscribe(

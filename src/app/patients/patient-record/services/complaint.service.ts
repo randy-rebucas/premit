@@ -29,7 +29,6 @@ export class ComplaintService {
     )
     .pipe(
       map(complaintData => {
-        console.log(complaintData);
         return { complaints: complaintData.complaints.map(complaint => {
           return {
             id: complaint._id,
@@ -64,11 +63,17 @@ export class ComplaintService {
       );
   }
 
+  getLast(patientId) {
+    return this.http.get<{ _id: string, complaints: [], created: string, patient: string }>(
+      BACKEND_URL + '/last/' + patientId
+      );
+  }
+
   insert(created: string, patient: string, complaints: []) {
     const recordData = {
       created, patient, complaints
     };
-    return this.http.post<{ message: string, record: ComplaintData }>(BACKEND_URL, recordData);
+    return this.http.post<{ message: string, complaint: ComplaintData }>(BACKEND_URL, recordData);
   }
 
   update(id: string, created: string, patient: string, complaints: []) {

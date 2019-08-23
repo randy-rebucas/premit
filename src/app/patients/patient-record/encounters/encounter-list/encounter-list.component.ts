@@ -20,7 +20,7 @@ export class EncounterListComponent implements OnInit, OnDestroy {
 
   constructor(
     // @Optional() @Inject(MAT_DIALOG_DATA) public data: HistoryService,
-    
+
     private dialog: MatDialog,
     private route: ActivatedRoute,
     private datePipe: DatePipe,
@@ -39,10 +39,9 @@ export class EncounterListComponent implements OnInit, OnDestroy {
     @ViewChild(MatSort, {static: true}) sort: MatSort;
 
   ngOnInit() {
-    
+
   }
 
-  
   ngOnDestroy() {
     this.authListenerSubs.unsubscribe();
   }

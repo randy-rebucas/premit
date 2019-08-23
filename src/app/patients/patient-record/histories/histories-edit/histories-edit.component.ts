@@ -117,12 +117,10 @@ export class HistoriesEditComponent implements OnInit, OnDestroy {
         this.form.value.record_date,
         this.patientId
       ).subscribe(() => {
+        this.onClose();
+        this.notificationService.success(':: Added successfully');
         this.historyService.getAll(this.perPage, this.currentPage, this.patientId);
       });
-
-      this.form.reset();
-      this.notificationService.success(':: Added successfully');
-      this.onClose();
     } else {
       this.historyService.update(
         this.recordId,
@@ -131,12 +129,10 @@ export class HistoriesEditComponent implements OnInit, OnDestroy {
         this.form.value.record_date,
         this.patientId
       ).subscribe(() => {
+        this.onClose();
+        this.notificationService.success(':: Updated successfully');
         this.historyService.getAll(this.perPage, this.currentPage, this.patientId);
       });
-
-      this.form.reset();
-      this.notificationService.success(':: Updated successfully');
-      this.onClose();
     }
   }
 

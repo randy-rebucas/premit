@@ -14,6 +14,8 @@ router.get('', Controller.getAll);
 
 router.get('/latest', Controller.getCurrent);
 
+router.get('/last/:patientId', Controller.getLast);
+
 router.get('/:id', Controller.get);
 
 router.delete('/:id', checkAuth, Controller.delete);

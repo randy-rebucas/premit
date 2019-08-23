@@ -1,21 +1,11 @@
-<div class="physical-exam-wrapper">
-  <div class="physical-exam-left">
-      <mat-card>
-          <mat-card-header>
-              <mat-card-title>Quick Nav</mat-card-title>
-          </mat-card-header>
-          <mat-card-content>
-              <mat-list>
-                  <mat-list-item> <a routerLink="./height" routerLinkActive="mat-accent">Height</a> </mat-list-item>
-                  <mat-list-item> <a routerLink="./weight" routerLinkActive="mat-accent">Weight</a> </mat-list-item>
-                  <mat-list-item> <a routerLink="./temperature" routerLinkActive="mat-accent">Temperature</a> </mat-list-item>
-                  <mat-list-item> <a routerLink="./blood-pressure" routerLinkActive="mat-accent">Blood pressure</a> </mat-list-item>
-                  <mat-list-item> <a routerLink="./respiratory-rate" routerLinkActive="mat-accent">Respiratory rate</a> </mat-list-item>
-              </mat-list>
-          </mat-card-content>
-      </mat-card>
-  </div>
-  <div class="physical-exam-right">
-      <router-outlet></router-outlet>
-  </div>
+<nav mat-tab-nav-bar>
+    <a mat-tab-link routerLink="./height" routerLinkActive #rlaHeight="routerLinkActive" [active]="rlaHeight.isActive">Height</a>
+    <a mat-tab-link routerLink="./weight" routerLinkActive #rlaWeight="routerLinkActive" [active]="rlaWeight.isActive">Weight</a>
+    <a mat-tab-link routerLink="./temperature" routerLinkActive #rlaTemperature="routerLinkActive" [active]="rlaTemperature.isActive">Temperature</a>
+    <a mat-tab-link routerLink="./blood-pressure" routerLinkActive #rlaBloodPressure="routerLinkActive" [active]="rlaBloodPressure.isActive">Blood pressure</a>
+    <a mat-tab-link routerLink="./respiratory-rate" routerLinkActive #rlaRespiratoryRate="routerLinkActive" [active]="rlaRespiratoryRate.isActive">Respiratory rate</a>
+</nav>
+<div class="physical-exam-wrap">
+    <router-outlet></router-outlet>
 </div>
+

@@ -96,12 +96,10 @@ export class HeightEditComponent implements OnInit, OnDestroy {
         this.form.value.record_date,
         this.patientId
       ).subscribe(() => {
+        this.onClose();
+        this.notificationService.success(':: Added successfully');
         this.heightService.getAll(this.perPage, this.currentPage, this.patientId);
       });
-
-      this.form.reset();
-      this.notificationService.success(':: Added successfully');
-      this.onClose();
     } else {
       this.heightService.update(
         this.recordId,
@@ -109,12 +107,10 @@ export class HeightEditComponent implements OnInit, OnDestroy {
         this.form.value.record_date,
         this.patientId
       ).subscribe(() => {
+        this.onClose();
+        this.notificationService.success(':: Updated successfully');
         this.heightService.getAll(this.perPage, this.currentPage, this.patientId);
       });
-
-      this.form.reset();
-      this.notificationService.success(':: Updated successfully');
-      this.onClose();
     }
   }
 

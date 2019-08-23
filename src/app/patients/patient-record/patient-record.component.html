@@ -2,24 +2,13 @@
     <h1 class="mat-headline"> Patient Details</h1>
 </div>
 <mat-grid-list cols="6" rowHeight="100px" [gutterSize]="'10px'">
-    <mat-grid-tile [colspan]="1" [rowspan]="3">
-        <mat-card>
-            <mat-card-header>
-                <mat-card-title>{{fullname}}</mat-card-title>
-                <mat-card-subtitle>{{id}}</mat-card-subtitle>
-            </mat-card-header>
-            <img mat-card-image src="{{image}}" alt="{{fullname}}">
-            <mat-card-content>
-                <address>
-                      Contact: {{contact}} <br/>
-                      Gender: {{gender}} <br/>
-                      Birthdate: {{ birthdate | date }}
-                    </address>
-            </mat-card-content>
-        </mat-card>
+    <mat-grid-tile [colspan]="1" [rowspan]="2" class="grid-content">
+        <div style="padding: 1em;">
+            <img src="{{image}}" alt="{{firstname + ' ' + midlename + ' ' + lastname}}" style="width: 100%;">
+        </div>
     </mat-grid-tile>
-    <mat-grid-tile [colspan]="5" [rowspan]="1">
-      <div style="width: 100%;">
+    <mat-grid-tile [colspan]="5" [rowspan]="1" class="grid-content" style="border: none;">
+        <div class="grid-inner-content grid-inner-content-list">
         <nav mat-tab-nav-bar>
             <a mat-tab-link routerLink="./physical-exams" routerLinkActive #rlaPhysicalExams="routerLinkActive" [active]="rlaPhysicalExams.isActive">Physical exams</a>
             <a mat-tab-link routerLink="./histories" routerLinkActive #rlaHistories="routerLinkActive" [active]="rlaHistories.isActive">Histories</a>
@@ -31,20 +20,36 @@
         </nav>
       </div>
     </mat-grid-tile>
-    <mat-grid-tile [colspan]="5" [rowspan]="4">
-        <div style="width: 100%; align-items: flex-start; margin-left: 10px;">
+    <mat-grid-tile [colspan]="5" [rowspan]="6" class="grid-content" style="border: none;">
+        <div class="grid-inner-content grid-inner-content-list">
             <router-outlet></router-outlet>
         </div>
-
     </mat-grid-tile>
-    <mat-grid-tile [colspan]="1" [rowspan]="1">
-        <button mat-raised-button color="accent">Que</button>
-        <button mat-button>Message</button>
+    <mat-grid-tile [colspan]="1" [rowspan]="2" class="grid-content">
+        <div style="padding: 1em;">
+            <h3>{{firstname + ' ' + midlename + ' ' + lastname}} <br/>
+                <span style="font-size: 14px; font-weight: 100;">{{id}}</span></h3>
+            <address>
+                Contact: {{contact}} <br/>
+                Gender: {{gender}} <br/>
+                Birthdate: {{ birthdate | date }}
+            </address>
+        </div>
     </mat-grid-tile>
-    <mat-grid-tile [colspan]="1" [rowspan]="1">
-        <mat-list>
-            <mat-list-item> <a href="/">Print Chart</a> </mat-list-item>
-            <mat-list-item> <a href="/">Generate QR Code</a> </mat-list-item>
-        </mat-list>
+    <mat-grid-tile [colspan]="1" [rowspan]="3" class="grid-content">
+        <div style="padding: 1em;">
+            Quick Actions
+            <mat-list>
+                <mat-list-item><i class="material-icons">
+                        message
+                        </i> &nbsp; Message </mat-list-item>
+                <mat-list-item><i class="material-icons">
+                        local_printshop
+                        </i> &nbsp; Print Chart </mat-list-item>
+                <mat-list-item><i class="material-icons">
+                        fingerprint
+                        </i> &nbsp; Generate QR Code </mat-list-item>
+            </mat-list>
+        </div>
     </mat-grid-tile>
 </mat-grid-list>

@@ -1,4 +1,4 @@
-<div class="mat-elevation-z8">
+
     <table mat-table [dataSource]="dataSource" matSort>
 
         <!-- Systolic Column -->
@@ -46,4 +46,3 @@
         <tr mat-footer-row *matFooterRowDef="['noData']" [ngClass]="{'hide': !(dataSource!=null && dataSource.data.length==0)}"></tr>
     </table>
     <mat-paginator [pageSizeOptions]="pageSizeOptions" [pageSize]="perPage"></mat-paginator>
-</div>

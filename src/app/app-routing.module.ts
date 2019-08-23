@@ -91,16 +91,19 @@ const appRoutes: Routes = [
           ] },
         ] },
         { path: 'histories', component: HistoriesListComponent },
-        { path: 'assessments', component: AssessmentsComponent, children: [
-          { path: '', component: AssessmentListComponent },
-          { path: ':complaintId', component: AssessmentListComponent }
-        ] },
-        { path: 'prescriptions', component: PrescriptionsComponent, children: [
-          { path: '', component: PrescriptionListComponent },
-        ] },
-        { path: 'progress-notes', component: ProgressNotesComponent, children: [
-          { path: '', component: ProgressNoteListComponent },
-        ] },
+        { path: 'assessments', component: AssessmentListComponent },
+        { path: 'prescriptions', component: PrescriptionListComponent },
+        { path: 'progress-notes', component: ProgressNoteListComponent },
+        // { path: 'assessments', component: AssessmentsComponent, children: [
+        //   { path: '', component: AssessmentListComponent },
+        //   { path: ':complaintId', component: AssessmentListComponent }
+        // ] },
+        // { path: 'prescriptions', component: PrescriptionsComponent, children: [
+        //   { path: '', component: PrescriptionListComponent },
+        // ] },
+        // { path: 'progress-notes', component: ProgressNotesComponent, children: [
+        //   { path: '', component: ProgressNoteListComponent },
+        // ] },
         { path: 'test-results', component: TestResultsComponent }
       ] },
     ] },

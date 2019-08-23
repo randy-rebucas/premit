@@ -118,6 +118,24 @@ exports.getCurrent = (req, res, next) => {
         });
 };
 
+exports.getLast = (req, res, next) => {
+  Complaint.find({ 'patient': req.params.patientId })
+      .limit(1)
+      .sort({ 'created': 'desc' })
+      .then(complaint => {
+          if (complaint) {
+              res.status(200).json(complaint);
+          } else {
+              res.status(404).json({ message: 'complaint not found' });
+          }
+      })
+      .catch(error => {
+          res.status(500).json({
+              message: error.message
+          });
+      });
+};
+
 exports.delete = (req, res, next) => {
     Complaint.deleteOne({ _id: req.params.id }) //pass doctors role for restriction
         .then(result => {

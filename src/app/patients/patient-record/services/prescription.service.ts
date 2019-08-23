@@ -58,6 +58,12 @@ export class PrescriptionService {
       );
   }
 
+  getLast(patientId) {
+    return this.http.get<{ _id: string, prescriptions: [], created: string, patient: string }>(
+      BACKEND_URL + '/last/' + patientId
+      );
+  }
+
   insert(created: string, complaintId: string, prescriptions: []) {
     const recordData = {
       created, complaintId, prescriptions

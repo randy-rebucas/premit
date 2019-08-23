@@ -64,6 +64,12 @@ export class NotesService {
       );
   }
 
+  getLast(patientId) {
+    return this.http.get<{ _id: string; created: string, complaintId: string, note: string }>(
+      BACKEND_URL + '/last/' + patientId
+      );
+  }
+
   insert(created: string, complaintId: string, note: string) {
     const recordData = {
       created, complaintId, note

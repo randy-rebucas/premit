@@ -1,0 +1,39 @@
+<h2 mat-dialog-title>{{ title }}
+    <button class="btn-dialog-close" mat-stroked-button (click)="onClose()" tabIndex="-1"><mat-icon>clear</mat-icon></button>
+  </h2>
+  <mat-dialog-content class="mat-typography">
+    <mat-grid-list cols="6" rowHeight="100px" [gutterSize]="'10px'">
+        <mat-grid-tile [colspan]="6" [rowspan]="1" class="grid-content">
+            <div style="padding: 1em;">
+                complaint detail
+            </div>
+        </mat-grid-tile>
+        <mat-grid-tile [colspan]="3" [rowspan]="2">
+            <mat-grid-tile-header>
+                <h3>Assessment</h3>
+            </mat-grid-tile-header>
+            <app-assessment-latest></app-assessment-latest>
+        </mat-grid-tile>
+        <mat-grid-tile [colspan]="3" [rowspan]="2">
+            <mat-grid-tile-header>
+                <h3>Prescription</h3>
+            </mat-grid-tile-header>
+            <app-prescription-latest></app-prescription-latest>
+        </mat-grid-tile>
+        <mat-grid-tile [colspan]="6" [rowspan]="1">
+            <mat-grid-tile-header>
+                <h3>Progress notes</h3>
+            </mat-grid-tile-header>
+            <app-progress-note-latest></app-progress-note-latest>
+        </mat-grid-tile>
+        <mat-grid-tile [colspan]="6" [rowspan]="2">
+            <mat-grid-tile-header>
+                <h3>Test Result</h3>
+            </mat-grid-tile-header>
+        </mat-grid-tile>
+    </mat-grid-list>
+  </mat-dialog-content>
+  <mat-dialog-actions>
+      <button class="mat-raised-button"(click)="print(0)">Print</button>
+      <button class="mat-raised-button mat-primary"(click)="print(1)">Print and Close</button>
+  </mat-dialog-actions>

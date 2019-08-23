@@ -1,4 +1,5 @@
 const Histories = require('../../models/records/histories');
+const moment = require('moment');
 
 exports.create = (req, res, next) => {
     const history = new Histories({
@@ -88,6 +89,48 @@ exports.get = (req, res, next) => {
                 message: error.message
             });
         });
+};
+
+exports.getCurrent = (req, res, next) => {
+  const today = moment().startOf('day');
+  //addpatient id
+  Histories.find({
+    patient: req.params.patientId,
+          created: {
+              $gte: today.toDate(),
+              $lte: moment(today).endOf('day').toDate()
+          }
+      })
+      .then(history => {
+          if (history) {
+              res.status(200).json(history);
+          } else {
+              res.status(404).json({ message: 'history not found' });
+          }
+      })
+      .catch(error => {
+          res.status(500).json({
+              message: error.message
+          });
+      });
+};
+
+exports.getLast = (req, res, next) => {
+  Histories.find({ 'patient': req.params.patientId })
+      .limit(2)
+      .sort({ 'created': 'desc' })
+      .then(history => {
+          if (history) {
+              res.status(200).json(history);
+          } else {
+              res.status(404).json({ message: 'history not found' });
+          }
+      })
+      .catch(error => {
+          res.status(500).json({
+              message: error.message
+          });
+      });
 };
 
 exports.delete = (req, res, next) => {

@@ -45,7 +45,6 @@ export class ChiefComplaintDetailComponent implements OnInit, OnDestroy {
       this.id = params.get('complaintId');
       this.complaintService.get(this.id).subscribe(recordData => {
         this.isLoading = false;
-        console.log(recordData.complaints);
         this.complaints = recordData.complaints;
       });
     });

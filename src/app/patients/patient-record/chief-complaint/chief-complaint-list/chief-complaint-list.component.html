@@ -1,4 +1,4 @@
-<div *ngIf="!show">
+
     <table mat-table [dataSource]="dataSource" matSort>
 
         <!-- Complaint Column -->
@@ -48,4 +48,3 @@
         <tr mat-footer-row *matFooterRowDef="['noData']" [ngClass]="{'hide': !(dataSource!=null && dataSource.data.length==0)}"></tr>
     </table>
     <mat-paginator [pageSizeOptions]="pageSizeOptions" [pageSize]="perPage"></mat-paginator>
-</div>

@@ -64,7 +64,6 @@ export class HeightService {
   }
 
   getLast(patientId) {
-    console.log(patientId);
     return this.http.get<{ _id: string; height: string, created: string, patient: string }>(
       BACKEND_URL + '/last/' + patientId
       );

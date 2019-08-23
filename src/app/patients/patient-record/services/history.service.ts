@@ -53,8 +53,14 @@ export class HistoryService {
   }
 
   get(id: string) {
-    return this.http.get<{ _id: string; type: string, description: string, created: string, patient: string }>(
+    return this.http.get<{ _id: string, type: string, description: string, created: string, patient: string }>(
       BACKEND_URL + '/' + id
+      );
+  }
+
+  getLast(patientId) {
+    return this.http.get<{ _id: string, type: string, description: string, created: string, patient: string }>(
+      BACKEND_URL + '/last/' + patientId
       );
   }
 

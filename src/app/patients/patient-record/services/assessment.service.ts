@@ -66,6 +66,12 @@ export class AssessmentService {
       );
   }
 
+  getLast(patientId) {
+    return this.http.get<{ _id: string, complaints: [], created: string, patient: string }>(
+      BACKEND_URL + '/last/' + patientId
+      );
+  }
+
   insert(created: string, complaintId: string, diagnosis: [], treatments: []) {
     const recordData = {
       created, complaintId, diagnosis, treatments

@@ -1,7 +1,7 @@
 import { Component, OnInit, OnDestroy, Inject } from '@angular/core';
 import { FormGroup, FormControl, Validators, NgControl, FormBuilder, FormArray } from '@angular/forms';
 import { Router, ActivatedRoute } from '@angular/router';
-import { MAT_DIALOG_DATA, MatDialogRef } from '@angular/material';
+import { MAT_DIALOG_DATA, MatDialogRef, MatDialogConfig, MatDialog } from '@angular/material';
 import { Subscription } from 'rxjs';
 import { DatePipe } from '@angular/common';
 
@@ -9,6 +9,7 @@ import { AuthService } from '../../../../auth/auth.service';
 import { NotificationService } from 'src/app/shared/notification.service';
 import { ComplaintService } from '../../services/complaint.service';
 import { ComplaintData } from '../../models/complaint-data.model';
+import { EncounterEditComponent } from '../../encounters/encounter-edit/encounter-edit.component';
 
 @Component({
   selector: 'app-chief-complaint-edit',
@@ -28,13 +29,17 @@ export class ChiefComplaintEditComponent implements OnInit, OnDestroy {
   patientId: string;
   title: string;
   patient: string;
+  complainId: string;
+
   form: FormGroup;
 
   maxDate = new Date();
 
   constructor(
+    private dialog: MatDialog,
     public complaintService: ComplaintService,
-    public route: ActivatedRoute,
+    private router: Router,
+    private route: ActivatedRoute,
     private authService: AuthService,
     private datePipe: DatePipe,
     private fb: FormBuilder,
@@ -111,26 +116,30 @@ export class ChiefComplaintEditComponent implements OnInit, OnDestroy {
         this.form.value.record_date,
         this.patientId,
         this.form.value.complaints
-      ).subscribe(() => {
-        this.complaintService.getAll(this.perPage, this.currentPage, this.patientId);
+      ).subscribe((complaintData) => {
+        this.onClose();
+        const dialogConfig = new MatDialogConfig();
+        dialogConfig.disableClose = true;
+        dialogConfig.autoFocus = true;
+        dialogConfig.width = '90%';
+        dialogConfig.data = {
+          id: null,
+          title: 'New encounter',
+          complaintId: complaintData.complaint.id
+        };
+        this.dialog.open(EncounterEditComponent, dialogConfig);
       });
-
-      this.form.reset();
-      this.notificationService.success(':: Added successfully');
-      this.onClose();
     } else {
       this.complaintService.update(
         this.recordId,
         this.form.value.record_date,
         this.patientId,
         this.form.value.complaints
-      ).subscribe(() => {
+      ).subscribe((complaintData) => {
+        this.onClose();
+        this.notificationService.success(':: Updated successfully');
         this.complaintService.getAll(this.perPage, this.currentPage, this.patientId);
       });
-
-      this.form.reset();
-      this.notificationService.success(':: Updated successfully');
-      this.onClose();
     }
   }
 

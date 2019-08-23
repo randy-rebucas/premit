@@ -1,7 +1,6 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { ActivatedRoute, Router, Params, ParamMap } from '@angular/router';
 import { PatientsService } from '../patients.service';
-import { PatientData } from '../patient-data.model';
 import { Subscription } from 'rxjs';
 import { AuthService } from 'src/app/auth/auth.service';
 import { HeightService } from '../patient-record/services/height.service';
@@ -9,8 +8,12 @@ import { WeightService } from '../patient-record/services/weight.service';
 import { TemperatureService } from '../patient-record/services/temperature.service';
 import { BpService } from '../patient-record/services/bp.service';
 import { RprService } from '../patient-record/services/rpr.service';
+import { HistoryService } from '../patient-record/services/history.service';
+import { ComplaintService } from '../patient-record/services/complaint.service';
+import { AssessmentService } from '../patient-record/services/assessment.service';
+import { PrescriptionService } from '../patient-record/services/prescription.service';
+import { NotesService } from '../patient-record/services/notes.service';
 
-// import { HeightData } from '../patient-record/models/height-data.model';
 @Component({
   selector: 'app-patient-detail',
   templateUrl: './patient-detail.component.html',
@@ -19,8 +22,6 @@ import { RprService } from '../patient-record/services/rpr.service';
 export class PatientDetailComponent implements OnInit, OnDestroy {
   userIsAuthenticated = false;
   private authListenerSubs: Subscription;
-  perPage = 10;
-  currentPage = 1;
 
   id: string;
   image: string;
@@ -40,12 +41,20 @@ export class PatientDetailComponent implements OnInit, OnDestroy {
   temperature: number;
   temperatureCreated = new Date();
 
-  systolic: number;
-  diastolic: number;
-  bpCreated = new Date();
+  tempSystolic: number;
+  tempDiastolic: number;
+  tempCreated = new Date();
 
-  rpr: number;
-  rprCreated = new Date();
+  respiratoryRate: number;
+  respiratoryRateCreated = new Date();
+
+  histories: any;
+  complaints: any;
+  assessments: any;
+  diagnosis: any;
+  treatments: any;
+  prescriptions: any;
+  progressNotes: string;
 
   private patientId: string;
   private recordsSub: Subscription;
@@ -58,7 +67,12 @@ export class PatientDetailComponent implements OnInit, OnDestroy {
     public weightService: WeightService,
     public temperatureService: TemperatureService,
     public bpService: BpService,
-    public rprService: RprService
+    public rprService: RprService,
+    public historyService: HistoryService,
+    public complaintService: ComplaintService,
+    public assessmentService: AssessmentService,
+    public prescriptionService: PrescriptionService,
+    public notesService: NotesService
     ) { }
 
     ngOnInit() {
@@ -99,14 +113,45 @@ export class PatientDetailComponent implements OnInit, OnDestroy {
       });
 
       this.bpService.getLast(this.patientId).subscribe(recordData => {
-        this.systolic = recordData[0].systolic;
-        this.diastolic = recordData[0].diastolic;
-        this.bpCreated = recordData[0].created;
+        this.tempSystolic = recordData[0].systolic;
+        this.tempDiastolic = recordData[0].diastolic;
+        this.tempCreated = recordData[0].created;
       });
 
       this.rprService.getLast(this.patientId).subscribe(recordData => {
-        this.rpr = recordData[0].respiratoryrate;
-        this.rprCreated = recordData[0].created;
+        this.respiratoryRate = recordData[0].respiratoryrate;
+        this.respiratoryRateCreated = recordData[0].created;
+      });
+
+      this.historyService.getLast(this.patientId).subscribe(recordData => {
+        this.histories = recordData;
+      });
+
+      this.complaintService.getLast(this.patientId).subscribe(recordData => {
+        this.complaints = null;
+        if (Object.keys(recordData).length) {
+          this.complaints = recordData[0].complaints;
+        }
+      });
+
+      this.assessmentService.getLast(this.patientId).subscribe(recordData => {
+        this.diagnosis = null;
+        this.treatments = null;
+        if (Object.keys(recordData).length) {
+          this.diagnosis = recordData[0].diagnosis;
+          this.treatments = recordData[0].treatments;
+        }
+      });
+
+      this.prescriptionService.getLast(this.patientId).subscribe(recordData => {
+        this.prescriptions = null;
+        if (Object.keys(recordData).length) {
+          this.prescriptions = recordData[0].prescriptions;
+        }
+      });
+
+      this.notesService.getLast(this.patientId).subscribe(recordData => {
+        this.progressNotes = recordData[0].notes;
       });
     }
 

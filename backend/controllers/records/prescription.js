@@ -123,6 +123,24 @@ exports.getCurrent = (req, res, next) => {
       });
 };
 
+exports.getLast = (req, res, next) => {
+  Prescription.find({ 'patient': req.params.patientId })
+      .limit(1)
+      .sort({ 'created': 'desc' })
+      .then(prescription => {
+          if (prescription) {
+              res.status(200).json(prescription);
+          } else {
+              res.status(404).json({ message: 'prescription not found' });
+          }
+      })
+      .catch(error => {
+          res.status(500).json({
+              message: error.message
+          });
+      });
+};
+
 exports.delete = (req, res, next) => {
   Prescription.deleteOne({ _id: req.params.id }) //pass doctors role for restriction
         .then(result => {
