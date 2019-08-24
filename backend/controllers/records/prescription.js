@@ -5,7 +5,8 @@ exports.create = (req, res, next) => {
 
     const prescription = new Prescription({
       created: req.body.created,
-      complaintId: req.body.complaintId
+      complaintId: req.body.complaintId,
+      patientId: req.body.patientId
     });
 
     prescriptionData = req.body.prescriptions;
@@ -33,7 +34,8 @@ exports.update = (req, res, next) => {
     const prescription = new Prescription({
       _id: req.body.id,
       created: req.body.created,
-      complaintId: req.body.complaintId
+      complaintId: req.body.complaintId,
+      patientId: req.body.patientId
     });
     prescriptionData = req.body.prescriptions;
     for (let index = 0; index < prescriptionData.length; index++) {
@@ -60,7 +62,7 @@ exports.update = (req, res, next) => {
 exports.getAll = (req, res, next) => {
     const pageSize = +req.query.pagesize;
     const currentPage = +req.query.page;
-    const prescriptionQuery = Prescription.find({ 'complaintId': req.query.complaintId }).sort({'created': 'desc'});
+    const prescriptionQuery = Prescription.find({ 'patientId': req.query.patientId }).sort({'created': 'desc'});
 
     let fetchedRecord;
     if (pageSize && currentPage) {

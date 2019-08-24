@@ -22,8 +22,8 @@ export class NotesService {
     private datePipe: DatePipe
     ) {}
 
-  getAll(perPage: number, currentPage: number, complaintId: string) {
-    const queryParams = `?complaintId=${complaintId}&pagesize=${perPage}&page=${currentPage}`;
+  getAll(perPage: number, currentPage: number, patientId: string) {
+    const queryParams = `?patientId=${patientId}&pagesize=${perPage}&page=${currentPage}`;
     this.http.get<{message: string, notes: any, max: number }>(
       BACKEND_URL + queryParams
     )
@@ -76,17 +76,16 @@ export class NotesService {
       );
   }
 
-  insert(created: string, complaintId: string, note: string) {
+  insert(created: string, complaintId: string, patientId: string, note: string) {
     const recordData = {
-      created, complaintId, note
+      created, complaintId, patientId, note
     };
     return this.http.post<{ message: string, record: NoteData }>(BACKEND_URL, recordData);
   }
 
-  update(id: string, created: string, complaintId: string, note: string) {
-    let recordData: NoteData | FormData;
-    recordData = {
-        id, created, complaintId, note
+  update(id: string, created: string, complaintId: string, patientId: string, note: string) {
+    const recordData = {
+        id, created, complaintId, patientId, note
     };
     return this.http.put(BACKEND_URL + '/' + id, recordData);
   }

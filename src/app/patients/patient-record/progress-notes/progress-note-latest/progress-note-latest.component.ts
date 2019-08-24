@@ -13,6 +13,7 @@ import { MatDialogConfig, MatDialog } from '@angular/material';
 })
 export class ProgressNoteLatestComponent implements OnInit, OnDestroy {
   @Input() complaintId: string;
+  @Input() patientId: string;
 
   isLoading = false;
   userIsAuthenticated = false;
@@ -33,14 +34,15 @@ export class ProgressNoteLatestComponent implements OnInit, OnDestroy {
       });
   }
 
-  onCreate(complaintId) {
+  onCreate(complaintId, patientId) {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.disableClose = true;
     dialogConfig.autoFocus = true;
     dialogConfig.data = {
       id: null,
       title: 'New record',
-      complaintIds: complaintId
+      complaintIds: complaintId,
+      patient: patientId
     };
     this.dialog.open(ProgressNoteEditComponent, dialogConfig);
   }

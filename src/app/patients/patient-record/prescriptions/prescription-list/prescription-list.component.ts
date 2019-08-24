@@ -67,8 +67,6 @@ export class PrescriptionListComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.isLoading = true;
 
-    // this.prescriptionService.getAll(this.perPage, this.currentPage, this.patientId);
-
     this.userIsAuthenticated = this.authService.getIsAuth();
     this.authListenerSubs = this.authService
       .getAuthStatusListener()
@@ -76,26 +74,17 @@ export class PrescriptionListComponent implements OnInit, OnDestroy {
         this.userIsAuthenticated = isAuthenticated;
       });
 
-    this.complaintService.getLatest().subscribe(
-        recordData => {
-          this.complaintId = null;
-          if (Object.keys(recordData).length) {
-            this.complaintId = recordData[0]._id;
+    this.prescriptionService.getAll(this.perPage, this.currentPage, this.patientId);
 
-            this.prescriptionService.getAll(this.perPage, this.currentPage, recordData[0]._id);
-
-            this.recordsSub = this.prescriptionService
-            .getUpdateListener()
-            .subscribe((prescriptionData: {prescriptions: PrescriptionData[], count: number}) => {
-              this.isLoading = false;
-              this.total = prescriptionData.count;
-              this.dataSource = new MatTableDataSource(prescriptionData.prescriptions);
-              this.dataSource.paginator = this.paginator;
-              this.dataSource.sort = this.sort;
-            });
-          }
-        }
-      );
+    this.recordsSub = this.prescriptionService
+      .getUpdateListener()
+      .subscribe((prescriptionData: {prescriptions: PrescriptionData[], count: number}) => {
+        this.isLoading = false;
+        this.total = prescriptionData.count;
+        this.dataSource = new MatTableDataSource(prescriptionData.prescriptions);
+        this.dataSource.paginator = this.paginator;
+        this.dataSource.sort = this.sort;
+      });
   }
 
   onPrint() {}

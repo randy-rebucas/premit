@@ -56,6 +56,7 @@ export class PrescriptionEditComponent implements OnInit, OnDestroy {
     ) {
       this.recordId = data.id;
       this.complaintId = data.complaintIds;
+      this.patientId = data.patientIds ? data.patientIds : data.patient;
       this.title = data.title;
     }
 
@@ -127,6 +128,7 @@ export class PrescriptionEditComponent implements OnInit, OnDestroy {
       this.prescriptionService.insert(
         this.form.value.record_date,
         this.complaintId,
+        this.patientId,
         this.form.value.prescriptions
       ).subscribe(() => {
         this.onClose();
@@ -146,19 +148,12 @@ export class PrescriptionEditComponent implements OnInit, OnDestroy {
         this.recordId,
         this.form.value.record_date,
         this.complaintId,
+        this.patientId,
         this.form.value.prescriptions
       ).subscribe(() => {
+        this.prescriptionService.getAll(this.perPage, this.currentPage, this.patientId);
         this.onClose();
         this.notificationService.success(':: Updated successfully');
-        this.complaintService.getLatest().subscribe(
-          recordData => {
-            this.complaintId = null;
-            if (Object.keys(recordData).length) {
-              this.complaintId = recordData[0]._id;
-              this.prescriptionService.getAll(this.perPage, this.currentPage, recordData[0]._id);
-            }
-          }
-        );
       });
     }
   }

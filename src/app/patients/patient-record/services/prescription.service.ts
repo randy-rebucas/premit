@@ -22,8 +22,8 @@ export class PrescriptionService {
     private datePipe: DatePipe
     ) {}
 
-  getAll(perPage: number, currentPage: number, complaintId: string) {
-    const queryParams = `?complaintId=${complaintId}&pagesize=${perPage}&page=${currentPage}`;
+  getAll(perPage: number, currentPage: number, patientId: string) {
+    const queryParams = `?patientId=${patientId}&pagesize=${perPage}&page=${currentPage}`;
     this.http.get<{message: string, prescriptions: any, max: number }>(
       BACKEND_URL + queryParams
     )
@@ -76,17 +76,17 @@ export class PrescriptionService {
       );
   }
 
-  insert(created: string, complaintId: string, prescriptions: []) {
+  insert(created: string, complaintId: string, patientId: string, prescriptions: []) {
     const recordData = {
-      created, complaintId, prescriptions
+      created, complaintId, patientId, prescriptions
     };
     return this.http.post<{ message: string, record: PrescriptionData }>(BACKEND_URL, recordData);
   }
 
-  update(id: string, created: string, complaintId: string, prescriptions: []) {
+  update(id: string, created: string, complaintId: string, patientId: string, prescriptions: []) {
 
     const recordData = {
-        id, created, complaintId, prescriptions
+        id, created, complaintId, patientId, prescriptions
       };
     return this.http.put(BACKEND_URL + '/' + id, recordData);
   }

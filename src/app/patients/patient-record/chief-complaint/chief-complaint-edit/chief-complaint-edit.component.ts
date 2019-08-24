@@ -125,6 +125,7 @@ export class ChiefComplaintEditComponent implements OnInit, OnDestroy {
         dialogConfig.data = {
           id: null,
           title: 'New encounter',
+          patientIds: this.patientId,
           complaintId: complaintData.complaint.id
         };
         this.dialog.open(EncounterEditComponent, dialogConfig);

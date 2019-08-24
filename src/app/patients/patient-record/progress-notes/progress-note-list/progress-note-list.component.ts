@@ -64,27 +64,18 @@ export class ProgressNoteListComponent implements OnInit, OnDestroy {
       .subscribe(isAuthenticated => {
         this.userIsAuthenticated = isAuthenticated;
       });
+    this.notesService.getAll(this.perPage, this.currentPage, this.patientId);
 
-    this.complaintService.getLatest().subscribe(
-        recordData => {
-          this.complaintId = null;
-          if (Object.keys(recordData).length) {
-            this.complaintId = recordData[0]._id;
+    this.recordsSub = this.notesService
+      .getUpdateListener()
+      .subscribe((noteData: {notes: NoteData[], count: number}) => {
+        this.isLoading = false;
+        this.total = noteData.count;
+        this.dataSource = new MatTableDataSource(noteData.notes);
+        this.dataSource.paginator = this.paginator;
+        this.dataSource.sort = this.sort;
+      });
 
-            this.notesService.getAll(this.perPage, this.currentPage, recordData[0]._id);
-
-            this.recordsSub = this.notesService
-            .getUpdateListener()
-            .subscribe((noteData: {notes: NoteData[], count: number}) => {
-              this.isLoading = false;
-              this.total = noteData.count;
-              this.dataSource = new MatTableDataSource(noteData.notes);
-              this.dataSource.paginator = this.paginator;
-              this.dataSource.sort = this.sort;
-            });
-          }
-        }
-      );
   }
 
   applyFilter(filterValue: string) {

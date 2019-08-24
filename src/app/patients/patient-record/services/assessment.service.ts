@@ -22,8 +22,8 @@ export class AssessmentService {
     private datePipe: DatePipe
     ) {}
 
-    getAll(perPage: number, currentPage: number, complaintId: string) {
-      const queryParams = `?complaintId=${complaintId}&pagesize=${perPage}&page=${currentPage}`;
+    getAll(perPage: number, currentPage: number, patientId: string) {
+      const queryParams = `?patientId=${patientId}&pagesize=${perPage}&page=${currentPage}`;
       this.http.get<{message: string, assessments: any, max: number }>(
         BACKEND_URL + queryParams
       )
@@ -78,16 +78,16 @@ export class AssessmentService {
       );
   }
 
-  insert(created: string, complaintId: string, diagnosis: [], treatments: []) {
+  insert(created: string, complaintId: string, patientId: string, diagnosis: [], treatments: []) {
     const recordData = {
-      created, complaintId, diagnosis, treatments
+      created, complaintId, patientId, diagnosis, treatments
     };
     return this.http.post<{ message: string, record: AssessmentData }>(BACKEND_URL, recordData);
   }
 
-  update(id: string, created: string, complaintId: string, diagnosis: [], treatments: []) {
+  update(id: string, created: string, patientId, complaintId: string, diagnosis: [], treatments: []) {
     const recordData = {
-        id, created, complaintId, diagnosis, treatments
+        id, created, complaintId, patientId, diagnosis, treatments
     };
     return this.http.put(BACKEND_URL + '/' + id, recordData);
   }

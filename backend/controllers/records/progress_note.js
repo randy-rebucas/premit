@@ -5,7 +5,8 @@ exports.create = (req, res, next) => {
     const note = new Note({
       note: req.body.note,
         created: req.body.created,
-        complaintId: req.body.complaintId
+        complaintId: req.body.complaintId,
+        patientId: req.body.patientId
     });
     note.save().then(createdRecord => {
             res.status(201).json({
@@ -28,7 +29,8 @@ exports.update = (req, res, next) => {
         _id: req.body.id,
         note: req.body.note,
         created: req.body.created_date,
-        complaintId: req.body.complaintId
+        complaintId: req.body.complaintId,
+        patientId: req.body.patientId
     });
     Note.updateOne({ _id: req.params.id }, //pass doctor role for restriction
       note
@@ -49,7 +51,7 @@ exports.update = (req, res, next) => {
 exports.getAll = (req, res, next) => {
     const pageSize = +req.query.pagesize;
     const currentPage = +req.query.page;
-    const noteQuery = Note.find({ 'complaintId': req.query.complaintId }).sort({'created': 'desc'});
+    const noteQuery = Note.find({ 'patientId': req.query.patientId }).sort({'created': 'desc'});
 
     let fetchedRecord;
     if (pageSize && currentPage) {

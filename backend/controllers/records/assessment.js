@@ -2,10 +2,10 @@ const Assessment = require('../../models/records/assessment');
 const moment = require('moment');
 
 exports.create = (req, res, next) => {
-    console.log(req.body);
     const assessment = new Assessment({
         created: req.body.created,
-        complaintId: req.body.complaintId
+        complaintId: req.body.complaintId,
+        patientId: req.body.patientId
     });
     assessmentData = req.body.diagnosis;
     for (let index = 0; index < assessmentData.length; index++) {
@@ -36,7 +36,8 @@ exports.update = (req, res, next) => {
     const assessment = new Assessment({
         _id: req.body.id,
         created: req.body.created,
-        complaintId: req.body.complaintId
+        complaintId: req.body.complaintId,
+        patientId: req.body.patientId
     });
     assessmentData = req.body.diagnosis;
     for (let index = 0; index < assessmentData.length; index++) {
@@ -65,7 +66,7 @@ exports.update = (req, res, next) => {
 exports.getAll = (req, res, next) => {
     const pageSize = +req.query.pagesize;
     const currentPage = +req.query.page;
-    const assessmentQuery = Assessment.find({ 'complaintId': req.query.complaintId }).sort({ 'created': 'desc' });
+    const assessmentQuery = Assessment.find({ 'patientId': req.query.patientId }).sort({ 'created': 'desc' });
 
     let fetchedRecord;
     if (pageSize && currentPage) {

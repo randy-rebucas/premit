@@ -65,26 +65,17 @@ export class AssessmentListComponent implements OnInit, OnDestroy {
         this.userIsAuthenticated = isAuthenticated;
       });
 
-    this.complaintService.getLatest().subscribe(
-      recordData => {
-        this.complaintId = null;
-        if (Object.keys(recordData).length) {
-          this.complaintId = recordData[0]._id;
+    this.assessmentService.getAll(this.perPage, this.currentPage, this.patientId);
 
-          this.assessmentService.getAll(this.perPage, this.currentPage, recordData[0]._id);
-
-          this.recordsSub = this.assessmentService
-          .getUpdateListener()
-          .subscribe((assessmentData: {assessments: AssessmentData[], count: number}) => {
-            this.isLoading = false;
-            this.total = assessmentData.count;
-            this.dataSource = new MatTableDataSource(assessmentData.assessments);
-            this.dataSource.paginator = this.paginator;
-            this.dataSource.sort = this.sort;
-          });
-        }
-      }
-    );
+    this.recordsSub = this.assessmentService
+      .getUpdateListener()
+      .subscribe((assessmentData: {assessments: AssessmentData[], count: number}) => {
+        this.isLoading = false;
+        this.total = assessmentData.count;
+        this.dataSource = new MatTableDataSource(assessmentData.assessments);
+        this.dataSource.paginator = this.paginator;
+        this.dataSource.sort = this.sort;
+      });
   }
 
   onCreate(complaintId) {
@@ -118,26 +109,7 @@ export class AssessmentListComponent implements OnInit, OnDestroy {
     .afterClosed().subscribe(res => {
       if (res) {
         this.assessmentService.delete(recordId).subscribe(() => {
-          this.complaintService.getLatest().subscribe(
-            recordData => {
-              this.complaintId = null;
-              if (Object.keys(recordData).length) {
-                this.complaintId = recordData[0]._id;
-
-                this.assessmentService.getAll(this.perPage, this.currentPage, recordData[0]._id);
-
-                this.recordsSub = this.assessmentService
-                .getUpdateListener()
-                .subscribe((assessmentData: {assessments: AssessmentData[], count: number}) => {
-                  this.isLoading = false;
-                  this.total = assessmentData.count;
-                  this.dataSource = new MatTableDataSource(assessmentData.assessments);
-                  this.dataSource.paginator = this.paginator;
-                  this.dataSource.sort = this.sort;
-                });
-              }
-            }
-          );
+          this.assessmentService.getAll(this.perPage, this.currentPage, this.patientId);
           this.notificationService.warn('! Deleted successfully');
         });
       }

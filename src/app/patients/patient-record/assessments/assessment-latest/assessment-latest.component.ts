@@ -14,6 +14,7 @@ import { AssessmentEditComponent } from '../assessment-edit/assetment-edit.compo
 })
 export class AssessmentLatestComponent implements OnInit, OnDestroy {
   @Input() complaintId: string;
+  @Input() patientId: string;
 
   isLoading = false;
   userIsAuthenticated = false;
@@ -34,7 +35,7 @@ export class AssessmentLatestComponent implements OnInit, OnDestroy {
       });
   }
 
-  onCreate(complaintId) {
+  onCreate(complaintId, patientId) {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.disableClose = true;
     dialogConfig.autoFocus = true;
@@ -42,7 +43,8 @@ export class AssessmentLatestComponent implements OnInit, OnDestroy {
     dialogConfig.data = {
       id: null,
       title: 'New record',
-      complaintIds: complaintId
+      complaintIds: complaintId,
+      patientIds: patientId
     };
     this.dialog.open(AssessmentEditComponent, dialogConfig);
   }

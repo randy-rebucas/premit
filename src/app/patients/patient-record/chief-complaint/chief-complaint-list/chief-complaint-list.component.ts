@@ -135,6 +135,9 @@ export class ChiefComplaintListComponent implements OnInit, OnDestroy {
     this.dialogService.openConfirmDialog('Are you sure to delete this record ?')
     .afterClosed().subscribe(res => {
       if (res) {
+        // delete assessment
+        // delete prescription
+        // delete notes
         this.complaintService.delete(recordId).subscribe(() => {
           this.complaintService.getAll(this.perPage, this.currentPage, this.patientId);
           this.notificationService.warn('! Deleted successfully');

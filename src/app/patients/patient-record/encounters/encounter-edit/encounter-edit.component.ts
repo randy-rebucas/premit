@@ -11,7 +11,6 @@ import { ComplaintData } from '../../models/complaint-data.model';
 import { NotesService } from '../../services/notes.service';
 import { PrescriptionService } from '../../services/prescription.service';
 import { AssessmentService } from '../../services/assessment.service';
-import { AssessmentData } from '../../models/assessment-data.model';
 
 @Component({
   selector: 'app-encounter-edit',
@@ -19,12 +18,9 @@ import { AssessmentData } from '../../models/assessment-data.model';
   styleUrls: ['./encounter-edit.component.css']
 })
 export class EncounterEditComponent implements OnInit, OnDestroy {
-  perPage = 10;
-  currentPage = 1;
-  pageSizeOptions = [5, 10, 25, 100];
-
   userIsAuthenticated = false;
   private authListenerSubs: Subscription;
+  patient: string;
 
   complaintData: ComplaintData;
   isLoading = false;
@@ -62,6 +58,7 @@ export class EncounterEditComponent implements OnInit, OnDestroy {
     @Inject(MAT_DIALOG_DATA) data
     ) {
       this.complaint = data.complaintId;
+      this.patient = data.patientIds;
       this.title = data.title;
     }
 
@@ -79,7 +76,6 @@ export class EncounterEditComponent implements OnInit, OnDestroy {
       this.complaints = recordData.complaints;
       this.created = recordData.created;
     });
-
     /**
      * get assessment
      */

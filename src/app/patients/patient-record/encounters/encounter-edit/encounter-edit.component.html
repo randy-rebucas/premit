@@ -16,7 +16,7 @@
         <mat-grid-tile [colspan]="3" [rowspan]="2" class="grid-content">
             <mat-grid-tile-header>
                 <h3 style="width: 100%;">Assessment
-                    <app-assessment-latest [complaintId]="id"></app-assessment-latest>
+                    <app-assessment-latest [complaintId]="id" [patientId]="patient"></app-assessment-latest>
                 </h3>
             </mat-grid-tile-header>
             <div class="grid-inner-content grid-inner-content-list">
@@ -51,7 +51,7 @@
         <mat-grid-tile [colspan]="3" [rowspan]="2" class="grid-content">
             <mat-grid-tile-header>
                 <h3 style="width: 100%;">Prescription
-                  <app-prescription-latest [complaintId]="id"></app-prescription-latest>
+                  <app-prescription-latest [complaintId]="id" [patientId]="patient"></app-prescription-latest>
                 </h3>
             </mat-grid-tile-header>
             <div class="grid-inner-content grid-inner-content-list">
@@ -83,7 +83,7 @@
         <mat-grid-tile [colspan]="6" [rowspan]="1" class="grid-content">
             <mat-grid-tile-header>
                 <h3 style="width: 100%;">Progress notes
-                  <app-progress-note-latest [complaintId]="id"></app-progress-note-latest>
+                  <app-progress-note-latest [complaintId]="id" [patientId]="patient"></app-progress-note-latest>
                 </h3>
             </mat-grid-tile-header>
             <div class="grid-inner-content grid-inner-content-list">
