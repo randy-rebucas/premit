@@ -1,7 +1,13 @@
 <mat-grid-list cols="6" rowHeight="100px" [gutterSize]="'10px'">
   <mat-grid-tile [colspan]="6" [rowspan]="1" class="grid-content">
       <mat-grid-tile-header>
-          <h3>Chief Complaints</h3>
+          <h3 style="width: 100%;">Chief Complaints
+            <button mat-icon-button (click)="onUpdate('chief-complaint', id)" style="position: absolute;
+              right: 8px;
+              top: 5px;">
+                  <mat-icon>launch</mat-icon>
+            </button>
+          </h3>
       </mat-grid-tile-header>
       <div style="padding: 1em; margin-top: 2.6em;">
         <mat-chip-list>
@@ -9,9 +15,15 @@
         </mat-chip-list>
       </div>
   </mat-grid-tile>
-  <mat-grid-tile [colspan]="3" [rowspan]="2" class="grid-content">
+  <mat-grid-tile [colspan]="2" [rowspan]="2" class="grid-content">
       <mat-grid-tile-header>
-          <h3>Assessment</h3>
+          <h3 style="width: 100%;">Assessment
+            <button mat-icon-button (click)="onUpdate('assessment', assessmentId)" style="position: absolute;
+              right: 8px;
+              top: 5px;">
+                  <mat-icon>launch</mat-icon>
+            </button>
+          </h3>
       </mat-grid-tile-header>
       <div class="grid-inner-content grid-inner-content-list">
           <table class="table">
@@ -42,9 +54,15 @@
             </table>
       </div>
   </mat-grid-tile>
-  <mat-grid-tile [colspan]="3" [rowspan]="2" class="grid-content">
+  <mat-grid-tile [colspan]="4" [rowspan]="2" class="grid-content">
       <mat-grid-tile-header>
-          <h3>Prescription</h3>
+          <h3 style="width: 100%;">Prescription
+            <button mat-icon-button (click)="onUpdate('prescription', prescriptionId)" style="position: absolute;
+              right: 8px;
+              top: 5px;">
+                  <mat-icon>launch</mat-icon>
+            </button>
+          </h3>
       </mat-grid-tile-header>
       <div class="grid-inner-content grid-inner-content-list">
           <table class="table">
@@ -74,7 +92,13 @@
   </mat-grid-tile>
   <mat-grid-tile [colspan]="6" [rowspan]="1" class="grid-content">
       <mat-grid-tile-header>
-          <h3>Progress notes</h3>
+          <h3 style="width: 100%;">Progress notes
+            <button mat-icon-button (click)="onUpdate('progress-notes', noteId)" style="position: absolute;
+              right: 8px;
+              top: 5px;">
+                  <mat-icon>launch</mat-icon>
+            </button>
+          </h3>
       </mat-grid-tile-header>
       <div class="grid-inner-content grid-inner-content-list">
           {{note}}

@@ -29,3 +29,8 @@ tr:hover td.mat-cell.cdk-column-action.mat-column-action button {
 mat-mini-fab {
   margin-bottom: 1em;
 }
+
+td.mat-cell:first-of-type, td.mat-footer-cell:first-of-type, th.mat-header-cell:first-of-type {
+  padding-left: 24px;
+  cursor: pointer;
+}

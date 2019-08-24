@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy, Inject, Optional } from '@angular/core';
-import { Router, ActivatedRoute, Params } from '@angular/router';
+import { Router, ActivatedRoute, Params, RouterStateSnapshot } from '@angular/router';
 import { Subscription } from 'rxjs';
 
 import { AuthService } from '../../../../auth/auth.service';
@@ -8,6 +8,10 @@ import { MAT_DIALOG_DATA, MatDialogConfig, MatDialog } from '@angular/material';
 import { AssessmentService } from '../../services/assessment.service';
 import { PrescriptionService } from '../../services/prescription.service';
 import { NotesService } from '../../services/notes.service';
+import { AssessmentEditComponent } from '../../assessments/assessment-edit/assetment-edit.component';
+import { PrescriptionEditComponent } from '../../prescriptions/prescription-edit/prescription-edit.component';
+import { ProgressNoteEditComponent } from '../../progress-notes/progress-note-edit/progress-note-edit.component';
+import { ChiefComplaintEditComponent } from '../chief-complaint-edit/chief-complaint-edit.component';
 
 @Component({
   selector: 'app-chief-complaint-detail',
@@ -34,6 +38,10 @@ export class ChiefComplaintDetailComponent implements OnInit, OnDestroy {
   noteId: string;
   note: string;
 
+  patientId: string;
+  targetElem: any;
+  targetWidth: any;
+
   private recordsSub: Subscription;
 
   constructor(
@@ -46,7 +54,11 @@ export class ChiefComplaintDetailComponent implements OnInit, OnDestroy {
     public prescriptionService: PrescriptionService,
     public notesService: NotesService,
     private router: Router,
-    ) {}
+    ) {
+      const snapshot: RouterStateSnapshot = this.router.routerState.snapshot;
+      const splitUrl = snapshot.url.split('/');
+      this.patientId = splitUrl[2];
+    }
 
   ngOnInit() {
     this.userIsAuthenticated = this.authService.getIsAuth();
@@ -60,12 +72,17 @@ export class ChiefComplaintDetailComponent implements OnInit, OnDestroy {
       this.id = params.get('complaintId');
     });
 
-    this.complaintService.get(this.id).subscribe(recordData => {
-      this.id = recordData._id;
-      this.complaints = recordData.complaints;
-      this.created = recordData.created;
-    });
+    /**
+     * get complaint
+     */
+    this.getComplaint(this.id);
 
+    this.recordsSub = this.complaintService
+    .getUpdateListener()
+    .subscribe(() => {
+      this.isLoading = false;
+      this.getComplaint(this.id);
+    });
     /**
      * get assessment
      */
@@ -100,6 +117,14 @@ export class ChiefComplaintDetailComponent implements OnInit, OnDestroy {
     .subscribe(() => {
       this.isLoading = false;
       this.getProgressNotes(this.id);
+    });
+  }
+
+  getComplaint(complaintId) {
+    this.complaintService.get(complaintId).subscribe(recordData => {
+      this.id = recordData._id;
+      this.complaints = recordData.complaints;
+      this.created = recordData.created;
     });
   }
 
@@ -142,6 +167,37 @@ export class ChiefComplaintDetailComponent implements OnInit, OnDestroy {
         }
       }
     );
+  }
+
+  onUpdate(elem, recordId) {
+    switch (elem) {
+      case 'assessment':
+        this.targetElem = AssessmentEditComponent;
+        this.targetWidth = '30%';
+        break;
+      case 'prescription':
+        this.targetElem = PrescriptionEditComponent;
+        this.targetWidth = '50%';
+        break;
+      case 'progress-notes':
+        this.targetElem = ProgressNoteEditComponent;
+        this.targetWidth = '30%';
+        break;
+      default:
+        this.targetElem = ChiefComplaintEditComponent;
+        this.targetWidth = '30%';
+    }
+
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.disableClose = true;
+    dialogConfig.autoFocus = true;
+    dialogConfig.width = this.targetWidth;
+    dialogConfig.data = {
+          id: recordId,
+          title: 'Update record',
+          patient: this.patientId
+      };
+    this.dialog.open(this.targetElem, dialogConfig);
   }
 
   ngOnDestroy() {

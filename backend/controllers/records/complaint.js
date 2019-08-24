@@ -1,4 +1,7 @@
 const Complaint = require('../../models/records/complaint');
+const Assessment = require('../../models/records/assessment');
+const Prescription = require('../../models/records/prescription');
+const ProgressNote = require('../../models/records/progress_note');
 const moment = require('moment');
 
 exports.create = (req, res, next) => {
@@ -150,4 +153,38 @@ exports.delete = (req, res, next) => {
                 message: error.message
             });
         });
+};
+
+exports.cascadeDelete = (req, res, next) => {
+  Complaint.deleteOne({ _id: req.params.id }) //pass doctors role for restriction
+  .then(result => {
+      if (result.n > 0) {
+          res.status(200).json({ message: 'Deletion successfull!' });
+      } else {
+          res.status(401).json({ message: 'Not Authorized!' });
+      }
+  })
+  .catch(error => {
+      res.status(500).json({
+          message: error.message
+      });
+  });
+
+  Complaint.post('remove', function(next) {
+    // 'this' is the client being removed. Provide callbacks here if you want
+    // to be notified of the calls' result.
+    Assessment.remove({complaintId: this._id}).exec();
+    Prescription.remove({complaintId: this._id}).exec();
+    ProgressNote.remove({complaintId: this._id}).exec();
+    next();
+  });
+
+  // submissionSchema.pre('remove', function(next) {
+  //   Client.update(
+  //       { submission_ids : this._id},
+  //       { $pull: { submission_ids: this._id } },
+  //       { multi: true })  //if reference exists in multiple documents
+  //   .exec();
+  //   next();
+  // });
 };

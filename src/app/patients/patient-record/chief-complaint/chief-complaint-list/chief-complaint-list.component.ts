@@ -12,6 +12,9 @@ import { DatePipe } from '@angular/common';
 import { DialogService } from 'src/app/shared/dialog.service';
 
 import { ChiefComplaintEditComponent } from '../chief-complaint-edit/chief-complaint-edit.component';
+import { AssessmentService } from '../../services/assessment.service';
+import { PrescriptionService } from '../../services/prescription.service';
+import { NotesService } from '../../services/notes.service';
 
 @Component({
   selector: 'app-chief-complaint-list',
@@ -31,13 +34,15 @@ export class ChiefComplaintListComponent implements OnInit, OnDestroy {
 
   userIsAuthenticated = false;
   patientId: string;
-  show = false;
 
   private recordsSub: Subscription;
   private authListenerSubs: Subscription;
   constructor(
     @Optional() @Inject(MAT_DIALOG_DATA) public data: ComplaintService,
     public complaintService: ComplaintService,
+    public assessmentService: AssessmentService,
+    public prescriptionService: PrescriptionService,
+    public notesService: NotesService,
     private dialog: MatDialog,
     private route: ActivatedRoute,
     private datePipe: DatePipe,
@@ -48,7 +53,6 @@ export class ChiefComplaintListComponent implements OnInit, OnDestroy {
       const snapshot: RouterStateSnapshot = this.router.routerState.snapshot;
       const splitUrl = snapshot.url.split('/');
       this.patientId = splitUrl[2];
-      this.show = false;
     }
 
     dataSource: MatTableDataSource<any>;
@@ -96,13 +100,7 @@ export class ChiefComplaintListComponent implements OnInit, OnDestroy {
   }
 
   onFilter(recordId) {
-    this.show = true;
     this.router.navigate(['./', recordId], {relativeTo: this.route});
-  }
-
-  onBack() {
-    this.show = false;
-    this.router.navigate(['./'], {relativeTo: this.route});
   }
 
   onCreate() {
@@ -135,13 +133,34 @@ export class ChiefComplaintListComponent implements OnInit, OnDestroy {
     this.dialogService.openConfirmDialog('Are you sure to delete this record ?')
     .afterClosed().subscribe(res => {
       if (res) {
-        // delete assessment
-        // delete prescription
-        // delete notes
+
         this.complaintService.delete(recordId).subscribe(() => {
           this.complaintService.getAll(this.perPage, this.currentPage, this.patientId);
           this.notificationService.warn('! Deleted successfully');
         });
+
+        // this.assessmentService.getByComplaintId(recordId).subscribe(
+        //   assessmenrData => {
+        // this.assessmentService.delete(assessmenrData[0]._id).subscribe(() => {
+        //   this.prescriptionService.getByComplaintId(recordId).subscribe(
+        //     prescriptionData => {
+        //     this.prescriptionService.delete(prescriptionData[0]._id).subscribe(() => {
+        //       this.notesService.getByComplaintId(recordId).subscribe(
+        //         noteData => {
+        //         this.notesService.delete(noteData[0]._id).subscribe(() => {
+        //           this.complaintService.delete(recordId).subscribe(() => {
+        //             this.complaintService.getAll(this.perPage, this.currentPage, this.patientId);
+        //             this.notificationService.warn('! Deleted successfully');
+        //           });
+        //         });
+        //         }
+        //       );
+        //     });
+        //     }
+        //   );
+        // });
+        //   }
+        // );
       }
     });
   }

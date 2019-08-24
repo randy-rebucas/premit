@@ -85,7 +85,7 @@ export class AssessmentService {
     return this.http.post<{ message: string, record: AssessmentData }>(BACKEND_URL, recordData);
   }
 
-  update(id: string, created: string, patientId, complaintId: string, diagnosis: [], treatments: []) {
+  update(id: string, created: string, complaintId: string, patientId: string, diagnosis: [], treatments: []) {
     const recordData = {
         id, created, complaintId, patientId, diagnosis, treatments
     };
@@ -95,5 +95,6 @@ export class AssessmentService {
   delete(recordId: string) {
     return this.http.delete(BACKEND_URL + '/' + recordId);
   }
+
 
 }

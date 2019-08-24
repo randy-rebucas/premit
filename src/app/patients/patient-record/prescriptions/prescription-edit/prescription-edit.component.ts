@@ -56,7 +56,7 @@ export class PrescriptionEditComponent implements OnInit, OnDestroy {
     ) {
       this.recordId = data.id;
       this.complaintId = data.complaintIds;
-      this.patientId = data.patientIds ? data.patientIds : data.patient;
+      this.patientId = data.patient;
       this.title = data.title;
     }
 

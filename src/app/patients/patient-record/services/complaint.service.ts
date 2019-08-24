@@ -87,4 +87,7 @@ export class ComplaintService {
     return this.http.delete(BACKEND_URL + '/' + recordId);
   }
 
+  cascadeDelete(recordId: string) {
+    return this.http.delete(BACKEND_URL + '/cascade/' + recordId);
+  }
 }

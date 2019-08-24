@@ -18,6 +18,8 @@ router.get('/last/:patientId', Controller.getLast);
 
 router.get('/:id', Controller.get);
 
+router.delete('/cascade/:complaintId', Controller.cascadeDelete);
+
 router.delete('/:id', checkAuth, Controller.delete);
 
 
