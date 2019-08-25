@@ -9,5 +9,5 @@
   </div>
 </mat-dialog-content>
 <mat-dialog-actions>
-  <button class="mat-raised-button mat-primary" printTitle="PatientName" printSectionId="print-section" ngxPrint><mat-icon>print</mat-icon> Print</button> <!--Your relevant print button-->
+  <button class="mat-raised-button mat-primary" printTitle="PatientName" [useExistingCss]="true" printSectionId="print-section" ngxPrint><mat-icon>print</mat-icon> Print</button> <!--Your relevant print button-->
 </mat-dialog-actions>
