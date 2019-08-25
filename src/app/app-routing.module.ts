@@ -54,6 +54,7 @@ import { ChiefComplaintLatestComponent } from './patients/patient-record/chief-c
 import { ChiefComplaintDetailComponent } from './patients/patient-record/chief-complaint/chief-complaint-detail/chief-complaint-detail.component';
 import { PatientsComponent } from './patients/patients.component';
 import { PatientRecordComponent } from './patients/patient-record/patient-record.component';
+import { RxPadComponent } from './rx-pad/rx-pad.component';
 
 const appRoutes: Routes = [
     { path: '', component: HomeComponent },
@@ -113,6 +114,7 @@ const appRoutes: Routes = [
       { path: 'notifications', component: SettingsNotificationComponent }
     ] },
     { path: 'appointments', component: AppointmentsComponent, canActivate: [AuthGuard] },
+    { path: 'rxpad/:padIds', component: RxPadComponent },
 
     { path: 'auth', loadChildren: './auth/auth.module#AuthModule'},
     { path: 'not-found', component: PageNotFoundComponent },

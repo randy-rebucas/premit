@@ -11,6 +11,7 @@ import { ComplaintData } from '../../models/complaint-data.model';
 import { NotesService } from '../../services/notes.service';
 import { PrescriptionService } from '../../services/prescription.service';
 import { AssessmentService } from '../../services/assessment.service';
+import { RxPadComponent } from 'src/app/rx-pad/rx-pad.component';
 
 @Component({
   selector: 'app-encounter-edit',
@@ -160,6 +161,18 @@ export class EncounterEditComponent implements OnInit, OnDestroy {
     } else {
       console.log(opt);
     }
+  }
+
+  onPrintPreview(recordId) {
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.disableClose = true;
+    dialogConfig.autoFocus = true;
+    dialogConfig.width = '50%';
+    dialogConfig.data = {
+      id: recordId,
+      title: 'Print preview'
+    };
+    this.dialog.open(RxPadComponent, dialogConfig);
   }
 
   onClose() {

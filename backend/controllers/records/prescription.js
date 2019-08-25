@@ -184,3 +184,7 @@ exports.delete = (req, res, next) => {
             });
         });
 };
+
+exports.printRx = (req, res, next) => {
+
+}

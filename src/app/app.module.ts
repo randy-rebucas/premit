@@ -39,6 +39,8 @@ import { AssessmentEditComponent } from './patients/patient-record/assessments/a
 import { PrescriptionEditComponent } from './patients/patient-record/prescriptions/prescription-edit/prescription-edit.component';
 import { ProgressNoteEditComponent } from './patients/patient-record/progress-notes/progress-note-edit/progress-note-edit.component';
 import { EncounterEditComponent } from './patients/patient-record/encounters/encounter-edit/encounter-edit.component';
+import { RxPadComponent } from './rx-pad/rx-pad.component';
+import {NgxPrintModule} from 'ngx-print';
 
 @NgModule({
   declarations: [
@@ -48,6 +50,7 @@ import { EncounterEditComponent } from './patients/patient-record/encounters/enc
     PageNotFoundComponent,
     HomeComponent,
     AppointmentsComponent,
+    RxPadComponent,
     SettingsComponent,
     SettingsGeneralComponent,
     SettingsNotificationComponent,
@@ -63,7 +66,8 @@ import { EncounterEditComponent } from './patients/patient-record/encounters/enc
     FormsModule,
     ReactiveFormsModule,
     AngularMaterialModule,
-    NgxMaterialTimepickerModule
+    NgxMaterialTimepickerModule,
+    NgxPrintModule
   ],
   providers: [
     AppConfiguration,

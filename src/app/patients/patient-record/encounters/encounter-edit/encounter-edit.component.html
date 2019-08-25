@@ -52,6 +52,7 @@
             <mat-grid-tile-header>
                 <h3 style="width: 100%;">Prescription
                   <app-prescription-latest [complaintId]="id" [patientId]="patient"></app-prescription-latest>
+                  <button class="mat-raised-button mat-primary" onPrintPreview(prescriptionId)><mat-icon>print</mat-icon> Print</button>
                 </h3>
             </mat-grid-tile-header>
             <div class="grid-inner-content grid-inner-content-list">
@@ -102,6 +103,7 @@
     </mat-grid-list>
   </mat-dialog-content>
   <mat-dialog-actions>
-      <button class="mat-raised-button"(click)="print(0)">Print</button>
-      <button class="mat-raised-button mat-primary"(click)="print(1)">Print and Close</button>
+      <!-- <button class="mat-raised-button"(click)="print(0)">Print</button>
+      <button class="mat-raised-button mat-primary"(click)="print(1)">Print and Close</button> -->
+       <!--Your relevant print button-->
   </mat-dialog-actions>

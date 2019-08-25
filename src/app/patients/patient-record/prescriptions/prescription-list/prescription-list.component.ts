@@ -13,6 +13,7 @@ import { PrescriptionService } from '../../services/prescription.service';
 import { PrescriptionEditComponent } from '../prescription-edit/prescription-edit.component';
 import { trigger, state, style, transition, animate } from '@angular/animations';
 import { ComplaintService } from '../../services/complaint.service';
+import { RxPadComponent } from 'src/app/rx-pad/rx-pad.component';
 
 @Component({
   selector: 'app-prescription-list',
@@ -87,7 +88,17 @@ export class PrescriptionListComponent implements OnInit, OnDestroy {
       });
   }
 
-  onPrint() {}
+  onPrintPreview(recordId) {
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.disableClose = true;
+    dialogConfig.autoFocus = true;
+    dialogConfig.width = '50%';
+    dialogConfig.data = {
+      id: recordId,
+      title: 'Print preview'
+    };
+    this.dialog.open(RxPadComponent, dialogConfig);
+  }
 
   onChangedPage(pageData: PageEvent) {
     this.isLoading = true;
