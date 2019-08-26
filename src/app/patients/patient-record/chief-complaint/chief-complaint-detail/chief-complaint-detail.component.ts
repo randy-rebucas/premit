@@ -12,6 +12,7 @@ import { AssessmentEditComponent } from '../../assessments/assessment-edit/asset
 import { PrescriptionEditComponent } from '../../prescriptions/prescription-edit/prescription-edit.component';
 import { ProgressNoteEditComponent } from '../../progress-notes/progress-note-edit/progress-note-edit.component';
 import { ChiefComplaintEditComponent } from '../chief-complaint-edit/chief-complaint-edit.component';
+import { RxPadComponent } from 'src/app/rx-pad/rx-pad.component';
 
 @Component({
   selector: 'app-chief-complaint-detail',
@@ -198,6 +199,19 @@ export class ChiefComplaintDetailComponent implements OnInit, OnDestroy {
           patient: this.patientId
       };
     this.dialog.open(this.targetElem, dialogConfig);
+  }
+
+  onPrintPreview(recordId) {
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.disableClose = true;
+    dialogConfig.autoFocus = true;
+    dialogConfig.width = '50%';
+    dialogConfig.data = {
+      id: recordId,
+      title: 'Print preview',
+      patientId: this.patientId
+    };
+    this.dialog.open(RxPadComponent, dialogConfig);
   }
 
   ngOnDestroy() {

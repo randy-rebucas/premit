@@ -3,6 +3,8 @@ import { Subscription } from 'rxjs';
 import { AuthService } from '../../auth/auth.service';
 import { Router, ActivatedRoute, ParamMap } from '@angular/router';
 import { PatientsService } from '../patients.service';
+import { QrCodeGenerateComponent } from 'src/app/qr-code/qr-code-generate/qr-code-generate.component';
+import { MatDialogConfig, MatDialog } from '@angular/material';
 
 @Component({
   selector: 'app-patient-record',
@@ -29,7 +31,8 @@ export class PatientRecordComponent implements OnInit, OnDestroy {
     private authService: AuthService,
     public patientsService: PatientsService,
     private route: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private dialog: MatDialog
     ) { }
 
     ngOnInit() {
@@ -55,6 +58,19 @@ export class PatientRecordComponent implements OnInit, OnDestroy {
         this.image = patientData.imagePath;
       });
     }
+
+    generateQrCode() {
+      const dialogConfig = new MatDialogConfig();
+      dialogConfig.disableClose = true;
+      dialogConfig.autoFocus = true;
+      dialogConfig.width = '30%';
+      dialogConfig.data = {
+        id: null,
+        title: 'Generate QR Code',
+        patientId: this.patientId
+      };
+      this.dialog.open(QrCodeGenerateComponent, dialogConfig);
+  }
 
     ngOnDestroy() {
       this.authListenerSubs.unsubscribe();

@@ -45,6 +45,7 @@ import { QrCodeComponent } from './qr-code/qr-code.component';
 import { QrCodeGenerateComponent } from './qr-code/qr-code-generate/qr-code-generate.component';
 import { QrCodeScannerComponent } from './qr-code/qr-code-scanner/qr-code-scanner.component';
 import { ZXingScannerModule } from '@zxing/ngx-scanner';
+import { QRCodeModule } from 'angularx-qrcode';
 
 @NgModule({
   declarations: [
@@ -75,7 +76,8 @@ import { ZXingScannerModule } from '@zxing/ngx-scanner';
     AngularMaterialModule,
     NgxMaterialTimepickerModule,
     NgxPrintModule,
-    ZXingScannerModule
+    ZXingScannerModule,
+    QRCodeModule
   ],
   providers: [
     AppConfiguration,
@@ -104,7 +106,8 @@ import { ZXingScannerModule } from '@zxing/ngx-scanner';
     AssessmentEditComponent,
     PrescriptionEditComponent,
     ProgressNoteEditComponent,
-    EncounterEditComponent
+    EncounterEditComponent,
+    QrCodeGenerateComponent
   ]
 })
 export class AppModule { }

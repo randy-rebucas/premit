@@ -1,7 +1,8 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, Inject } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { AuthService } from '../../auth/auth.service';
 import { Router, ActivatedRoute } from '@angular/router';
+import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 
 @Component({
   selector: 'app-qr-code-generate',
@@ -11,6 +12,8 @@ import { Router, ActivatedRoute } from '@angular/router';
 export class QrCodeGenerateComponent implements OnInit, OnDestroy {
   userIsAuthenticated = false;
   private authListenerSubs: Subscription;
+  public myAngularxQrCode: string = null;
+  title: string;
 
   isLoading = false;
 
@@ -18,7 +21,12 @@ export class QrCodeGenerateComponent implements OnInit, OnDestroy {
     private authService: AuthService,
     private router: Router,
     route: ActivatedRoute,
-    ) { }
+    public dialogRef: MatDialogRef < QrCodeGenerateComponent >,
+    @Inject(MAT_DIALOG_DATA) data
+    ) {
+      this.title = data.title;
+      this.myAngularxQrCode = data.patientId; // 'Your QR code data string';
+     }
 
   ngOnInit() {
     this.userIsAuthenticated = this.authService.getIsAuth();
@@ -29,6 +37,13 @@ export class QrCodeGenerateComponent implements OnInit, OnDestroy {
       });
   }
 
+  onClose() {
+    this.dialogRef.close();
+  }
+
+  printQr() {
+
+  }
   ngOnDestroy() {
     this.authListenerSubs.unsubscribe();
   }

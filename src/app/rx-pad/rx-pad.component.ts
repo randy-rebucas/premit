@@ -34,7 +34,7 @@ export class RxPadComponent implements OnInit, OnDestroy {
     @Inject(MAT_DIALOG_DATA) data
     ) {
       this.recordId = data.id;
-      this.patientId = data.patient;
+      this.patientId = data.patientId;
       this.title = data.title;
     }
 

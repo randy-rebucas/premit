@@ -95,7 +95,8 @@ export class PrescriptionListComponent implements OnInit, OnDestroy {
     dialogConfig.width = '50%';
     dialogConfig.data = {
       id: recordId,
-      title: 'Print preview'
+      title: 'Print preview',
+      patientId: this.patientId
     };
     this.dialog.open(RxPadComponent, dialogConfig);
   }

@@ -1,37 +1,12 @@
-<p>qrcode-generate-works</p>
-<!--
-    qrcode
 
-    <head>
-        <script type="text/javascript" src="qrcode.js"></script>
-    </head>
-    <body>
-        <input type="text" id="valor" value="">
-        <button onClick="createQrCode()">Gerar QR Code</button>
-        <div id="qrcode"></div>
-    </body>
-    <script>
-    
-    function createQrCode()
-    {
-        var userInput = document.getElementById('valor').value;
-        var qrcode = new QRCode("qrcode", {
-            text: userInput,
-            width: 256,
-            height: 256,
-            colorDark: "black",
-            colorLight: "white",
-            correctLevel : QRCode.CorrectLevel.H
-        });
-    }
-    
-    </script>
-    var qrcode = new QRCode("qrcode", {
-        text: _id, //referes to patient id
-        width: 256,
-        height: 256,
-        colorDark: "black",
-        colorLight: "white",
-        correctLevel : QRCode.CorrectLevel.H
-    });
--->
+<h2 mat-dialog-title>{{ title }}
+  <button class="btn-dialog-close" mat-stroked-button (click)="onClose()" tabIndex="-1"><mat-icon>clear</mat-icon></button>
+</h2>
+<mat-dialog-content class="mat-typography">
+  <div id="print-section">
+    <qrcode [qrdata]="myAngularxQrCode" [size]="256" [level]="'H'"></qrcode>
+  </div>
+</mat-dialog-content>
+<mat-dialog-actions>
+  <button class="mat-raised-button mat-primary" printTitle="Patient QR Code" [useExistingCss]="true" printSectionId="print-section" ngxPrint><mat-icon>print</mat-icon> Print</button> <!--Your relevant print button-->
+</mat-dialog-actions>

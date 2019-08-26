@@ -6,6 +6,7 @@
   <div id="print-section">
     <!--Your html stuff that you want to print-->
     {{recordId}}
+    <qrcode [qrdata]="patientId" [size]="100" [level]="'H'"></qrcode>
   </div>
 </mat-dialog-content>
 <mat-dialog-actions>

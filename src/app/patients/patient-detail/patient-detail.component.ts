@@ -13,6 +13,8 @@ import { ComplaintService } from '../patient-record/services/complaint.service';
 import { AssessmentService } from '../patient-record/services/assessment.service';
 import { PrescriptionService } from '../patient-record/services/prescription.service';
 import { NotesService } from '../patient-record/services/notes.service';
+import { QrCodeGenerateComponent } from 'src/app/qr-code/qr-code-generate/qr-code-generate.component';
+import { MatDialogConfig, MatDialog } from '@angular/material';
 
 @Component({
   selector: 'app-patient-detail',
@@ -63,6 +65,7 @@ export class PatientDetailComponent implements OnInit, OnDestroy {
     public patientsService: PatientsService,
     private route: ActivatedRoute,
     private router: Router,
+    private dialog: MatDialog,
     public heightService: HeightService,
     public weightService: WeightService,
     public temperatureService: TemperatureService,
@@ -193,6 +196,19 @@ export class PatientDetailComponent implements OnInit, OnDestroy {
         default:
           this.router.navigate(['./'], {relativeTo: this.route});
       }
+    }
+
+    generateQrCode() {
+        const dialogConfig = new MatDialogConfig();
+        dialogConfig.disableClose = true;
+        dialogConfig.autoFocus = true;
+        dialogConfig.width = '30%';
+        dialogConfig.data = {
+          id: null,
+          title: 'Generate QR Code',
+          patientId: this.patientId
+        };
+        this.dialog.open(QrCodeGenerateComponent, dialogConfig);
     }
 
     ngOnDestroy() {
