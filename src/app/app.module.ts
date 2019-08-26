@@ -41,6 +41,10 @@ import { ProgressNoteEditComponent } from './patients/patient-record/progress-no
 import { EncounterEditComponent } from './patients/patient-record/encounters/encounter-edit/encounter-edit.component';
 import { RxPadComponent } from './rx-pad/rx-pad.component';
 import {NgxPrintModule} from 'ngx-print';
+import { QrCodeComponent } from './qr-code/qr-code.component';
+import { QrCodeGenerateComponent } from './qr-code/qr-code-generate/qr-code-generate.component';
+import { QrCodeScannerComponent } from './qr-code/qr-code-scanner/qr-code-scanner.component';
+import { ZXingScannerModule } from '@zxing/ngx-scanner';
 
 @NgModule({
   declarations: [
@@ -51,6 +55,9 @@ import {NgxPrintModule} from 'ngx-print';
     HomeComponent,
     AppointmentsComponent,
     RxPadComponent,
+    QrCodeComponent,
+    QrCodeScannerComponent,
+    QrCodeGenerateComponent,
     SettingsComponent,
     SettingsGeneralComponent,
     SettingsNotificationComponent,
@@ -67,7 +74,8 @@ import {NgxPrintModule} from 'ngx-print';
     ReactiveFormsModule,
     AngularMaterialModule,
     NgxMaterialTimepickerModule,
-    NgxPrintModule
+    NgxPrintModule,
+    ZXingScannerModule
   ],
   providers: [
     AppConfiguration,

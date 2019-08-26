@@ -2,5 +2,17 @@
     <p>Home</p>
 </div>
 <div *ngIf="userIsAuthenticated">
-    <p>Search {{license}}</p>
+    <mat-grid-list cols="2" rowHeight="350px" [gutterSize]="'10px'">
+        <mat-grid-tile [colspan]="1" [rowspan]="2" class="grid-content">
+            <div class="grid-inner-content grid-inner-content-list" style="padding: 1em; text-align: center;">
+                <h1 class="mat-headline">Scan Patient QR</h1>
+                <app-qr-code-scanner></app-qr-code-scanner>
+            </div>
+        </mat-grid-tile>
+        <mat-grid-tile [colspan]="1" [rowspan]="2" class="grid-content">
+            <div class="grid-inner-content grid-inner-content-list" style="padding: 1em;">
+                <h1 class="mat-headline">Serving #</h1>
+            </div>
+        </mat-grid-tile>
+    </mat-grid-list>
 </div>

@@ -1,0 +1,5 @@
+<!-- some.component.html -->
+<button mat-stroked-button color="primary" (click)="onToggleScan()">Click to Scan QR Code</button>
+<!-- <button (click)="onDisableScan()" *ngIf="scannerEnabled">Close Scan</button> -->
+<zxing-scanner [formats]="['QR_CODE']" [formats]="allowedFormats" [enable]="scannerEnabled" (scanComplete)="scanCompleteHandler($event)"></zxing-scanner>
+<!-- (scanSuccess)="scanSuccessHandler($event)"  (scanError)="scanErrorHandler($event)" (scanFailure)="scanFailureHandler($event)"  -->

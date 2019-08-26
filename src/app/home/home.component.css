@@ -1,0 +1,22 @@
+mat-grid-list {
+    margin-top: 2em;
+}
+
+.mat-grid-tile {
+    border: 1px solid rgba(0, 0, 0, .12);
+}
+
+.mat-grid-tile-footer {
+    background: #efefef !important;
+    color: #555 !important;
+}
+
+mat-grid-tile.grid-content>::ng-deep .mat-figure {
+    align-items: flex-start;
+    justify-content: flex-start;
+}
+
+.grid-inner-content-list {
+    padding: 1em;
+    width: 100%;
+}
