@@ -154,7 +154,10 @@ export class PatientDetailComponent implements OnInit, OnDestroy {
       });
 
       this.notesService.getLast(this.patientId).subscribe(recordData => {
-        this.progressNotes = recordData[0].notes;
+        this.progressNotes = null;
+        if (Object.keys(recordData).length) {
+          this.progressNotes = recordData[0].notes;
+        }
       });
     }
 
@@ -209,6 +212,10 @@ export class PatientDetailComponent implements OnInit, OnDestroy {
           patientId: this.patientId
         };
         this.dialog.open(QrCodeGenerateComponent, dialogConfig);
+    }
+
+    downloadRecord() {
+      console.log('downloading..');
     }
 
     ngOnDestroy() {
