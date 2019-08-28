@@ -180,11 +180,11 @@
         <div style="padding: 1em;">
             Quick Actions
             <mat-list>
-                <mat-list-item><i class="material-icons">
+                <mat-list-item (click)="onCreateMessage()"><i class="material-icons">
                         message
                         </i> &nbsp; Message </mat-list-item>
                 <mat-list-item (click)="viewChart()"><i class="material-icons">
-                        local_printshop
+                  remove_red_eye
                         </i> &nbsp; View Chart </mat-list-item>
                 <mat-list-item (click)="generateQrCode()"><i class="material-icons">
                         fingerprint

@@ -16,6 +16,7 @@ import { NotesService } from '../patient-record/services/notes.service';
 import { QrCodeGenerateComponent } from 'src/app/qr-code/qr-code-generate/qr-code-generate.component';
 import { MatDialogConfig, MatDialog } from '@angular/material';
 import { PatientChartComponent } from '../patient-chart/patient-chart.component';
+import { MessageEditComponent } from 'src/app/messages/message-edit/message-edit.component';
 
 @Component({
   selector: 'app-patient-detail',
@@ -206,7 +207,7 @@ export class PatientDetailComponent implements OnInit, OnDestroy {
         const dialogConfig = new MatDialogConfig();
         dialogConfig.disableClose = true;
         dialogConfig.autoFocus = true;
-        dialogConfig.width = '30%';
+        dialogConfig.width = '16%';
         dialogConfig.data = {
           id: null,
           title: 'Generate QR Code',
@@ -226,6 +227,19 @@ export class PatientDetailComponent implements OnInit, OnDestroy {
           patientId: this.patientId
         };
       this.dialog.open(PatientChartComponent, dialogConfig);
+    }
+
+    onCreateMessage() {
+      const dialogConfig = new MatDialogConfig();
+      dialogConfig.disableClose = true;
+      dialogConfig.autoFocus = true;
+      dialogConfig.width = '30%';
+      dialogConfig.data = {
+          id: null,
+          title: 'Create Message',
+          patientId: this.patientId
+        };
+      this.dialog.open(MessageEditComponent, dialogConfig);
     }
 
     ngOnDestroy() {

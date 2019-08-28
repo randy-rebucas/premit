@@ -25,6 +25,9 @@
                     <a mat-button routerLink="/appointments" routerLinkActive="mat-accent">Appointments</a>
                 </li>
                 <li *ngIf="userIsAuthenticated">
+                  <a mat-button routerLink="/messages" routerLinkActive="mat-accent">Messages</a>
+              </li>
+                <li *ngIf="userIsAuthenticated">
                     <a mat-button routerLink="/settings" routerLinkActive="mat-accent">Settings</a>
                 </li>
                 <li *ngIf="userIsAuthenticated">

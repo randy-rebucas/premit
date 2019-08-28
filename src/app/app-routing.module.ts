@@ -57,6 +57,8 @@ import { PatientRecordComponent } from './patients/patient-record/patient-record
 import { RxPadComponent } from './rx-pad/rx-pad.component';
 import { AppointmentListComponent } from './appointments/appointment-list/appointment-list.component';
 import { AppointmentCalendarComponent } from './appointments/appointment-calendar/appointment-calendar.component';
+import { MessagesComponent } from './messages/messages.component';
+import { MessageListComponent } from './messages/message-list/message-list.component';
 
 const appRoutes: Routes = [
     { path: '', component: HomeComponent },
@@ -108,6 +110,9 @@ const appRoutes: Routes = [
     { path: 'appointments', component: AppointmentsComponent, canActivate: [AuthGuard], children: [
       { path: '', component: AppointmentListComponent },
       { path: 'calendar', component: AppointmentCalendarComponent },
+    ]},
+    { path: 'messages', component: MessagesComponent, canActivate: [AuthGuard], children: [
+      { path: '', component: MessageListComponent }
     ]},
     { path: 'rxpad/:padIds', component: RxPadComponent },
 

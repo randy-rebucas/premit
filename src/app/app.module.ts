@@ -50,6 +50,9 @@ import { AppointmentEditComponent } from './appointments/appointment-edit/appoin
 import { AppointmentListComponent } from './appointments/appointment-list/appointment-list.component';
 import { AppointmentCalendarComponent } from './appointments/appointment-calendar/appointment-calendar.component';
 import { PatientChartComponent } from './patients/patient-chart/patient-chart.component';
+import { MessagesComponent } from './messages/messages.component';
+import { MessageListComponent } from './messages/message-list/message-list.component';
+import { MessageEditComponent } from './messages/message-edit/message-edit.component';
 
 @NgModule({
   declarations: [
@@ -69,6 +72,9 @@ import { PatientChartComponent } from './patients/patient-chart/patient-chart.co
     SettingsComponent,
     SettingsGeneralComponent,
     SettingsNotificationComponent,
+    MessagesComponent,
+    MessageListComponent,
+    MessageEditComponent,
     MatDialogConfirmComponent
   ],
   imports: [
@@ -116,7 +122,8 @@ import { PatientChartComponent } from './patients/patient-chart/patient-chart.co
     EncounterEditComponent,
     QrCodeGenerateComponent,
     AppointmentEditComponent,
-    PatientChartComponent
+    PatientChartComponent,
+    MessageEditComponent
   ]
 })
 export class AppModule { }
