@@ -55,6 +55,8 @@ import { ChiefComplaintDetailComponent } from './patients/patient-record/chief-c
 import { PatientsComponent } from './patients/patients.component';
 import { PatientRecordComponent } from './patients/patient-record/patient-record.component';
 import { RxPadComponent } from './rx-pad/rx-pad.component';
+import { AppointmentListComponent } from './appointments/appointment-list/appointment-list.component';
+import { AppointmentCalendarComponent } from './appointments/appointment-calendar/appointment-calendar.component';
 
 const appRoutes: Routes = [
     { path: '', component: HomeComponent },
@@ -95,16 +97,6 @@ const appRoutes: Routes = [
         { path: 'assessments', component: AssessmentListComponent },
         { path: 'prescriptions', component: PrescriptionListComponent },
         { path: 'progress-notes', component: ProgressNoteListComponent },
-        // { path: 'assessments', component: AssessmentsComponent, children: [
-        //   { path: '', component: AssessmentListComponent },
-        //   { path: ':complaintId', component: AssessmentListComponent }
-        // ] },
-        // { path: 'prescriptions', component: PrescriptionsComponent, children: [
-        //   { path: '', component: PrescriptionListComponent },
-        // ] },
-        // { path: 'progress-notes', component: ProgressNotesComponent, children: [
-        //   { path: '', component: ProgressNoteListComponent },
-        // ] },
         { path: 'test-results', component: TestResultsComponent }
       ] },
     ] },
@@ -113,7 +105,10 @@ const appRoutes: Routes = [
       { path: 'general', component: SettingsGeneralComponent },
       { path: 'notifications', component: SettingsNotificationComponent }
     ] },
-    { path: 'appointments', component: AppointmentsComponent, canActivate: [AuthGuard] },
+    { path: 'appointments', component: AppointmentsComponent, canActivate: [AuthGuard], children: [
+      { path: '', component: AppointmentListComponent },
+      { path: 'calendar', component: AppointmentCalendarComponent },
+    ]},
     { path: 'rxpad/:padIds', component: RxPadComponent },
 
     { path: 'auth', loadChildren: './auth/auth.module#AuthModule'},

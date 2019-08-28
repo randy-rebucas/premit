@@ -46,6 +46,10 @@ import { QrCodeGenerateComponent } from './qr-code/qr-code-generate/qr-code-gene
 import { QrCodeScannerComponent } from './qr-code/qr-code-scanner/qr-code-scanner.component';
 import { ZXingScannerModule } from '@zxing/ngx-scanner';
 import { QRCodeModule } from 'angularx-qrcode';
+import { AppointmentEditComponent } from './appointments/appointment-edit/appointment-edit.component';
+import { AppointmentListComponent } from './appointments/appointment-list/appointment-list.component';
+import { AppointmentCalendarComponent } from './appointments/appointment-calendar/appointment-calendar.component';
+import { PatientChartComponent } from './patients/patient-chart/patient-chart.component';
 
 @NgModule({
   declarations: [
@@ -55,6 +59,9 @@ import { QRCodeModule } from 'angularx-qrcode';
     PageNotFoundComponent,
     HomeComponent,
     AppointmentsComponent,
+    AppointmentEditComponent,
+    AppointmentListComponent,
+    AppointmentCalendarComponent,
     RxPadComponent,
     QrCodeComponent,
     QrCodeScannerComponent,
@@ -107,7 +114,9 @@ import { QRCodeModule } from 'angularx-qrcode';
     PrescriptionEditComponent,
     ProgressNoteEditComponent,
     EncounterEditComponent,
-    QrCodeGenerateComponent
+    QrCodeGenerateComponent,
+    AppointmentEditComponent,
+    PatientChartComponent
   ]
 })
 export class AppModule { }

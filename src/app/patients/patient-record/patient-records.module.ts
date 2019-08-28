@@ -30,6 +30,7 @@ import { EncounterListComponent } from './encounters/encounter-list/encounter-li
 import { EncounterEditComponent } from './encounters/encounter-edit/encounter-edit.component';
 import { PrescriptionLatestComponent } from './prescriptions/prescription-latest/prescription-latest.component';
 import { ProgressNoteLatestComponent } from './progress-notes/progress-note-latest/progress-note-latest.component';
+import { PatientChartComponent } from '../patient-chart/patient-chart.component';
 
 
 @NgModule({
@@ -58,7 +59,8 @@ import { ProgressNoteLatestComponent } from './progress-notes/progress-note-late
     TestResultsComponent,
     ProgressNoteEditComponent,
     ProgressNoteListComponent,
-    ProgressNoteLatestComponent
+    ProgressNoteLatestComponent,
+    PatientChartComponent
   ],
   imports: [
     CommonModule,

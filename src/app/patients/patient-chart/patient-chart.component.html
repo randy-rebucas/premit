@@ -1,0 +1,12 @@
+<h2 mat-dialog-title>{{ title }}
+    <button class="btn-dialog-close" mat-stroked-button (click)="onClose()" tabIndex="-1"><mat-icon>clear</mat-icon></button>
+</h2>
+<mat-dialog-content class="mat-typography">
+    <div id="content" #content>
+        <h1>Test</h1>
+        <p>Test</p>
+    </div>
+</mat-dialog-content>
+<mat-dialog-actions>
+    <button class="mat-raised-button mat-primary" (click)="downloadChart()">Download Chart</button>
+</mat-dialog-actions>

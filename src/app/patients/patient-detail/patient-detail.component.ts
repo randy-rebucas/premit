@@ -15,6 +15,7 @@ import { PrescriptionService } from '../patient-record/services/prescription.ser
 import { NotesService } from '../patient-record/services/notes.service';
 import { QrCodeGenerateComponent } from 'src/app/qr-code/qr-code-generate/qr-code-generate.component';
 import { MatDialogConfig, MatDialog } from '@angular/material';
+import { PatientChartComponent } from '../patient-chart/patient-chart.component';
 
 @Component({
   selector: 'app-patient-detail',
@@ -214,8 +215,17 @@ export class PatientDetailComponent implements OnInit, OnDestroy {
         this.dialog.open(QrCodeGenerateComponent, dialogConfig);
     }
 
-    downloadRecord() {
-      console.log('downloading..');
+    viewChart() {
+      const dialogConfig = new MatDialogConfig();
+      dialogConfig.disableClose = true;
+      dialogConfig.autoFocus = true;
+      dialogConfig.width = '80%';
+      dialogConfig.data = {
+          id: null,
+          title: 'Chart',
+          patientId: this.patientId
+        };
+      this.dialog.open(PatientChartComponent, dialogConfig);
     }
 
     ngOnDestroy() {

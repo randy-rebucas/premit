@@ -66,7 +66,7 @@ exports.updatePatient = (req, res, next) => {
 exports.getPatients = (req, res, next) => {
     const pageSize = +req.query.pagesize;
     const currentPage = +req.query.page;
-    const patientQuery = Patient.find({ 'client_id': req.query.client }).sort({'firstname': 'asc'});
+    const patientQuery = Patient.find({ 'client_id': req.query.client }).sort({ 'firstname': 'asc' });
 
     let fetchedPatients;
     if (pageSize && currentPage) {
