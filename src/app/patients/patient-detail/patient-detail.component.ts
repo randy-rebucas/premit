@@ -220,7 +220,7 @@ export class PatientDetailComponent implements OnInit, OnDestroy {
       const dialogConfig = new MatDialogConfig();
       dialogConfig.disableClose = true;
       dialogConfig.autoFocus = true;
-      dialogConfig.width = '80%';
+      dialogConfig.width = '50%';
       dialogConfig.data = {
           id: null,
           title: 'Chart',

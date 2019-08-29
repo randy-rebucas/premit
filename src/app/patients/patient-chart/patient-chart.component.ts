@@ -4,7 +4,6 @@ import { AuthService } from '../../auth/auth.service';
 import { Router, ActivatedRoute } from '@angular/router';
 import { MatDialogRef, MAT_DIALOG_DATA } from '@angular/material';
 
-import * as jsPDF from 'jspdf';
 import { HeightService } from '../patient-record/services/height.service';
 import { WeightService } from '../patient-record/services/weight.service';
 import { TemperatureService } from '../patient-record/services/temperature.service';
@@ -16,6 +15,8 @@ import { AssessmentService } from '../patient-record/services/assessment.service
 import { PrescriptionService } from '../patient-record/services/prescription.service';
 import { NotesService } from '../patient-record/services/notes.service';
 import { PatientsService } from '../patients.service';
+import * as jsPDF from 'jspdf';
+import html2canvas from 'html2canvas';
 
 @Component({
   selector: 'app-patient-chart',
@@ -34,6 +35,7 @@ export class PatientChartComponent implements OnInit, OnDestroy {
   lastname: string;
   contact: string;
   gender: string;
+  address: string;
   birthdate: string;
 
   height: number;
@@ -101,6 +103,7 @@ export class PatientChartComponent implements OnInit, OnDestroy {
         this.contact = patientData.contact;
         this.gender = patientData.gender;
         this.birthdate = patientData.birthdate;
+        this.address = patientData.address;
         this.image = patientData.imagePath;
       });
 
@@ -170,23 +173,68 @@ export class PatientChartComponent implements OnInit, OnDestroy {
   }
 
   public downloadChart() {
-    const pdfDoc = new jsPDF();
-
-    const specialElementHandlers = {
-        '#editor': function(element: any, renderer: any) {
-            return true;
-        }
-    };
 
     const content = this.content.nativeElement;
 
-    pdfDoc.fromHTML(content.innerHTML, 15, 15, {
-        'width': 190,
-        'elementHandlers': specialElementHandlers
-    });
+    html2canvas(content).then(canvas => {
 
-    pdfDoc.save('test.pdf');
+      // Few necessary setting options
+      const imgWidth = 208;
+      const pageHeight = 295;
+      const imgHeight = canvas.height * imgWidth / canvas.width;
+      const heightLeft = imgHeight;
+
+      const contentDataURL = canvas.toDataURL('image/jpg');
+
+      const pdfDoc = new jsPDF();
+
+      const margins = {
+          top: 15,
+          bottom: 15,
+          left: 15,
+          width: 190
+      };
+
+      const position = 0;
+
+      const specialElementHandlers = {
+          '#editor': function(element: any, renderer: any) {
+              return true;
+          }
+      };
+
+      pdfDoc.fromHTML(content.innerHTML, margins.left, margins.top, {
+          'width': margins.width,
+          'elementHandlers': specialElementHandlers
+      });
+
+      pdfDoc.setProperties({
+        title: 'Record Chart',
+        subject: 'Randy Rebucas Record Chart',
+        author: 'Clinic+',
+        keywords: 'patient chart',
+        creator: 'Clinic+'
+      });
+
+      pdfDoc.addImage(contentDataURL, 'JPEG', 0, position, imgWidth, imgHeight);
+      pdfDoc.save('record.pdf');
+    });
   }
+
+  // getImgFromUrl(logoUrl, callback) {
+  //   const img = new Image();
+  //   img.src = logoUrl;
+  //   img.onload = function() {
+  //       callback(img);
+  //   };
+  // }
+
+  // generatePDF(img) {
+  //   const options = {orientation: 'p', unit: 'mm', format: 'a4'};
+  //   const doc = new jsPDF(options);
+  //   doc.addImage(img, 'JPEG', 0, 0, 100, 50);
+  //   doc.save('record.pdf');
+  // }
 
   ngOnDestroy() {
     this.authListenerSubs.unsubscribe();

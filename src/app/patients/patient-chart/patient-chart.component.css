@@ -15,3 +15,45 @@ mat-spinner {
 mat-dialog-actions {
     margin-top: 2em;
 }
+
+.patient-detail img {
+  width: 200px;
+}
+
+div#patient-info {
+  display: flex;
+  flex-direction: row;
+  flex: 10% 2 2;
+}
+
+.patient-detail {
+  margin-right: 2em;
+}
+
+.patient-detail ul {
+  list-style: none;
+}
+
+.patient-detail ul li {
+  font-size: 16px;
+  padding: 0;
+}
+
+mat-grid-tile.grid-content>::ng-deep .mat-figure {
+  align-items: flex-start;
+  justify-content: flex-start;
+}
+
+.grid-inner-content-list {
+  margin-top: 3em;
+  padding: 1em;
+  width: 100%;
+}
+
+mat-list-item {
+  cursor: pointer;
+}
+
+table {
+width: 100%;
+}
