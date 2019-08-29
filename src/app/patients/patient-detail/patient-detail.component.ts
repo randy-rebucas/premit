@@ -158,7 +158,7 @@ export class PatientDetailComponent implements OnInit, OnDestroy {
       this.notesService.getLast(this.patientId).subscribe(recordData => {
         this.progressNotes = null;
         if (Object.keys(recordData).length) {
-          this.progressNotes = recordData[0].notes;
+          this.progressNotes = recordData[0].note;
         }
       });
     }
@@ -240,6 +240,10 @@ export class PatientDetailComponent implements OnInit, OnDestroy {
           patientId: this.patientId
         };
       this.dialog.open(MessageEditComponent, dialogConfig);
+    }
+
+    gotoRecord() {
+      this.router.navigate(['./record/physical-exams'], {relativeTo: this.route});
     }
 
     ngOnDestroy() {

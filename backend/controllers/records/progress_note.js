@@ -115,7 +115,7 @@ exports.getCurrent = (req, res, next) => {
 };
 
 exports.getLast = (req, res, next) => {
-  Note.find({ 'patient': req.params.patientId })
+  Note.find({ 'patientId': req.params.patientId })
     .limit(1)
     .sort({ 'created': 'desc' })
     .then(note => {
@@ -133,15 +133,9 @@ exports.getLast = (req, res, next) => {
 };
 
 exports.getByComplaint = (req, res, next) => {
-  const today = moment().startOf('day');
   Note.find({
-    complaintId: req.params.complaintId,
-    created: {
-        $gte: today.toDate(),
-        $lte: moment(today).endOf('day').toDate()
-    }
+    complaintId: req.params.complaintId
   })
-  .limit(1)
   .then(note => {
       if (note) {
           res.status(200).json(note);

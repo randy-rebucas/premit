@@ -37,6 +37,10 @@ table {
   text-align: center;
 }
 
+td.mat-cell.cdk-column-action.mat-column-action {
+  text-align: right;
+}
+
 td.mat-cell.cdk-column-action.mat-column-action button {
   visibility: hidden;
 }

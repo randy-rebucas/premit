@@ -73,7 +73,7 @@ export class AssessmentService {
   }
 
   getLast(patientId) {
-    return this.http.get<{ _id: string, complaints: [], created: string, patient: string }>(
+    return this.http.get<{ _id: string, complaintId: string, diagnosis: [], treatments: [] }>(
       BACKEND_URL + '/last/' + patientId
       );
   }

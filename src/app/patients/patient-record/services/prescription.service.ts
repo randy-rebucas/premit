@@ -53,25 +53,25 @@ export class PrescriptionService {
   }
 
   get(id: string) {
-    return this.http.get<{ _id: string; prescriptions: [], complaint: string, created: string, patient: string }>(
+    return this.http.get<{ _id: string, prescriptions: [], complaint: string, created: string, patient: string }>(
       BACKEND_URL + '/' + id
       );
   }
 
   getLatest() {
-    return this.http.get<{ _id: string; complaintId: string, prescriptions: [] }>(
+    return this.http.get<{ _id: string, complaintId: string, prescriptions: [] }>(
       BACKEND_URL + '/latest'
       );
   }
 
   getByComplaintId(complaintId) {
-    return this.http.get<{ _id: string; complaintId: string, prescriptions: [] }>(
+    return this.http.get<{ _id: string, complaintId: string, prescriptions: [] }>(
       BACKEND_URL + '/complaint/' + complaintId
       );
   }
 
   getLast(patientId) {
-    return this.http.get<{ _id: string, prescriptions: [], created: string, patient: string }>(
+    return this.http.get<{ _id: string, complaintId: string, prescriptions: [] }>(
       BACKEND_URL + '/last/' + patientId
       );
   }

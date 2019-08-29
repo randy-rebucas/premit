@@ -127,7 +127,7 @@ exports.getCurrent = (req, res, next) => {
 
 exports.getLast = (req, res, next) => {
   Prescription.find({
-        patient: req.params.patientId
+    patientId: req.params.patientId
       })
       .limit(1)
       .sort({ 'created': 'desc' })
@@ -144,17 +144,14 @@ exports.getLast = (req, res, next) => {
           });
       });
 };
-
+/**
+ * @param complaintId
+ * @since v1
+ */
 exports.getByComplaint = (req, res, next) => {
-  const today = moment().startOf('day');
   Prescription.find({
-          complaintId: req.params.complaintId,
-          created: {
-              $gte: today.toDate(),
-              $lte: moment(today).endOf('day').toDate()
-          }
+          complaintId: req.params.complaintId
         })
-        .limit(1)
         .then(prescription => {
             if (prescription) {
                 res.status(200).json(prescription);

@@ -11,14 +11,17 @@ table {
     text-align: center;
 }
 
+td.mat-cell.cdk-column-action.mat-column-action {
+  text-align: right;
+}
+
 td.mat-cell.cdk-column-action.mat-column-action button {
-    visibility: hidden;
+  visibility: hidden;
 }
 
 tr:hover td.mat-cell.cdk-column-action.mat-column-action button {
-    visibility: visible;
+  visibility: visible;
 }
-
 mat-subheader {
   font-size: 16px;
 }
