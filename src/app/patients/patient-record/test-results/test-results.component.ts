@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, ViewChild } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { AuthService } from '../../../auth/auth.service';
 import { Router } from '@angular/router';
@@ -10,6 +10,7 @@ import { NotificationService } from 'src/app/shared/notification.service';
   styleUrls: ['./test-results.component.css']
 })
 export class TestResultsComponent implements OnInit, OnDestroy {
+
   userIsAuthenticated = false;
   private authListenerSubs: Subscription;
 

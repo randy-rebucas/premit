@@ -24,7 +24,10 @@ var prescriptionRouter = require('./routes/records/prescription');
 var notesRouter = require('./routes/records/progress_note');
 var assessmentsRouter = require('./routes/records/assessment');
 
+var uploadRouter = require('./routes/upload');
+
 var driveRouter = require('./routes/drive');
+var cors = require('cors');
 
 var app = express();
 
@@ -66,6 +69,13 @@ app.use((req, res, next) => {
     next();
 });
 
+var corsOptions = {
+  origin: '*',
+  optionsSuccessStatus: 200,
+}
+
+app.use(cors(corsOptions));
+
 app.use('/', indexRouter);
 app.use('/api/user', userRouter);
 app.use('/api/patients', patientRouter);
@@ -83,6 +93,7 @@ app.use('/api/progress-notes', notesRouter);
 app.use('/api/assessments', assessmentsRouter);
 
 app.use('/api/drive', driveRouter);
+app.use('/api/upload', uploadRouter);
 //app.use((req, res, next) => {
 //    res.sendFile(path.join(__dirname, 'angular', 'index.html'));
 //});

@@ -9,6 +9,7 @@ import { AppConfiguration } from './app-configuration.service';
 import { MainNavComponent } from './main-nav/main-nav.component';
 import { AppRoutingModule } from './app-routing.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { FlexLayoutModule } from '@angular/flex-layout'
 import { AngularMaterialModule } from './angular-material.module';
 import { AuthInterceptor } from './auth/auth-interceptor';
 import { ErrorInterceptor } from './error-interceptor';
@@ -40,7 +41,7 @@ import { PrescriptionEditComponent } from './patients/patient-record/prescriptio
 import { ProgressNoteEditComponent } from './patients/patient-record/progress-notes/progress-note-edit/progress-note-edit.component';
 import { EncounterEditComponent } from './patients/patient-record/encounters/encounter-edit/encounter-edit.component';
 import { RxPadComponent } from './rx-pad/rx-pad.component';
-import {NgxPrintModule} from 'ngx-print';
+import { NgxPrintModule } from 'ngx-print';
 import { QrCodeComponent } from './qr-code/qr-code.component';
 import { QrCodeGenerateComponent } from './qr-code/qr-code-generate/qr-code-generate.component';
 import { QrCodeScannerComponent } from './qr-code/qr-code-scanner/qr-code-scanner.component';
@@ -53,6 +54,9 @@ import { PatientChartComponent } from './patients/patient-chart/patient-chart.co
 import { MessagesComponent } from './messages/messages.component';
 import { MessageListComponent } from './messages/message-list/message-list.component';
 import { MessageEditComponent } from './messages/message-edit/message-edit.component';
+import { DialogComponent } from './upload/dialog/dialog.component';
+import { UploadService } from './upload/upload.service';
+import { UploadModule } from './upload/upload.module';
 
 @NgModule({
   declarations: [
@@ -75,12 +79,14 @@ import { MessageEditComponent } from './messages/message-edit/message-edit.compo
     MessagesComponent,
     MessageListComponent,
     MessageEditComponent,
-    MatDialogConfirmComponent
+    MatDialogConfirmComponent,
+    DialogComponent
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
+    FlexLayoutModule,
     HttpClientModule,
     PatientsModule,
     PatientRecordsModule,
@@ -90,10 +96,12 @@ import { MessageEditComponent } from './messages/message-edit/message-edit.compo
     NgxMaterialTimepickerModule,
     NgxPrintModule,
     ZXingScannerModule,
-    QRCodeModule
+    QRCodeModule,
+    UploadModule
   ],
   providers: [
     AppConfiguration,
+    UploadService,
     {
         provide: APP_INITIALIZER,
         useFactory: AppConfigurationFactory,
@@ -123,7 +131,8 @@ import { MessageEditComponent } from './messages/message-edit/message-edit.compo
     QrCodeGenerateComponent,
     AppointmentEditComponent,
     PatientChartComponent,
-    MessageEditComponent
+    MessageEditComponent,
+    DialogComponent
   ]
 })
 export class AppModule { }

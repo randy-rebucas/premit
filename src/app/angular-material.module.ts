@@ -24,7 +24,8 @@ import { MatInputModule,
   MatBadgeModule,
   MatMenuModule,
   MatSidenavModule,
-  MatButtonToggleModule
+  MatButtonToggleModule,
+  MatProgressBarModule
 } from '@angular/material';
 
 @NgModule({
@@ -54,7 +55,8 @@ import { MatInputModule,
     MatBadgeModule,
     MatMenuModule,
     MatSidenavModule,
-    MatButtonToggleModule
+    MatButtonToggleModule,
+    MatProgressBarModule
   ]
 })
 export class AngularMaterialModule {}

@@ -31,6 +31,7 @@ import { EncounterEditComponent } from './encounters/encounter-edit/encounter-ed
 import { PrescriptionLatestComponent } from './prescriptions/prescription-latest/prescription-latest.component';
 import { ProgressNoteLatestComponent } from './progress-notes/progress-note-latest/progress-note-latest.component';
 import { PatientChartComponent } from '../patient-chart/patient-chart.component';
+import { UploadModule } from 'src/app/upload/upload.module';
 
 
 @NgModule({
@@ -67,7 +68,8 @@ import { PatientChartComponent } from '../patient-chart/patient-chart.component'
     ReactiveFormsModule,
     AngularMaterialModule,
     PhysicalExamsModule,
-    RouterModule
+    RouterModule,
+    UploadModule
   ]
 })
 export class PatientRecordsModule {}
