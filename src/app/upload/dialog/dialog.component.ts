@@ -13,6 +13,8 @@ import { AuthService } from 'src/app/auth/auth.service';
 export class DialogComponent implements OnInit, OnDestroy {
   @ViewChild('file', {static: false}) file;
   public files: Set<File> = new Set();
+  perPage = 10;
+  currentPage = 1;
 
   userIsAuthenticated = false;
   private authListenerSubs: Subscription;
@@ -101,6 +103,8 @@ export class DialogComponent implements OnInit, OnDestroy {
 
       // ... and the component is no longer uploading
       this.uploading = false;
+
+      this.uploadService.getAll(this.perPage, this.currentPage, this.patientId);
     });
   }
 

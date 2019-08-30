@@ -6,7 +6,7 @@ ul#file-gallery {
   flex-wrap: wrap;
 }
 ul#file-gallery li {
-  width: 150px;
+  width: 200px;
   margin-right: 5px;
 }
 ul#file-gallery li img {
