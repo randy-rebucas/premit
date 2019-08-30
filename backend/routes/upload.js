@@ -8,7 +8,7 @@ const router = express.Router();
 
 router.get('', UploadController.getAll);
 
-// router.get('/:key', SettingController.getSetting);
+router.get('/:id', UploadController.get);
 
 // router.put('/:id', checkAuth, SettingController.update);
 

@@ -1,0 +1,7 @@
+
+mat-list.file-list-items mat-list-item {
+  cursor: pointer;
+}
+mat-list-item.mat-list-item.ng-star-inserted.active {
+  background: #f1f1f1;
+}

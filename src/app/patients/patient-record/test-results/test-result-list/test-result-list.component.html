@@ -1,0 +1,4 @@
+<mat-list class="file-list-items">
+  <h3 mat-subheader>Attachments</h3>
+  <mat-list-item *ngFor="let file of files" [routerLink]="[file.id]" routerLinkActive="active"> {{ file.name.length > 20 ? file.name.substring(0, 20)+"..." : file.name }} </mat-list-item>
+</mat-list>

@@ -12,27 +12,13 @@ import { UploadData } from 'src/app/upload/upload-data.model';
   styleUrls: ['./test-results.component.css']
 })
 export class TestResultsComponent implements OnInit, OnDestroy {
-  files: UploadData[] = [];
-  isLoading = false;
-  total = 0;
-  perPage = 10;
-  currentPage = 1;
 
-  patientId: string;
-
-  pageSizeOptions = [5, 10, 25, 100];
   userIsAuthenticated = false;
-  private recordsSub: Subscription;
   private authListenerSubs: Subscription;
 
   constructor(private authService: AuthService,
               private router: Router,
-              private notificationService: NotificationService,
-              public uploadService: UploadService) {
-                const snapshot: RouterStateSnapshot = this.router.routerState.snapshot;
-                const splitUrl = snapshot.url.split('/');
-                this.patientId = splitUrl[2];
-              }
+              private notificationService: NotificationService) {}
 
   ngOnInit() {
     this.userIsAuthenticated = this.authService.getIsAuth();
@@ -40,16 +26,6 @@ export class TestResultsComponent implements OnInit, OnDestroy {
       .getAuthStatusListener()
       .subscribe(isAuthenticated => {
         this.userIsAuthenticated = isAuthenticated;
-      });
-
-    this.uploadService.getAll(this.perPage, this.currentPage, this.patientId);
-
-    this.recordsSub = this.uploadService
-      .getUpdateListener()
-      .subscribe((fileData: {files: UploadData[], count: number}) => {
-        this.isLoading = false;
-        this.total = fileData.count;
-        this.files = fileData.files;
       });
   }
 

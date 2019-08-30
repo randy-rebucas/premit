@@ -29,6 +29,22 @@ exports.getAll = (req, res, next) => {
       });
 };
 
+exports.get = (req, res, next) => {
+  console.log(req.params);
+  Upload.findById(req.params.id).then(file => {
+          if (file) {
+              res.status(200).json(file);
+          } else {
+              res.status(404).json({ message: 'file not found' });
+          }
+      })
+      .catch(error => {
+          res.status(500).json({
+              message: error.message
+          });
+      });
+};
+
 exports.upload = (req, res, next) => {
   //console.log(req.body);
 

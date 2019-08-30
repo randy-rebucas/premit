@@ -1,0 +1,23 @@
+<div id="file-info">
+  <table>
+    <tr>
+      <td>Name: {{name}}</td>
+      <td>Type: {{type}}</td>
+      <td>
+        <div class="button-action">
+            <button mat-icon-button (click)="onEdit(id)"><mat-icon>launch</mat-icon></button>
+            <button mat-icon-button color="warn" (click)="onDelete(id)"><mat-icon>delete_outline</mat-icon></button>
+        </div>
+      </td>
+    </tr>
+    <tr>
+      <td colspan="3">Path: {{path}}</td>
+    </tr>
+    <tr>
+      <td colspan="3">
+          <img src="{{path}}" style="width: 100%;"/>
+      </td>
+    </tr>
+  </table>
+</div>
+

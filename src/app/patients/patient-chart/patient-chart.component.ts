@@ -108,64 +108,71 @@ export class PatientChartComponent implements OnInit, OnDestroy {
       });
 
     this.heightService.getLast(this.patientId).subscribe(recordData => {
+      if (Object.keys(recordData).length) {
         this.height = recordData[0].height;
         this.heightCreated = recordData[0].created;
-      });
+      }
+    });
 
     this.weightService.getLast(this.patientId).subscribe(recordData => {
+      if (Object.keys(recordData).length) {
         this.weight = recordData[0].weight;
         this.weightCreated = recordData[0].created;
-      });
+      }
+    });
 
     this.temperatureService.getLast(this.patientId).subscribe(recordData => {
+      if (Object.keys(recordData).length) {
         this.temperature = recordData[0].temperature;
         this.temperatureCreated = recordData[0].created;
-      });
+      }
+    });
 
     this.bpService.getLast(this.patientId).subscribe(recordData => {
+      if (Object.keys(recordData).length) {
         this.tempSystolic = recordData[0].systolic;
         this.tempDiastolic = recordData[0].diastolic;
         this.tempCreated = recordData[0].created;
-      });
+      }
+    });
 
     this.rprService.getLast(this.patientId).subscribe(recordData => {
+      if (Object.keys(recordData).length) {
         this.respiratoryRate = recordData[0].respiratoryrate;
         this.respiratoryRateCreated = recordData[0].created;
-      });
+      }
+    });
 
     this.historyService.getLast(this.patientId).subscribe(recordData => {
+      if (Object.keys(recordData).length) {
         this.histories = recordData;
-      });
+      }
+    });
 
     this.complaintService.getLast(this.patientId).subscribe(recordData => {
-        this.complaints = null;
-        if (Object.keys(recordData).length) {
-          this.complaints = recordData[0].complaints;
-        }
-      });
+      if (Object.keys(recordData).length) {
+        this.complaints = recordData[0].complaints;
+      }
+    });
 
     this.assessmentService.getLast(this.patientId).subscribe(recordData => {
-        this.diagnosis = null;
-        this.treatments = null;
-        if (Object.keys(recordData).length) {
-          this.diagnosis = recordData[0].diagnosis;
-          this.treatments = recordData[0].treatments;
-        }
-      });
+      if (Object.keys(recordData).length) {
+        this.diagnosis = recordData[0].diagnosis;
+        this.treatments = recordData[0].treatments;
+      }
+    });
 
     this.prescriptionService.getLast(this.patientId).subscribe(recordData => {
-        this.prescriptions = null;
-        if (Object.keys(recordData).length) {
-          this.prescriptions = recordData[0].prescriptions;
-        }
-      });
+      if (Object.keys(recordData).length) {
+        this.prescriptions = recordData[0].prescriptions;
+      }
+    });
 
     this.notesService.getLast(this.patientId).subscribe(recordData => {
-        this.progressNotes = null;
-        if (Object.keys(recordData).length) {
-          this.progressNotes = recordData[0].note;
-        }
-      });
+      if (Object.keys(recordData).length) {
+        this.progressNotes = recordData[0].note;
+      }
+    });
   }
 
   onClose() {

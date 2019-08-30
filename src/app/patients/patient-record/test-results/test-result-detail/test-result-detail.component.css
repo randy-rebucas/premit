@@ -1,0 +1,12 @@
+table {
+  width: 100%;
+}
+
+table tr:first-child td:last-child {
+  text-align: right;
+  visibility: hidden;
+}
+
+table tr:first-child:hover td:last-child {
+  visibility: visible;
+}

@@ -1,7 +1,15 @@
-<ul id="file-gallery">
-    <li *ngFor="let file of files">
-      <img src="{{file.path}}" alt="{{file.name}}">
-    </li>
-  </ul>
-<!--<p>imaging results, pathology results, specialized testing</p>-->
-<!--  -->
+<mat-card class="test-results">
+  <mat-card-title>Test Results</mat-card-title>
+  <mat-card-subtitle>
+    This includes Imaging results, Pathology results, Specialized testing
+  </mat-card-subtitle>
+  <mat-card-content>
+      <mat-divider [vertical]="false"></mat-divider>
+    <div class="test-result-area" id="test-result-list">
+      <app-test-result-list></app-test-result-list>
+    </div>
+    <div  class="test-result-area" id="test-result-detail">
+      <router-outlet></router-outlet>
+    </div>
+  </mat-card-content>
+</mat-card>

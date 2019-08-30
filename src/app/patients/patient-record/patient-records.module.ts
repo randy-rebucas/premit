@@ -24,6 +24,9 @@ import { ProgressNotesComponent } from './progress-notes/progress-notes.componen
 import { ProgressNoteEditComponent } from './progress-notes/progress-note-edit/progress-note-edit.component';
 import { ProgressNoteListComponent } from './progress-notes/progress-note-list/progress-note-list.component';
 import { TestResultsComponent } from './test-results/test-results.component';
+import { TestResultListComponent } from './test-results/test-result-list/test-result-list.component';
+import { TestResultDetailComponent } from './test-results/test-result-detail/test-result-detail.component';
+import { TestResultInitialComponent } from './test-results/test-result-initial/test-result-initial.component';
 import { PhysicalExamsModule } from './physical-exams/physical-exams.module';
 import { ChiefComplaintDetailComponent } from './chief-complaint/chief-complaint-detail/chief-complaint-detail.component';
 import { EncounterListComponent } from './encounters/encounter-list/encounter-list.component';
@@ -31,6 +34,10 @@ import { EncounterEditComponent } from './encounters/encounter-edit/encounter-ed
 import { PrescriptionLatestComponent } from './prescriptions/prescription-latest/prescription-latest.component';
 import { ProgressNoteLatestComponent } from './progress-notes/progress-note-latest/progress-note-latest.component';
 import { PatientChartComponent } from '../patient-chart/patient-chart.component';
+
+/**
+ * imported outside of this directory to gain access of <app-upload></app-upload> component selector
+ */
 import { UploadModule } from 'src/app/upload/upload.module';
 
 
@@ -58,6 +65,9 @@ import { UploadModule } from 'src/app/upload/upload.module';
     PrescriptionLatestComponent,
     ProgressNotesComponent,
     TestResultsComponent,
+    TestResultListComponent,
+    TestResultDetailComponent,
+    TestResultInitialComponent,
     ProgressNoteEditComponent,
     ProgressNoteListComponent,
     ProgressNoteLatestComponent,

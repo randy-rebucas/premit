@@ -1,15 +1,16 @@
-ul#file-gallery {
-  list-style: none;
-  padding: 0;
-  margin: 1em 0;
-  display: flex;
-  flex-wrap: wrap;
+.test-result-area {
+  display: inline-flex;
+  vertical-align: top;
 }
-ul#file-gallery li {
-  width: 200px;
-  margin-right: 5px;
+div#test-result-list {
+  width: 18%;
+  border-right: 1px solid rgba(0, 0, 0, .12);
+  padding: 1em;
 }
-ul#file-gallery li img {
+div#test-result-detail {
+  width: 77%;
+  padding: 1em;
+}
+app-test-result-list {
   width: 100%;
-  border: 1px solid rgba(0, 0, 0, .12);
 }

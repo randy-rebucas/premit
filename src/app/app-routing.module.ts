@@ -59,6 +59,9 @@ import { AppointmentListComponent } from './appointments/appointment-list/appoin
 import { AppointmentCalendarComponent } from './appointments/appointment-calendar/appointment-calendar.component';
 import { MessagesComponent } from './messages/messages.component';
 import { MessageListComponent } from './messages/message-list/message-list.component';
+import { TestResultListComponent } from './patients/patient-record/test-results/test-result-list/test-result-list.component';
+import { TestResultDetailComponent } from './patients/patient-record/test-results/test-result-detail/test-result-detail.component';
+import { TestResultInitialComponent } from './patients/patient-record/test-results/test-result-initial/test-result-initial.component';
 
 const appRoutes: Routes = [
     { path: '', component: HomeComponent },
@@ -99,7 +102,10 @@ const appRoutes: Routes = [
         { path: 'assessments', component: AssessmentListComponent },
         { path: 'prescriptions', component: PrescriptionListComponent },
         { path: 'progress-notes', component: ProgressNoteListComponent },
-        { path: 'test-results', component: TestResultsComponent }
+        { path: 'test-results', component: TestResultsComponent, children: [
+          { path: '', component: TestResultInitialComponent },
+          { path: ':fileId', component: TestResultDetailComponent }
+        ] }
       ] },
     ] },
     { path: 'settings', component: SettingsComponent, canActivate: [AuthGuard], children: [

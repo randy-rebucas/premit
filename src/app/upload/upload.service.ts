@@ -53,6 +53,12 @@ export class UploadService {
     return this.filesUpdated.asObservable();
   }
 
+  getFile(fileId: string) {
+    return this.http.get<{ _id: string, path: string, name: string, type: string, created: string}>(
+      BACKEND_URL + '/' + fileId
+      );
+  }
+
   public upload(files: Set<File>, clientId: string, patientId: string):
     { [key: string]: { progress: Observable<number> } } {
 

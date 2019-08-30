@@ -132,9 +132,6 @@ export class ChiefComplaintDetailComponent implements OnInit, OnDestroy {
   getAssessement(complaintId) {
     this.assessmentService.getByComplaintId(complaintId).subscribe(
       recordData => {
-        this.assessmentId = null;
-        this.diagnosis = null;
-        this.treatments = null;
         if (Object.keys(recordData).length) {
           this.assessmentId = recordData[0]._id;
           this.diagnosis = recordData[0].diagnosis;
@@ -147,8 +144,6 @@ export class ChiefComplaintDetailComponent implements OnInit, OnDestroy {
   getPrescription(complaintId) {
     this.prescriptionService.getByComplaintId(complaintId).subscribe(
       recordData => {
-        this.prescriptionId = null;
-        this.prescriptions = null;
         if (Object.keys(recordData).length) {
           this.prescriptionId = recordData[0]._id;
           this.prescriptions = recordData[0].prescriptions;
@@ -160,8 +155,6 @@ export class ChiefComplaintDetailComponent implements OnInit, OnDestroy {
   getProgressNotes(complaintId) {
     this.notesService.getByComplaintId(complaintId).subscribe(
       recordData => {
-        this.noteId = null;
-        this.note = null;
         if (Object.keys(recordData).length) {
           this.noteId = recordData[0]._id;
           this.note = recordData[0].note;
