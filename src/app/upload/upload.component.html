@@ -1,1 +1,6 @@
 <button mat-raised-button (click)="openUploadDialog()">Upload</button>
+<ul id="file-gallery">
+  <li *ngFor="let file of files">
+    <img src="{{file.path}}" alt="{{file.name}}">
+  </li>
+</ul>

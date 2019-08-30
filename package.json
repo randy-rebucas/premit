@@ -31,7 +31,6 @@
     "lodash": "^4.17.15",
     "ngx-material-timepicker": "^4.0.2",
     "ngx-print": "^1.2.0-beta.2",
-    "ngx-uploadcare-widget": "^1.2.4",
     "rxjs": "^6.5.2",
     "tslib": "^1.9.0",
     "zone.js": "~0.9.1"

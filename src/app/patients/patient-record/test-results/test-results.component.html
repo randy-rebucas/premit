@@ -1,3 +1,7 @@
-<app-upload></app-upload>
+<ul id="file-gallery">
+    <li *ngFor="let file of files">
+      <img src="{{file.path}}" alt="{{file.name}}">
+    </li>
+  </ul>
 <!--<p>imaging results, pathology results, specialized testing</p>-->
 <!--  -->

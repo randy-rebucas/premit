@@ -6,7 +6,7 @@ const checkAuth = require('../middleware/check-auth');
 
 const router = express.Router();
 
-// router.get('', UploadController.upload);
+router.get('', UploadController.getAll);
 
 // router.get('/:key', SettingController.getSetting);
 
