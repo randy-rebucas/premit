@@ -3,4 +3,8 @@ right: 8px;
 top: 5px;">
     <mat-icon>add</mat-icon>
 </button>
+<button mat-icon-button (click)="onPrintPreview(prescriptionId, patientId)" *ngIf="prescriptionId != null" style="position: absolute;
+right: 45px;
+top: 5px;"><mat-icon>print</mat-icon></button>
+
 

@@ -20,3 +20,46 @@ button.mat-raised-button mat-icon {
   vertical-align: middle;
   margin-right: .3em;
 }
+
+table#rxpad {
+  width: 100%;
+}
+
+table#rxpad tr th {
+  font-size: 14px;
+  font-family: monospace;
+  text-align: left;
+}
+
+table#rxpad tbody tr td {
+  height: 500px;
+  vertical-align: top;
+}
+
+table#rxpad tfoot tr td {
+  font-size: 14px;
+  font-family: monospace;
+  text-align: right;
+}
+
+table#prescriptions {
+  width: 100%;
+  margin: 100px 0;
+}
+
+table#prescriptions tr td {
+  color: rgb(51, 122, 183);
+  font-weight: bold;
+  font-size: 14px;
+  font-family: monospace;
+}
+
+table#prescriptions tr td span {
+  font-weight: 100;
+  font-size: 12px;
+  font-style: italic;
+}
+
+table#prescriptions tr td {
+  height: unset !important;
+}

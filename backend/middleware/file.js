@@ -25,5 +25,9 @@ const storage = multer.diskStorage({
     cb(null, name + "-" + Date.now() + "." + ext);
   }
 });
+// sharp(req.files['image'].path).resize(200, 200).toBuffer(function (err, buf) {
+//   if (err) return next(err)
 
+//   // Do whatever you want with `buf`
+// })
 module.exports = multer({ storage: storage }).single('image');

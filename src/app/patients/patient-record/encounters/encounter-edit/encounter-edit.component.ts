@@ -117,6 +117,7 @@ export class EncounterEditComponent implements OnInit, OnDestroy {
   getAssessement(complaintId) {
     this.assessmentService.getByComplaintId(complaintId).subscribe(
       recordData => {
+        console.log(recordData);
         this.assessmentId = null;
         this.diagnosis = null;
         this.treatments = null;
@@ -161,18 +162,6 @@ export class EncounterEditComponent implements OnInit, OnDestroy {
     } else {
       console.log(opt);
     }
-  }
-
-  onPrintPreview(recordId) {
-    const dialogConfig = new MatDialogConfig();
-    dialogConfig.disableClose = true;
-    dialogConfig.autoFocus = true;
-    dialogConfig.width = '50%';
-    dialogConfig.data = {
-      id: recordId,
-      title: 'Print preview'
-    };
-    this.dialog.open(RxPadComponent, dialogConfig);
   }
 
   onClose() {

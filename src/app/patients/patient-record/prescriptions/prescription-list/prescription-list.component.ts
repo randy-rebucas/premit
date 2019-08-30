@@ -92,7 +92,7 @@ export class PrescriptionListComponent implements OnInit, OnDestroy {
     const dialogConfig = new MatDialogConfig();
     dialogConfig.disableClose = true;
     dialogConfig.autoFocus = true;
-    dialogConfig.width = '50%';
+    dialogConfig.width = '40%';
     dialogConfig.data = {
       id: recordId,
       title: 'Print preview',

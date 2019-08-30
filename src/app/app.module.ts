@@ -132,7 +132,8 @@ import { UploadModule } from './upload/upload.module';
     AppointmentEditComponent,
     PatientChartComponent,
     MessageEditComponent,
-    DialogComponent
+    DialogComponent,
+    RxPadComponent
   ]
 })
 export class AppModule { }

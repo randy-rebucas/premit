@@ -5,6 +5,7 @@ import { AuthService } from '../../../../auth/auth.service';
 import { AssessmentService } from '../../services/assessment.service';
 import { MatDialogConfig, MatDialog } from '@angular/material';
 import { PrescriptionEditComponent } from '../prescription-edit/prescription-edit.component';
+import { RxPadComponent } from 'src/app/rx-pad/rx-pad.component';
 
 @Component({
   selector: 'app-prescription-latest',
@@ -14,6 +15,7 @@ import { PrescriptionEditComponent } from '../prescription-edit/prescription-edi
 export class PrescriptionLatestComponent implements OnInit, OnDestroy {
   @Input() complaintId: string;
   @Input() patientId: string;
+  @Input() prescriptionId: string;
 
   isLoading = false;
   userIsAuthenticated = false;
@@ -45,6 +47,19 @@ export class PrescriptionLatestComponent implements OnInit, OnDestroy {
       patient: patientId
     };
     this.dialog.open(PrescriptionEditComponent, dialogConfig);
+  }
+
+  onPrintPreview(recordId, patient) {
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.disableClose = true;
+    dialogConfig.autoFocus = true;
+    dialogConfig.width = '40%';
+    dialogConfig.data = {
+      id: recordId,
+      title: 'Print preview',
+      patientId: patient
+    };
+    this.dialog.open(RxPadComponent, dialogConfig);
   }
 
   ngOnDestroy() {

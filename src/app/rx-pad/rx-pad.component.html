@@ -5,8 +5,77 @@
 <mat-dialog-content class="mat-typography">
   <div id="print-section">
     <!--Your html stuff that you want to print-->
-    {{recordId}}
-    <qrcode [qrdata]="patientId" [size]="100" [level]="'H'"></qrcode>
+    <table id="rxpad">
+      <thead>
+          <tr>
+              <th>Name: </th>
+              <th>
+                  {{firstname}} {{midlename}} {{lastname}}
+              </th>
+              <th>Birthdate:</th>
+              <th> {{birthdate | date}}</th>
+            </tr>
+            <tr>
+              <th>Age: </th>
+              <th>31</th>
+              <th>Gender: </th>
+              <th>{{gender}}</th>
+            </tr>
+            <tr>
+              <th>Address:</th>
+              <th colspan="3"> {{address}}</th>
+            </tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td colspan="4">
+            <table id="prescriptions">
+              <tr *ngFor="let prescription of prescriptions; let i = index;">
+                <td>{{i+1}}</td>
+                <td> {{prescription.medicine}} {{prescription.preparation}} <br/>
+                  <span>sig: {{prescription.sig}}</span></td>
+                <td> # {{prescription.quantity}}</td>
+              </tr>
+            </table>
+          </td>
+        </tr>
+      </tbody>
+      <tfoot>
+        <tr>
+          <td rowspan="4">
+              <qrcode [qrdata]="patientId" [size]="100" [level]="'H'"></qrcode>
+          </td>
+          <td colspan="3">
+              Irma Barbara B.Taganas-Guibone, M.D.
+          </td>
+        </tr>
+        <tr>
+          <td colspan="2">
+              License No :
+          </td>
+          <td>
+              99436
+          </td>
+        </tr>
+        <tr>
+          <td colspan="2">
+              PTR No :
+          </td>
+          <td>
+           --
+          </td>
+        </tr>
+        <tr>
+          <td colspan="2">
+              S2 No :
+          </td>
+          <td>
+          --
+          </td>
+        </tr>
+      </tfoot>
+    </table>
+
   </div>
 </mat-dialog-content>
 <mat-dialog-actions>

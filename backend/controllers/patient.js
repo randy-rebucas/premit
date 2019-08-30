@@ -1,7 +1,9 @@
 const Patient = require('../models/patient');
+const sharp = require('sharp');
 
 exports.createPatient = (req, res, next) => {
     const url = req.protocol + '://' + req.get('host');
+
     const patient = new Patient({
         firstname: req.body.firstname,
         midlename: req.body.midlename,
