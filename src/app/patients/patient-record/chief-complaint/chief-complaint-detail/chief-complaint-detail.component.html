@@ -119,6 +119,7 @@
               <img src="{{attachment.path}}" alt="{{attachment.name}}">
             </li>
           </ul>
+          <span *ngIf="attachments == null">--</span>
       </div>
   </mat-grid-tile>
 </mat-grid-list>
