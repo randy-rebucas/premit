@@ -6,6 +6,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 import { BarcodeFormat } from '@zxing/library';
 // import { Result } from '@zxing/library';
 import { ZXingScannerComponent } from '@zxing/ngx-scanner';
+import { PatientsService } from 'src/app/patients/patients.service';
 
 @Component({
   selector: 'app-qr-code-scanner',
@@ -26,6 +27,7 @@ export class QrCodeScannerComponent implements OnInit, OnDestroy {
     private authService: AuthService,
     private router: Router,
     route: ActivatedRoute,
+    public patientsService: PatientsService
     ) { }
 
   ngOnInit() {
@@ -47,7 +49,11 @@ export class QrCodeScannerComponent implements OnInit, OnDestroy {
 
   handleQrCodeResult(resultString: string) {
     if  (resultString != null) {
-      this.router.navigateByUrl('/patients/' + resultString + '/record/physical-exams/height');
+      this.patientsService.getPatient(resultString).subscribe((response) => {
+        if (response._id) {
+          this.router.navigateByUrl('/patients/' + response._id + '/record/physical-exams/height');
+        }
+      });
     }
   }
 
