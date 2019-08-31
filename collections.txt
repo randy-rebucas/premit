@@ -1,0 +1,50 @@
+User
+  firstname
+  lastname
+  email
+  password
+  activated
+  banned
+  ban_reason
+  last_ip
+  created_at
+  license_key
+
+Attachments
+  path
+  name
+  type
+  patient
+  clientId
+  complaintId
+  created
+
+Setting
+  client_id
+  clinic_owner
+  clinic_name
+  clinic_address
+  clinic_email
+  clinic_url
+  prc
+  ptr
+  s2
+  clinic_phone
+    contact
+  clinic_hours
+    morning_open
+    morning_close
+    afternoon_open
+    afternoon_close
+
+Patient
+  firstname
+  midlename
+  lastname
+  contact
+  gender
+  birthdate
+  address
+  imagePath
+  created_at
+  client_id [User]

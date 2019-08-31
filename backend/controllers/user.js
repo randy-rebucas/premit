@@ -2,44 +2,56 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const ip = require("ip");
 
+const Person = require('../models/person');
 const User = require('../models/user');
 const Setting = require('../models/setting');
 
 exports.createUser = (req, res, next) => {
     bcrypt.hash(req.body.password, 10)
         .then(hash => {
-            const user = new User({
-                firstname: req.body.firstname,
-                lastname: req.body.lastname,
+          const person = new Person({
+            firstname: req.body.firstname,
+            lastname: req.body.lastname
+          });
+          person.save()
+            .then(personResult => {
+              console.log(personResult);
+              const user = new User({
                 email: req.body.email,
                 password: hash,
-                last_ip: ip.address(),
-                license_key: (Date.now().toString(36) + Math.random().toString(36).substr(2, 5)).toUpperCase(),
-            });
-            user.save()
-                .then(result => {
-                  const setting = new Setting({
-                    client_id: result._id,
-                    clinic_owner: result.firstname + ' ' + result.lastname
+                lastIp: ip.address(),
+                licenseKey: (Date.now().toString(36) + Math.random().toString(36).substr(2, 5)).toUpperCase(),
+                personId: personResult._id
+              });
+              user.save()
+              .then(userResult => {
+                console.log(userResult);
+                const setting = new Setting({
+                  client_id: userResult._id
+                });
+                setting.save().then(createdSetting => {
+                  res.status(201).json({
+                      message: 'User created!',
+                      result: userResult
                   });
-                  setting.save().then(createdSetting => {
-                    res.status(201).json({
-                        message: 'User created!',
-                        result: result
-                    });
-                  })
-                  .catch(error => {
-                      res.status(500).json({
-                          message: error
-                      });
-                  });
-
                 })
-                .catch(err => {
+                .catch(error => {
                     res.status(500).json({
-                        message: 'Invalid authentication credentials!'
+                        message: error.message
                     });
                 });
+              })
+              .catch(err => {
+                res.status(500).json({
+                    message: err.message
+                });
+              });
+            })
+          .catch(err => {
+              res.status(500).json({
+                  message: err.message
+              });
+          });
         });
 }
 
@@ -58,10 +70,10 @@ exports.userLogin = (req, res, next) => {
         .then(result => {
             if (!result) {
                 return res.status(401).json({
-                    message: 'Auth failedno result'
+                    message: 'Auth failed no result'
                 });
             }
-            const token = jwt.sign({ email: fetchedUser.email, license: fetchedUser.license_key, userId: fetchedUser._id },
+            const token = jwt.sign({ email: fetchedUser.email, license: fetchedUser.licenseKey, userId: fetchedUser._id },
                 process.env.JWT_KEY, { expiresIn: '12h' }
             );
             console.log(token);
@@ -71,7 +83,7 @@ exports.userLogin = (req, res, next) => {
                 expiresIn: 43200, //3600,
                 userId: fetchedUser._id,
                 userEmail: fetchedUser.email,
-                userLicense: fetchedUser.license_key
+                userLicense: fetchedUser.licenseKey
             });
         })
         .catch(err => {
@@ -85,7 +97,7 @@ exports.userLogin = (req, res, next) => {
 exports.getAll = (req, res, next) => {
     const pageSize = +req.query.pagesize;
     const currentPage = +req.query.page;
-    const query = User.find().sort({ 'created_at': 'desc' });
+    const query = User.find().sort({ 'createdAt': 'desc' });
 
     let fetchedRecord;
     if (pageSize && currentPage) {
