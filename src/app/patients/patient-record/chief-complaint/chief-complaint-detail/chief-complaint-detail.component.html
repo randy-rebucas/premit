@@ -18,7 +18,7 @@
   <mat-grid-tile [colspan]="2" [rowspan]="2" class="grid-content">
       <mat-grid-tile-header>
           <h3 style="width: 100%;">Assessment
-            <button mat-icon-button (click)="onUpdate('assessment', assessmentId)" style="position: absolute;
+            <button *ngIf="assessmentId != null" mat-icon-button (click)="onUpdate('assessment', assessmentId)" style="position: absolute;
               right: 8px;
               top: 5px;">
                   <mat-icon>launch</mat-icon>
@@ -57,13 +57,13 @@
   <mat-grid-tile [colspan]="4" [rowspan]="2" class="grid-content">
       <mat-grid-tile-header>
           <h3 style="width: 100%;">Prescription
-            <button mat-icon-button (click)="onUpdate('prescription', prescriptionId)" style="position: absolute;
+            <button *ngIf="prescriptionId != null" mat-icon-button (click)="onUpdate('prescription', prescriptionId)" style="position: absolute;
               right: 8px;
               top: 5px;">
                   <mat-icon>launch</mat-icon>
             </button>
-            <button mat-icon-button (click)="onPrintPreview(prescriptionId)" style="position: absolute;
-            right: 36px;
+            <button *ngIf="prescriptionId != null" mat-icon-button (click)="onPrintPreview(prescriptionId)" style="position: absolute;
+            right: 50px;
             top: 5px;"><mat-icon>print</mat-icon></button>
           </h3>
       </mat-grid-tile-header>
@@ -96,7 +96,7 @@
   <mat-grid-tile [colspan]="6" [rowspan]="1" class="grid-content">
       <mat-grid-tile-header>
           <h3 style="width: 100%;">Progress notes
-            <button mat-icon-button (click)="onUpdate('progress-notes', noteId)" style="position: absolute;
+            <button *ngIf="noteId != null" mat-icon-button (click)="onUpdate('progress-notes', noteId)" style="position: absolute;
               right: 8px;
               top: 5px;">
                   <mat-icon>launch</mat-icon>
@@ -113,7 +113,12 @@
           <h3>Test Result</h3>
       </mat-grid-tile-header>
       <div class="grid-inner-content grid-inner-content-list">
-        <app-upload></app-upload>
+        <app-upload [complaintId]="id"></app-upload>
+          <ul id="file-gallery">
+            <li *ngFor="let attachment of attachments">
+              <img src="{{attachment.path}}" alt="{{attachment.name}}">
+            </li>
+          </ul>
       </div>
   </mat-grid-tile>
 </mat-grid-list>

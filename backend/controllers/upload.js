@@ -1,5 +1,6 @@
 const IncomingForm = require('formidable').IncomingForm
 const Upload = require('../models/upload');
+const moment = require('moment');
 
 exports.getAll = (req, res, next) => {
   const pageSize = +req.query.pagesize;
@@ -45,9 +46,52 @@ exports.get = (req, res, next) => {
       });
 };
 
-exports.upload = (req, res, next) => {
-  //console.log(req.body);
+exports.getCurrent = (req, res, next) => {
+  const today = moment().startOf('day');
 
+  Upload.find({
+          created: {
+              $gte: today.toDate(),
+              $lte: moment(today).endOf('day').toDate()
+          }
+      })
+      .then(file => {
+          if (file) {
+              res.status(200).json(file);
+          } else {
+              res.status(404).json({ message: 'file not found' });
+          }
+      })
+      .catch(error => {
+          res.status(500).json({
+              message: error.message
+          });
+      });
+};
+
+/**
+ * @param complaintId
+ * @since v1
+ */
+exports.getByComplaint = (req, res, next) => {
+  Upload.find({
+        complaintId: req.params.complaintId
+      })
+      .then(file => {
+          if (file) {
+              res.status(200).json(file);
+          } else {
+              res.status(404).json({ message: 'file not found' });
+          }
+      })
+      .catch(error => {
+          res.status(500).json({
+              message: error.message
+          });
+      });
+};
+
+exports.upload = (req, res, next) => {
   var form = new IncomingForm();
   form.uploadDir = 'attachments';
   form.keepExtensions = true;
@@ -64,10 +108,6 @@ exports.upload = (req, res, next) => {
     // Do something with the file
     // e.g. save it to the database
     // you can access it using file.path
-    // console.log(file.path);
-    // console.log(file.size);
-    // console.log(file.name);
-    // console.log(file.type);
   });
 
   form.on('error', (err) => {
@@ -88,9 +128,27 @@ exports.upload = (req, res, next) => {
       name: files.file.name,
       type: files.file.type,
       patient: fields.patient,
-      clientId: fields.clientId
+      clientId: fields.clientId,
+      complaintId: fields.complaintId
     });
     upload.save();
 
   });
+};
+
+
+exports.delete = (req, res, next) => {
+  Upload.deleteOne({ _id: req.params.id }) //pass doctors role for restriction
+      .then(result => {
+          if (result.n > 0) {
+              res.status(200).json({ message: 'Deletion successfull!' });
+          } else {
+              res.status(401).json({ message: 'Not Authorized!' });
+          }
+      })
+      .catch(error => {
+          res.status(500).json({
+              message: error.message
+          });
+      });
 };

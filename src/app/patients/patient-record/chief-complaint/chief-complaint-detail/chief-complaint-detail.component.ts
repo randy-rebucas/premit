@@ -13,6 +13,7 @@ import { PrescriptionEditComponent } from '../../prescriptions/prescription-edit
 import { ProgressNoteEditComponent } from '../../progress-notes/progress-note-edit/progress-note-edit.component';
 import { ChiefComplaintEditComponent } from '../chief-complaint-edit/chief-complaint-edit.component';
 import { RxPadComponent } from 'src/app/rx-pad/rx-pad.component';
+import { UploadService } from 'src/app/upload/upload.service';
 
 @Component({
   selector: 'app-chief-complaint-detail',
@@ -43,6 +44,8 @@ export class ChiefComplaintDetailComponent implements OnInit, OnDestroy {
   targetElem: any;
   targetWidth: any;
 
+  attachments: any;
+
   private recordsSub: Subscription;
 
   constructor(
@@ -54,6 +57,7 @@ export class ChiefComplaintDetailComponent implements OnInit, OnDestroy {
     public assessmentService: AssessmentService,
     public prescriptionService: PrescriptionService,
     public notesService: NotesService,
+    public uploadService: UploadService,
     private router: Router,
     ) {
       const snapshot: RouterStateSnapshot = this.router.routerState.snapshot;
@@ -119,6 +123,18 @@ export class ChiefComplaintDetailComponent implements OnInit, OnDestroy {
       this.isLoading = false;
       this.getProgressNotes(this.id);
     });
+
+    /**
+     * get progress notes
+     */
+    this.getAttachments(this.id);
+
+    this.recordsSub = this.uploadService
+    .getUpdateListener()
+    .subscribe(() => {
+      this.isLoading = false;
+      this.getAttachments(this.id);
+    });
   }
 
   getComplaint(complaintId) {
@@ -127,6 +143,17 @@ export class ChiefComplaintDetailComponent implements OnInit, OnDestroy {
       this.complaints = recordData.complaints;
       this.created = recordData.created;
     });
+  }
+
+  getAttachments(complaintId) {
+    this.uploadService.getByComplaintId(complaintId).subscribe(
+      recordData => {
+        console.log(recordData);
+        if (Object.keys(recordData).length) {
+          this.attachments = recordData;
+        }
+      }
+    );
   }
 
   getAssessement(complaintId) {

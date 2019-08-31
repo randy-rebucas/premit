@@ -118,6 +118,8 @@ export class ChiefComplaintEditComponent implements OnInit, OnDestroy {
         this.form.value.complaints
       ).subscribe((complaintData) => {
         this.onClose();
+        this.complaintService.getAll(this.perPage, this.currentPage, this.patientId);
+
         const dialogConfig = new MatDialogConfig();
         dialogConfig.disableClose = true;
         dialogConfig.autoFocus = true;

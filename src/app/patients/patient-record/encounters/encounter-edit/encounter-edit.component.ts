@@ -12,6 +12,7 @@ import { NotesService } from '../../services/notes.service';
 import { PrescriptionService } from '../../services/prescription.service';
 import { AssessmentService } from '../../services/assessment.service';
 import { RxPadComponent } from 'src/app/rx-pad/rx-pad.component';
+import { UploadService } from 'src/app/upload/upload.service';
 
 @Component({
   selector: 'app-encounter-edit',
@@ -42,6 +43,8 @@ export class EncounterEditComponent implements OnInit, OnDestroy {
   noteId: string;
   note: string;
 
+  attachments: any;
+
   form: FormGroup;
   private recordsSub: Subscription;
 
@@ -55,6 +58,7 @@ export class EncounterEditComponent implements OnInit, OnDestroy {
     public assessmentService: AssessmentService,
     public prescriptionService: PrescriptionService,
     public notesService: NotesService,
+    public uploadService: UploadService,
     public dialogRef: MatDialogRef < EncounterEditComponent >,
     @Inject(MAT_DIALOG_DATA) data
     ) {
@@ -112,15 +116,34 @@ export class EncounterEditComponent implements OnInit, OnDestroy {
       this.isLoading = false;
       this.getProgressNotes(this.complaint);
     });
+
+    /**
+     * get progress notes
+     */
+    this.getAttachments(this.complaint);
+
+    this.recordsSub = this.uploadService
+    .getUpdateListener()
+    .subscribe(() => {
+      this.isLoading = false;
+      this.getAttachments(this.complaint);
+    });
+  }
+
+  getAttachments(complaintId) {
+    this.uploadService.getByComplaintId(complaintId).subscribe(
+      recordData => {
+        console.log(recordData);
+        if (Object.keys(recordData).length) {
+          this.attachments = recordData;
+        }
+      }
+    );
   }
 
   getAssessement(complaintId) {
     this.assessmentService.getByComplaintId(complaintId).subscribe(
       recordData => {
-        console.log(recordData);
-        this.assessmentId = null;
-        this.diagnosis = null;
-        this.treatments = null;
         if (Object.keys(recordData).length) {
           this.assessmentId = recordData[0]._id;
           this.diagnosis = recordData[0].diagnosis;
@@ -133,8 +156,6 @@ export class EncounterEditComponent implements OnInit, OnDestroy {
   getPrescription(complaintId) {
     this.prescriptionService.getByComplaintId(complaintId).subscribe(
       recordData => {
-        this.prescriptionId = null;
-        this.prescriptions = null;
         if (Object.keys(recordData).length) {
           this.prescriptionId = recordData[0]._id;
           this.prescriptions = recordData[0].prescriptions;
@@ -146,8 +167,6 @@ export class EncounterEditComponent implements OnInit, OnDestroy {
   getProgressNotes(complaintId) {
     this.notesService.getByComplaintId(complaintId).subscribe(
       recordData => {
-        this.noteId = null;
-        this.note = null;
         if (Object.keys(recordData).length) {
           this.noteId = recordData[0]._id;
           this.note = recordData[0].note;
@@ -156,12 +175,19 @@ export class EncounterEditComponent implements OnInit, OnDestroy {
     );
   }
 
-  print(opt) {
-    if (opt === 1) {
-      this.dialogRef.close();
-    } else {
-      console.log(opt);
-    }
+  onPrintPreview(recordId, patient) {
+    this.onClose();
+
+    const dialogConfig = new MatDialogConfig();
+    dialogConfig.disableClose = true;
+    dialogConfig.autoFocus = true;
+    dialogConfig.width = '40%';
+    dialogConfig.data = {
+      id: recordId,
+      title: 'Print preview',
+      patientId: patient
+    };
+    this.dialog.open(RxPadComponent, dialogConfig);
   }
 
   onClose() {

@@ -7,6 +7,7 @@ const attachmentSchema = mongoose.Schema({
   type: { type: String },
   patient: { type: mongoose.Schema.Types.ObjectId, ref: 'Patient', required: true },
   clientId: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
+  complaintId: { type: mongoose.Schema.Types.ObjectId, ref: 'Complaint', required: true },
   created: { type: Date, default: Date.now }
 });
 

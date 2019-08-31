@@ -91,17 +91,24 @@
                 <span *ngIf="note == null">--</span>
             </div>
         </mat-grid-tile>
-        <mat-grid-tile [colspan]="6" [rowspan]="2" class="grid-content">
+        <mat-grid-tile [colspan]="6" [rowspan]="3" class="grid-content">
             <mat-grid-tile-header>
-                <h3>Test Result</h3>
+                <h3 style="width: 100%;">Test Result
+                    <app-upload [complaintId]="complaint"></app-upload>
+                </h3>
             </mat-grid-tile-header>
             <div class="grid-inner-content grid-inner-content-list">
-              <p>on progress...</p>
+              <ul id="file-gallery">
+                <li *ngFor="let attachment of attachments">
+                  <img src="{{attachment.path}}" alt="{{attachment.name}}">
+                </li>
+              </ul>
+              <span *ngIf="attachments == null">--</span>
             </div>
         </mat-grid-tile>
     </mat-grid-list>
   </mat-dialog-content>
   <mat-dialog-actions>
-      <button class="mat-raised-button"(click)="print(0)">Print</button>
+      <button class="mat-raised-button mat-primary" (click)="onPrintPreview(prescriptionId, patient)" *ngIf="prescriptionId != null">Close and Print</button>
   </mat-dialog-actions>
 

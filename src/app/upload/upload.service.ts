@@ -59,7 +59,19 @@ export class UploadService {
       );
   }
 
-  public upload(files: Set<File>, clientId: string, patientId: string):
+  getLatest() {
+    return this.http.get<{ _id: string, path: string, name: string, type: string, created: string }>(
+      BACKEND_URL + '/latest'
+      );
+  }
+
+  getByComplaintId(complaintId) {
+    return this.http.get<{ _id: string, path: string, name: string, type: string, created: string }>(
+      BACKEND_URL + '/complaint/' + complaintId
+      );
+  }
+
+  public upload(files: Set<File>, clientId: string, patientId: string, complaintId: string):
     { [key: string]: { progress: Observable<number> } } {
 
     // this will be the our resulting map
@@ -71,6 +83,7 @@ export class UploadService {
       formData.append('file', file, file.name);
       formData.append('patient', patientId);
       formData.append('clientId', clientId);
+      formData.append('complaintId', complaintId);
 
       // create a http-post request and pass the form
       // tell it to report the upload progress
@@ -78,7 +91,6 @@ export class UploadService {
         reportProgress: true
       });
 
-      console.log(req);
       // create a new progress-subject for every file
       const progress = new Subject<number>();
 
@@ -109,4 +121,7 @@ export class UploadService {
     return status;
   }
 
+  deleteFile(fileId: string) {
+    return this.http.delete(BACKEND_URL + '/' + fileId);
+  }
 }

@@ -21,6 +21,7 @@ export class DialogComponent implements OnInit, OnDestroy {
   userId: string;
   patientId: string;
   title: string;
+  complaintId: string;
 
   progress;
   canBeClosed = true;
@@ -37,6 +38,7 @@ export class DialogComponent implements OnInit, OnDestroy {
     ) {
       this.patientId = data.patient;
       this.title = data.title;
+      this.complaintId = data.complaint;
     }
 
   ngOnInit() {
@@ -72,7 +74,7 @@ export class DialogComponent implements OnInit, OnDestroy {
     this.uploading = true;
 
     // start the upload and save the progress map
-    this.progress = this.uploadService.upload(this.files, this.userId, this.patientId);
+    this.progress = this.uploadService.upload(this.files, this.userId, this.patientId, this.complaintId);
 
     // convert the progress map into an array
     const allProgressObservables = [];

@@ -18,6 +18,7 @@ export class RxPadComponent implements OnInit, OnDestroy {
   recordId: string;
   patientId: string;
   title: string;
+  canClosed: boolean;
 
   id: string;
   created: string;
@@ -47,6 +48,7 @@ export class RxPadComponent implements OnInit, OnDestroy {
       this.recordId = data.id;
       this.patientId = data.patientId;
       this.title = data.title;
+      this.canClosed = data.canClose ? true : false;
     }
 
   ngOnInit() {

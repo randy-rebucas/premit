@@ -1,4 +1,4 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, Input } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { AuthService } from '../auth/auth.service';
 import { Router, RouterStateSnapshot } from '@angular/router';
@@ -14,7 +14,7 @@ import { UploadData } from './upload-data.model';
   styleUrls: ['./upload.component.css']
 })
 export class UploadComponent implements OnInit, OnDestroy {
-  files: UploadData[] = [];
+  @Input() complaintId: string;
   isLoading = false;
   total = 0;
   perPage = 10;
@@ -23,6 +23,8 @@ export class UploadComponent implements OnInit, OnDestroy {
   pageSizeOptions = [5, 10, 25, 100];
 
   patientId: string;
+  attachmentId: string;
+  attachments: any;
 
   form: FormGroup;
   imagePreview: string;
@@ -47,15 +49,23 @@ export class UploadComponent implements OnInit, OnDestroy {
         this.userIsAuthenticated = isAuthenticated;
       });
 
-    this.uploadService.getAll(this.perPage, this.currentPage, this.patientId);
+    // this.uploadService.getAll(this.perPage, this.currentPage, this.patientId);
+
+    this.uploadService.getByComplaintId(this.complaintId).subscribe(
+      recordData => {
+        if (Object.keys(recordData).length) {
+          this.attachments = recordData;
+        }
+      }
+    );
 
     this.recordsSub = this.uploadService
       .getUpdateListener()
       .subscribe((fileData: {files: UploadData[], count: number}) => {
         this.isLoading = false;
         this.total = fileData.count;
-        this.files = fileData.files;
-      });
+        this.attachments = fileData.files;
+    });
   }
 
   openUploadDialog() {
@@ -66,7 +76,8 @@ export class UploadComponent implements OnInit, OnDestroy {
     dialogConfig.height = '50%';
     dialogConfig.data = {
       title: 'Upload Files',
-      patient: this.patientId
+      patient: this.patientId,
+      complaint: this.complaintId
     };
     this.dialog.open(DialogComponent, dialogConfig);
   }
