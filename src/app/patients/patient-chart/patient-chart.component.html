@@ -7,7 +7,13 @@
             <mat-grid-tile [colspan]="6" [rowspan]="1" class="grid-content">
                   <div id="patient-info">
                       <div class="patient-detail">
-                          <img src="{{image}}" alt="{{firstname + ' ' + midlename + ' ' + lastname}}">
+                          <div *ngIf="image; then thenBlock else elseBlock"></div>
+                          <ng-template #thenBlock>
+                              <img src="{{image}}" alt="{{firstname + ' ' + midlename + ' ' + lastname}}" style="width: 100%;" />
+                          </ng-template>
+                          <ng-template #elseBlock>
+                            <img src="assets/images/blank.png" alt="{{firstname + ' ' + midlename + ' ' + lastname}}" style="width: 100%;" />
+                          </ng-template>
                       </div>
                     <div class="patient-detail">
                       <ul>

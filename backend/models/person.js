@@ -8,6 +8,7 @@ const personSchema = mongoose.Schema({
     contact: { type: String, default: null },
     gender: { type: String, default: null },
     address: { type: String, default: null },
+    birthdate: { type: Date, default: null },
     createdAt: { type: Date, default: Date.now }
 });
 

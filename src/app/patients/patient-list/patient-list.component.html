@@ -13,7 +13,13 @@
             <ng-container matColumnDef="imagePath">
                 <th mat-header-cell *matHeaderCellDef mat-sort-header> Pictures</th>
                 <td mat-cell *matCellDef="let row">
-                    <img [src]="row.imagePath" [alt]="row.firstname" style="width:40px; height:auto;" />
+                    <div *ngIf="row.imagePath; then thenBlock else elseBlock"></div>
+                    <ng-template #thenBlock>
+                        <img [src]="row.imagePath" [alt]="row.firstname" style="width:40px; height:auto; vertical-align: middle;" />
+                    </ng-template>
+                    <ng-template #elseBlock>
+                      <img src="assets/images/blank.png" [alt]="row.firstname" style="width:40px; height:auto; vertical-align: middle;" />
+                    </ng-template>
                 </td>
             </ng-container>
 

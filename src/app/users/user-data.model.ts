@@ -1,10 +1,5 @@
-export interface PatientData {
+export interface UserData {
   id: string;
-  bloodType: string;
-  comments: string;
-  personId: string;
-  clientId: string;
-
   firstname: string;
   midlename: string;
   lastname: string;
@@ -12,4 +7,6 @@ export interface PatientData {
   gender: string;
   birthdate: string;
   address: string;
+  imagePath: string;
+  client: string;
 }

@@ -57,7 +57,6 @@ export class PatientRecordComponent implements OnInit, OnDestroy {
         this.contact = patientData.contact;
         this.gender = patientData.gender;
         this.birthdate = patientData.birthdate;
-        this.image = patientData.imagePath;
       });
     }
 

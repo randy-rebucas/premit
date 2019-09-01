@@ -7,9 +7,9 @@ const extractFile = require('../middleware/file');
 
 const router = express.Router();
 
-router.post('', checkAuth, extractFile, PatientController.createPatient);
+router.post('', checkAuth, PatientController.createPatient); //extractFile,
 
-router.put('/:id', checkAuth, extractFile, PatientController.updatePatient);
+router.put('/:id/:personId', checkAuth, PatientController.updatePatient); //extractFile,
 
 router.get('', PatientController.getPatients);
 

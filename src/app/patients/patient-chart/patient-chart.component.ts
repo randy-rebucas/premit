@@ -104,7 +104,6 @@ export class PatientChartComponent implements OnInit, OnDestroy {
         this.gender = patientData.gender;
         this.birthdate = patientData.birthdate;
         this.address = patientData.address;
-        this.image = patientData.imagePath;
       });
 
     this.heightService.getLast(this.patientId).subscribe(recordData => {

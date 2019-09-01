@@ -99,7 +99,6 @@ export class PatientDetailComponent implements OnInit, OnDestroy {
         this.contact = patientData.contact;
         this.gender = patientData.gender;
         this.birthdate = patientData.birthdate;
-        this.image = patientData.imagePath;
       });
 
       this.heightService.getLast(this.patientId).subscribe(recordData => {

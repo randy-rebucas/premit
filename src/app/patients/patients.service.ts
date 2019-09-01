@@ -32,15 +32,16 @@ export class PatientsService {
         return { patients: patientData.patients.map(patient => {
           return {
             id: patient._id,
-            firstname: patient.firstname,
-            midlename: patient.midlename,
-            lastname: patient.lastname,
-            contact: patient.contact,
-            gender: patient.gender,
-            birthdate: patient.birthdate,
-            address: patient.address,
-            imagePath: patient.imagePath,
-            client_id: patient.client_id
+            firstname: patient.personId.firstname,
+            midlename: patient.personId.midlename,
+            lastname: patient.personId.lastname,
+            contact: patient.personId.contact,
+            gender: patient.personId.gender,
+            birthdate: patient.personId.birthdate,
+            address: patient.personId.address,
+            bloodType: patient.bloodType,
+            comments: patient.comments,
+            clientId: patient.clientId
           };
         }), maxPatients: patientData.maxPatients};
       })
@@ -60,46 +61,40 @@ export class PatientsService {
 
   getPatient(id: string) {
     // tslint:disable-next-line: max-line-length
-    return this.http.get<{ _id: string; firstname: string, midlename: string, lastname: string, contact: string, gender: string, birthdate: string, address: string, imagePath: string, client_id: string
-    }>(
-      BACKEND_URL + '/' + id
+    return this.http.get<{ _id: string, bloodType: string, comments: string, personId: string, clientId: string, firstname: any, midlename: any, lastname: string, contact: string, gender: string, birthdate: string, address: string }>(
+        BACKEND_URL + '/' + id
       );
   }
 
-  addPatient(firstname: string, midlename: string, lastname: string, contact: string, gender: string, birthdate: string, address: string, image: File
-    ) {
-    const patientData = new FormData();
-    patientData.append('firstname', firstname);
-    patientData.append('midlename', midlename);
-    patientData.append('lastname', lastname);
-    patientData.append('contact', contact);
-    patientData.append('gender', gender);
-    patientData.append('birthdate', birthdate);
-    patientData.append('address', address);
-    patientData.append('image', image, firstname);
+  addPatient(_firstname: string, _midlename: string, _lastname: string, _contact: string, _bloodType: string, _gender: string, _birthdate: string, _address: string, _comments: string) {
+      const patientData = {
+        firstname: _firstname,
+        midlename: _midlename,
+        lastname: _lastname,
+        contact: _contact,
+        bloodType: _bloodType,
+        gender: _gender,
+        birthdate: _birthdate,
+        address: _address,
+        comments: _comments
+      };
     return this.http.post<{ message: string, patient: PatientData }>(BACKEND_URL, patientData);
   }
 
-  updatePatient(id: string, firstname: string, midlename: string, lastname: string, contact: string, gender: string, birthdate: string, address: string, image: File | string) {
-    let patientData: PatientData | FormData;
-    if (typeof(image) === 'object') {
-      patientData = new FormData();
-      patientData.append('id', id);
-      patientData.append('firstname', firstname);
-      patientData.append('midlename', midlename);
-      patientData.append('lastname', lastname);
-      patientData.append('contact', contact);
-      patientData.append('gender', gender);
-      patientData.append('birthdate', birthdate);
-      patientData.append('address', address);
-      patientData.append('image', image, firstname);
-    } else {
-      patientData = {
-        id: id, firstname: firstname, midlename: midlename, lastname: lastname, contact: contact, gender: gender, birthdate: birthdate, address: address, imagePath: image, client: null
-      };
-    }
-
-    return this.http.put(BACKEND_URL + '/' + id, patientData);
+  updatePatient(_id: string, _personId: string, _firstname: string, _midlename: string, _lastname: string, _contact: string, _bloodType: string, _gender: string, _birthdate: string, _address: string, _comments: string) {
+    const patientData = {
+      id: _id,
+      firstname: _firstname,
+      midlename: _midlename,
+      lastname: _lastname,
+      contact: _contact,
+      bloodType: _bloodType,
+      gender: _gender,
+      birthdate: _birthdate,
+      address: _address,
+      comments: _comments
+    };
+    return this.http.put(BACKEND_URL + '/' + _id + '/' + _personId, patientData);
   }
 
   deletePatient(patientId: string) {

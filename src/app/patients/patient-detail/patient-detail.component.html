@@ -6,7 +6,13 @@
 <mat-grid-list cols="6" rowHeight="100px" [gutterSize]="'10px'">
     <mat-grid-tile [colspan]="1" [rowspan]="2" class="grid-content">
         <div style="padding: 1em;">
-            <img src="{{image}}" alt="{{firstname + ' ' + midlename + ' ' + lastname}}" style="width: 100%;">
+            <div *ngIf="image; then thenBlock else elseBlock"></div>
+            <ng-template #thenBlock>
+                <img src="{{image}}" alt="{{firstname + ' ' + midlename + ' ' + lastname}}" style="width: 100%;" />
+            </ng-template>
+            <ng-template #elseBlock>
+              <img src="assets/images/blank.png" alt="{{firstname + ' ' + midlename + ' ' + lastname}}" style="width: 100%;" />
+            </ng-template>
         </div>
     </mat-grid-tile>
     <mat-grid-tile [colspan]="1" [rowspan]="2">

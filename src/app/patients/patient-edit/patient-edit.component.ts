@@ -61,6 +61,7 @@ export class PatientEditComponent implements OnInit, OnDestroy {
       lastname: new FormControl(null, {
         validators: [Validators.required, Validators.minLength(3), Validators.maxLength(50)]
       }),
+      bloodType: new FormControl(null),
       contact: new FormControl(null, {
         validators: [Validators.required, Validators.minLength(7), Validators.maxLength(13)]
       }),
@@ -71,10 +72,7 @@ export class PatientEditComponent implements OnInit, OnDestroy {
       address: new FormControl(null, {
         validators: [Validators.required, Validators.minLength(3), Validators.maxLength(250)]
       }),
-      image: new FormControl(null, {
-        validators: [Validators.required],
-        asyncValidators: [mimeType]
-      })
+      comments: new FormControl(null)
     });
 
     if (this.patientId) {
@@ -84,6 +82,10 @@ export class PatientEditComponent implements OnInit, OnDestroy {
           this.isLoading = false;
           this.patient = {
             id: patientData._id,
+            bloodType: patientData.bloodType,
+            comments: patientData.comments,
+            clientId: patientData.clientId,
+            personId: patientData.personId,
             firstname: patientData.firstname,
             midlename: patientData.midlename,
             lastname: patientData.lastname,
@@ -91,10 +93,10 @@ export class PatientEditComponent implements OnInit, OnDestroy {
             gender: patientData.gender,
             birthdate: patientData.birthdate,
             address: patientData.address,
-            imagePath: patientData.imagePath,
-            client: patientData.client_id
           };
           this.form.setValue({
+            bloodType: this.patient.bloodType,
+            comments: this.patient.comments,
             firstname: this.patient.firstname,
             midlename: this.patient.midlename,
             lastname: this.patient.lastname,
@@ -102,9 +104,7 @@ export class PatientEditComponent implements OnInit, OnDestroy {
             gender: this.patient.gender,
             birthdate: this.patient.birthdate,
             address: this.patient.address,
-            image: this.patient.imagePath
           });
-          this.imagePreview = this.patient.imagePath;
         });
       } else {
         this.mode = 'create';
@@ -133,35 +133,34 @@ export class PatientEditComponent implements OnInit, OnDestroy {
         this.form.value.midlename,
         this.form.value.lastname,
         this.form.value.contact,
+        this.form.value.bloodType,
         this.form.value.gender,
         this.form.value.birthdate,
         this.form.value.address,
-        this.form.value.image
+        this.form.value.comments
       ).subscribe(() => {
+        this.onClose();
+        this.notificationService.success(':: Added successfully');
         this.patientsService.getPatients(this.userId, this.patientsPerPage, this.currentPage);
       });
-
-      this.form.reset();
-      this.notificationService.success(':: Added successfully');
-      this.onClose();
     } else {
       this.patientsService.updatePatient(
         this.patientId,
+        this.patient.personId,
         this.form.value.firstname,
         this.form.value.midlename,
         this.form.value.lastname,
         this.form.value.contact,
+        this.form.value.bloodType,
         this.form.value.gender,
         this.form.value.birthdate,
         this.form.value.address,
-        this.form.value.image
+        this.form.value.comments
       ).subscribe(() => {
+        this.onClose();
+        this.notificationService.success(':: Updated successfully');
         this.patientsService.getPatients(this.userId, this.patientsPerPage, this.currentPage);
       });
-
-      this.form.reset();
-      this.notificationService.success(':: Updated successfully');
-      this.onClose();
     }
   }
 
